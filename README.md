@@ -98,10 +98,9 @@
 
 - 図書館検索機能
 - googlemapと連携する。
-- 図書館レビュー機能
 - 返却日時の通知機能
 - 本に関するマルチ検索
-- タグ機能
+- いいね機能
 - 問い合わせリンク
 - ログイン機能
     - LINEでログイン
@@ -137,3 +136,6 @@
 | 本の検索機能 | Google Books APIs |  |
 
 # -
+
+## ■ 画面遷移
+https://www.figma.com/design/2QrYPgWgoUxBn6t7itM78d/ReadLink?node-id=0-1&node-type=canvas&t=f9MfXj9rV8qHNNQ4-0
