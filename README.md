@@ -139,3 +139,7 @@
 
 ## ■ 画面遷移
 https://www.figma.com/design/2QrYPgWgoUxBn6t7itM78d/ReadLink?node-id=0-1&node-type=canvas&t=f9MfXj9rV8qHNNQ4-0
+
+## ■ ER図
+https://dbdiagram.io/d/ReadLink-6729dbe3e9daa85aca59fd84
+<img src="https://dbdiagram.io/d/ReadLink-6729dbe3e9daa85aca59fd84" alt="Gyazo画像" />
