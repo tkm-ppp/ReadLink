@@ -38,4 +38,3 @@
 
 /node_modules
 .env
-credentials.yml.enc
