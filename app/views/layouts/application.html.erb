@@ -7,6 +7,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <% if controller_name == 'home' && action_name == 'top' %>
+    <%= stylesheet_link_tag 'home' %> <!-- トップページ用CSSを読み込む -->
+  <% end %>
 
     <%= yield :head %>
 
@@ -23,7 +26,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
-  <body class="bg-orange-600">
+  <div class="main">
     <%= yield %>
   </body>
 </html>
