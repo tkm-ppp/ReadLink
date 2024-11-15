@@ -7,25 +7,25 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: localhost
-  username: postgres
-  password: password
+  username: readlink_3u64_user
+  password: 7qLcTWoHkWySPAz9vcCBIoDyiLN1MJSE
   port: 5432
 
 
 development:
   <<: *default
-  database: ReadLink_development
+  database: readlink_3u64
 
 
 test:
   <<: *default
-  database: ReadLink_test
+  database: readlink_3u64
   port: 5432
 
 production:
   primary: &primary_production
     <<: *default
-    database: ReadLink_production
+    database: readlink_3u64
     username: myapp
     password: <%= ENV["MYAPP_DATABASE_PASSWORD"] %>
   cache:
