@@ -3,6 +3,11 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
+    <div class="field">
+    <%= f.label :name %> <br />
+    <%= f.text_field :name %>
+  </div>
+  
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
@@ -27,3 +32,41 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+
+<style>
+.field {
+  margin-bottom: 15px;
+  color: #333; /* テキストの色を暗めに設定 */
+}
+
+.field label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.field input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+.actions input[type="submit"] {
+  background-color: #FF8C00;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+</style>

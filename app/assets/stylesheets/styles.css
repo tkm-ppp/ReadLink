@@ -1,11 +1,4 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-image: url('background.jpg'); /* 適切な背景画像のURLを指定 */
-    background-size: cover;
-    color: white;
-}
+
 
 header {
     background-color: #FF8C00; /* オレンジ色 */
@@ -13,46 +6,7 @@ header {
     text-align: center;
 }
 
-h1 {
-    font-size: 2.5em;
-    margin: 0;
-}
 
-nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-nav li {
-    display: inline;
-    margin: 0 15px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.hero {
-    text-align: center;
-    margin-top: 100px; /* 調整 */
-}
-
-.hero h2 {
-    font-size: 4em;
-    color: red;
-}
-
-.map-button {
-    background-color: #FF8C00; /* オレンジ色 */
-    border: none;
-    color: white;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    cursor: pointer;
-    margin-top: 20px;
-}
 
 footer {
     text-align: center;
@@ -63,9 +17,4 @@ footer {
     width: 100%;
 }
 
-.portfolio-image {
-    max-width: 100%; /* 画像の最大幅を100%に設定 */
-    height: auto; /* 高さを自動調整 */
-    display: block; /* ブロック要素として表示 */
-    margin: 0 auto; /* 中央に配置 */
-}
+
