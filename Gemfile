@@ -52,7 +52,7 @@ gem 'responders', '3.1.1'
 gem 'warden', '1.2.9'
 
 # APIリクエストを簡単に行うため 
-gem install httparty
+gem 'httparty'
 
 
 group :development, :test do
