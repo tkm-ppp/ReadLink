@@ -54,6 +54,9 @@ gem 'warden', '1.2.9'
 # APIリクエストを簡単に行うため 
 gem 'httparty'
 
+# Net::HTTPを使用してコードが煩雑になることを防ぐため
+gem 'faraday'
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
