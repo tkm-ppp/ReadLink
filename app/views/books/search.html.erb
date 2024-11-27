@@ -1,0 +1,25 @@
+
+<% if @google_books.present? %>
+    # 検索した本の情報を表示する
+    <% @google_books['items']&.each do |google_book| %>
+        <%= image_tag google_book_thumbnail(google_book) %>
+        <%= google_book['volumeInfo']['title'] %>
+        <%= google_book['volumeInfo']['authors']%>
+        <%= google_book['volumeInfo']['publishedDate'] %>
+
+        #よみたいに追加ボタンを押したらhidden_fieldを使用してbooksコントローラーのcreateに値が送信される
+        <%= form_with model: @book, local: true, id: "new_book" do |f| %>
+            <%= f.hidden_field :title, value: set_google_book_params(google_book)["title"] %>
+            <%= f.hidden_field :published_date, value: set_google_book_params(google_book)["publishedDate"] %>
+            <%= f.hidden_field :info_link, value: set_google_book_params(google_book)["canonicalVolumeLink"] %>
+            <%= f.hidden_field :image_link, value: set_google_book_params(google_book)["bookImage"] %>
+            <%= f.hidden_field :systemid, value: set_google_book_params(google_book)["systemid"] %>
+            <% set_google_book_params(google_book)["authors"]&.each do |author| %>
+                <%= hidden_field_tag 'book[authors][]', author %>
+            <% end %>
+            <%= button_tag type: "f.submit" do %>
+               <i class="fa-regular fa-square-plus"></i>よみたいに追加
+            <% end %>
+        <% end %>
+    <% end %>
+<% end %>

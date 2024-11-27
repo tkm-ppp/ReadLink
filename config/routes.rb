@@ -1,19 +1,30 @@
 Rails.application.routes.draw do
-  root to: 'homes#top'
+  root to: "homes#top"
 
-  get 'books', to: 'books#index' 
+  resources :books do
+    collection { get :search }
+  end
+
+  get "book_authors/create"
+  get "book_authors/destroy"
+  get "authors/index"
+  get "authors/show"
+  get "authors/new"
+  get "authors/create"
+
+  get "books", to: "books#index"
 
 
   devise_for :users, controllers: {
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
+    sessions: "users/sessions",
+    registrations: "users/registrations"
   }
 
   devise_scope :user do
-    get '/users/sign_out' => 'devise/sessions#destroy'
+    get "/users/sign_out" => "devise/sessions#destroy"
   end
 
-  resources :users, only: [:show]
+  resources :users, only: [ :show ]
   resources :tasks
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

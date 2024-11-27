@@ -19,7 +19,7 @@ gem "cssbundling-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem 'dotenv-rails', groups: [:development, :production, :test]
+gem "dotenv-rails", groups: [ :development, :production, :test ]
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.20"
 
@@ -43,16 +43,16 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 # ログイン機能
-gem 'devise', '4.9.4'
+gem "devise", "4.9.4"
 
-gem 'orm_adapter', '0.5.0'
+gem "orm_adapter", "0.5.0"
 
-gem 'responders', '3.1.1'
+gem "responders", "3.1.1"
 
-gem 'warden', '1.2.9'
+gem "warden", "1.2.9"
 
 # APIリクエストを簡単に行うため
-gem 'httparty'
+gem "httparty"
 
 
 
