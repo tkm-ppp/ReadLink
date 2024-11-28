@@ -4,13 +4,13 @@ class User < ApplicationRecord
   # Deviseのモジュールを含める
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  
+
   # バリデーション
   validates :email, presence: { message: "メールアドレスは必須です" }, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "メールアドレスの形式が正しくありません" }
-  
+
   validates :password, presence: true, length: { minimum: 6, message: "パスワードは6文字以上である必要があります" }
   validates :password_confirmation, presence: true
-  
+
   validates :name, presence: true, uniqueness: true
 
 
@@ -27,5 +27,4 @@ class User < ApplicationRecord
   end
 
   # カスタムバリデーション
-
 end

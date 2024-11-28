@@ -10,5 +10,4 @@ module DeviseHelper
         "danger"
       end
     end
-  end
-  
+end

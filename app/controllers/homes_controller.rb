@@ -1,3 +1,5 @@
 class HomesController < ApplicationController
-    def top; end
+    def top
+        @is_top_page = true
+      end
 end
