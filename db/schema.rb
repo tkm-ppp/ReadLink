@@ -10,9 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_26_033322) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_28_053903) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "authors", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "book_authors", force: :cascade do |t|
+    t.bigint "book_id"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_book_authors_on_author_id"
+    t.index ["book_id"], name: "index_book_authors_on_book_id"
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "title"
+    t.text "info_link"
+    t.string "systemid"
+    t.string "publisher"
+    t.string "published_date"
+    t.string "image_link"
+    t.integer "page_count"
+    t.decimal "rating", precision: 2, scale: 1
+    t.string "genre"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_books_on_user_id"
+  end
 
   create_table "tasks", force: :cascade do |t|
     t.string "name"
