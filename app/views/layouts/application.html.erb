@@ -16,13 +16,14 @@
   <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="d-flex flex-column min-vh-100">
-  <div class="main flex-grow-1">
     <header>    
       <nav class="navbar navbar-expand">
         <div class="container-fluid">
-          <a class="navbar-brand text-blue-600" href="/">ReadLink</a>
+          <a class="navbar-brand " href="/">ReadLink</a>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto"></ul>
 
@@ -43,6 +44,7 @@
       </nav>
     </header>
 
+  
     <% flash.each do |type, message| %>
       <div class="alert alert-<%= type == 'notice' ? 'success' : 'danger' %>">
         <%= message %>
@@ -50,33 +52,36 @@
     <% end %>
 
     <div class="relative w-full">
-      <div class="h-screen">
-        <% if controller_name == 'homes' && action_name == 'top' || controller_name == 'sessions' || controller_name == 'registrations' %>
-          <img src="<%= asset_path('portfolio.png') %>" alt="ポートフォリオ用の画像" class="absolute inset-0 object-cover w-full h-full" style="object-position: bottom;" />
+  <div class="<%= (controller_name == 'homes' && action_name == 'top') || (controller_name == 'sessions') || (controller_name == 'registrations') ? 'min-h-screen' : 'h-auto' %>">
+    <% if (controller_name == 'homes' && action_name == 'top') || (controller_name == 'sessions') || (controller_name == 'registrations') %>
+      <img src="<%= asset_path('portfolio.png') %>" alt="ポートフォリオ用の画像" class="absolute inset-0 object-cover w-full h-full" style="object-position: bottom;" />
 
-          <% unless @is_top_page %>
-            <div class="absolute inset-0 bg-black opacity-50"></div> <!-- 半透明のオーバーレイ -->
-          <% end %>
-        <% end %>
+      <% unless @is_top_page %>
+        <div class="absolute inset-0 bg-black opacity-50"></div> <!-- 半透明のオーバーレイ -->
+      <% end %>
+    <% end %>
 
-        <!-- ここで検索フォームを画像の上に配置 -->
-        <%= form_with url: search_books_path, local: true, method: :get do |f| %>
-          <div class="absolute top-20 right-0 w-full max-w-md p-4 flex justify-end">
-            <div class="relative w-full max-w-md">
-              <%= f.search_field :search, class: "form-control w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500", placeholder: "本のタイトルや著者名を入力" %>
-              <%= f.submit "検索", class: "btn btn-primary bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600 transition" %>
-            </div>
-          </div>
-        <% end %>
+    <%= form_with url: search_books_path, local: true, method: :get do |f| %>
+      <div class="absolute top-5 right-0 w-full max-w-md p-4 flex justify-end">
+        <div class="relative w-full max-w-md">
+          <%= f.search_field :search, class: "form-control w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500", placeholder: "本のタイトルや著者名を入力" %>
+          <%= f.submit "検索", class: "btn btn-primary bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600 transition" %>
+        </div>
       </div>
+    <% end %>
+  </div>
+</div>
+
 
       <!-- 画像の上に他のコンテンツを配置 -->
-      <div class="content absolute w-full p-4" style="top: 130px;">
+    <div class="flex-grow-1 d-flex flex-column"> 
+      <div class="content w-full p-4 mt-4">
         <%= yield %>
       </div>
     </div>
-
-    <footer class="p-4 mt-auto">
+  
+  
+    <footer class="mt-auto p-4">
       <nav>
         <ul>
           <li><a href="#">お問い合わせ</a></li>
@@ -85,7 +90,7 @@
         </ul>
       </nav>
     </footer>
-  </div>
+  
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

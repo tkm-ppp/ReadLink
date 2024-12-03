@@ -13,6 +13,33 @@ class BooksController < ApplicationController
   end
 
   def show
+    # URLパラメータから本のIDを取得
+    book_id = params[:id]
+
+    # Google Books APIから本の詳細情報を取得
+    url = "https://www.googleapis.com/books/v1/volumes/#{book_id}"
+    res = Faraday.get(url)
+
+    if res.success?
+      @book_details = JSON.parse(res.body)
+  
+      # 必要な情報を抽出
+      @title = @book_details.dig('volumeInfo', 'title')
+      @image_link = @book_details.dig('volumeInfo', 'imageLinks', 'thumbnail') # サムネイル画像を取得
+      @info_link = @book_details.dig('volumeInfo', 'infoLink')
+      @published_date = @book_details.dig('volumeInfo', 'publishedDate')
+      @publisher = @book_details.dig('volumeInfo', 'publisher')
+      @page_count = @book_details.dig('volumeInfo', 'pageCount')
+      @rating = @book_details.dig('volumeInfo', 'averageRating')
+      @description = @book_details.dig('volumeInfo', 'description')
+      
+      # ジャンルについては別途管理が必要
+      @genre = nil # 必要に応じて設定する
+    else
+      Rails.logger.error "API Error: #{res.status} - #{res.body}"
+      flash[:danger] = "本の詳細を取得できませんでした。"
+      redirect_to books_path and return
+    end
   end
 
   def search

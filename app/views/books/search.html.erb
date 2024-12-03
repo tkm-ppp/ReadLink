@@ -1,12 +1,8 @@
 <% if @google_books.present? %>
-    <h1 class="text-2xl font-bold text-blue-600 mb-4">
-        <%= "検索結果".upcase %>
-    </h1>
-
-    <% @google_books['items']&.each do |google_book| %>
+        <% @google_books['items']&.each do |google_book| %>
         <div class="flex items-start mb-4">
             <div class="mr-4">
-                <%= image_tag google_book_thumbnail(google_book) || 'default_image.png', class: "w-32 h-auto" %>
+                 <%= link_to image_tag(google_book_thumbnail(google_book) || 'default_image.png', class: "w-32 h-auto"), book_path(google_book['id']) %>
             </div>
             <div class="flex-1">
                 <h2 class="text-lg font-bold"><%= google_book['volumeInfo']['title'] %></h2>

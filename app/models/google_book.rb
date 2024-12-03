@@ -9,7 +9,7 @@ class GoogleBook
     attribute :published_at, :date
     attribute :title, :string
   
-    validates :googlebooksapi_id, presence: true
+    validates :google_books_api_id, presence: true
     validates :title, presence: true
   
     class << self
@@ -19,7 +19,7 @@ class GoogleBook
         @item = item
         @volume_info = @item['volumeInfo']
         new(
-          googlebooksapi_id: @item['id'],
+          google_books_api_id: @item['id'],
           authors: @volume_info['authors'],
           image: image_url,
           published_at: @volume_info['publishedDate'],
@@ -27,8 +27,8 @@ class GoogleBook
         )
       end
   
-      def new_from_id(googlebooksapi_id)
-        url = url_of_creating_from_id(googlebooksapi_id)
+      def new_from_id(google_books_api_id)
+        url = url_of_creating_from_id(google_books_api_id)
         item = get_json_from_url(url)
         new_from_item(item)
       end
@@ -70,8 +70,8 @@ class GoogleBook
     end
   
     def find_book_or_save
-      if Book.find_by(googlebooksapi_id: googlebooksapi_id) || save
-        Book.find_by(googlebooksapi_id: googlebooksapi_id)
+      if Book.find_by(google_books_api_id: google_books_api_id) || save
+        Book.find_by(google_books_api_id: google_books_api_id)
       else
         false
       end
@@ -81,7 +81,7 @@ class GoogleBook
   
     def build_book
       Book.new(
-        googlebooksapi_id: googlebooksapi_id,
+        google_books_api_id: google_books_api_id,
         published_at: published_at,
         title: title,
       )
