@@ -5,6 +5,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :books
+
   # バリデーション
   validates :email, presence: { message: "メールアドレスは必須です" }, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "メールアドレスの形式が正しくありません" }
 

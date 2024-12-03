@@ -10,14 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_16_150105) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_01_042605) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_catalog.plpgsql"
+  enable_extension "plpgsql"
 
-  create_table "tasks", force: :cascade do |t|
+  create_table "authors", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "book_id"
+    t.boolean "is_representative", null: false
+    t.index ["book_id"], name: "index_authors_on_book_id"
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "title"
+    t.text "info_link"
+    t.string "publisher"
+    t.string "published_date"
+    t.string "image_link"
+    t.integer "page_count"
+    t.decimal "rating", precision: 2, scale: 1
+    t.string "genre"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "google_books_api_id", null: false
+    t.index ["google_books_api_id"], name: "index_books_on_google_books_api_id", unique: true
+    t.index ["user_id"], name: "index_books_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -33,4 +54,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_16_150105) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "authors", "books"
+  add_foreign_key "books", "users"
 end

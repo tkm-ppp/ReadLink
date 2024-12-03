@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   root to: "homes#top"
 
   resources :books do
-    collection { get :search }
+    collection do
+      get 'search'
+    end
   end
 
   get "book_authors/create"
@@ -10,9 +12,7 @@ Rails.application.routes.draw do
   get "authors/index"
   get "authors/show"
   get "authors/new"
-  get "authors/create"
-
-  get "books", to: "books#index"
+  get "authors/create"  
 
 
   devise_for :users, controllers: {

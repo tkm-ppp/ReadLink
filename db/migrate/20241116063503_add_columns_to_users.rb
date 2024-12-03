@@ -1,4 +1,4 @@
-class AddColumnsToUsers < ActiveRecord::Migration[8.0]
+class AddColumnsToUsers < ActiveRecord::Migration[7.0]
   def change
     add_column :users, :name, :string, null: false
   end
