@@ -91,6 +91,7 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     concurrent-ruby (1.3.4)
+    connection_pool (2.4.1)
     crass (1.0.6)
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
@@ -109,14 +110,31 @@ GEM
     dotenv-rails (3.1.4)
       dotenv (= 3.1.4)
       railties (>= 6.1)
+    dry-core (1.0.2)
+      concurrent-ruby (~> 1.0)
+      logger
+      zeitwerk (~> 2.6)
+    dry-inflector (1.1.0)
+    dry-logic (1.5.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.0, < 2)
+      zeitwerk (~> 2.6)
+    dry-types (1.7.2)
+      bigdecimal (~> 3.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.0)
+      dry-inflector (~> 1.0)
+      dry-logic (~> 1.4)
+      zeitwerk (~> 2.6)
     ed25519 (1.3.0)
     erubi (1.13.0)
-    faraday (2.12.1)
-      faraday-net_http (>= 2.0, < 3.5)
-      json
-      logger
-    faraday-net_http (3.4.0)
-      net-http (>= 0.5.0)
+    faraday (1.2.0)
+      multipart-post (>= 1.2, < 3)
+      ruby2_keywords
+    faraday-follow_redirects (0.3.0)
+      faraday (>= 1, < 3)
+    faraday_middleware (1.2.1)
+      faraday (~> 1.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     httparty (0.22.0)
@@ -134,7 +152,7 @@ GEM
       activesupport (>= 5.0.0)
     jsbundling-rails (1.3.1)
       railties (>= 6.0.0)
-    json (2.8.2)
+    json (2.9.0)
     kamal (2.3.0)
       activesupport (>= 7.0)
       base64 (~> 0.2)
@@ -146,8 +164,20 @@ GEM
       sshkit (>= 1.23.0, < 2.0)
       thor (~> 1.3)
       zeitwerk (>= 2.6.18, < 3.0)
+    kaminari (1.2.2)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.2)
+      kaminari-activerecord (= 1.2.2)
+      kaminari-core (= 1.2.2)
+    kaminari-actionview (1.2.2)
+      actionview
+      kaminari-core (= 1.2.2)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     language_server-protocol (3.17.0.3)
-    logger (1.6.1)
+    logger (1.6.2)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -164,8 +194,7 @@ GEM
     msgpack (1.7.5)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
-    net-http (0.5.0)
-      uri
+    multipart-post (2.4.1)
     net-imap (0.5.1)
       date
       net-protocol
@@ -246,6 +275,10 @@ GEM
     rake (13.2.1)
     rdoc (6.8.1)
       psych (>= 4.0.0)
+    redis (5.3.0)
+      redis-client (>= 0.22.0)
+    redis-client (0.22.2)
+      connection_pool
     regexp_parser (2.9.3)
     reline (0.5.12)
       io-console (~> 0.5)
@@ -282,6 +315,7 @@ GEM
       rubocop-performance
       rubocop-rails
     ruby-progressbar (1.13.0)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.27.0)
       base64 (~> 0.2)
@@ -321,7 +355,6 @@ GEM
     unicode-display_width (3.1.2)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    uri (1.0.2)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -355,16 +388,22 @@ DEPENDENCIES
   debug
   devise (= 4.9.4)
   dotenv-rails
+  dry-types
   faraday
+  faraday-follow_redirects (~> 0.3.0)
+  faraday_middleware
   httparty
   jbuilder
   jsbundling-rails
   kamal
+  kaminari
+  nokogiri
   orm_adapter (= 0.5.0)
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
   rails (~> 7.0.8.6)
+  redis
   responders (= 3.1.1)
   rubocop-rails-omakase
   selenium-webdriver

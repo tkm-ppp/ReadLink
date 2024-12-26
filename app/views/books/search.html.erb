@@ -1,29 +1,38 @@
-<% if @google_books.present? %>
-        <% @google_books['items']&.each do |google_book| %>
-        <div class="flex items-start mb-4">
-            <div class="mr-4">
-                 <%= link_to image_tag(google_book_thumbnail(google_book) || 'default_image.png', class: "w-32 h-auto"), book_path(google_book['id']) %>
-            </div>
-            <div class="flex-1">
-                <h2 class="text-lg font-bold"><%= google_book['volumeInfo']['title'] %></h2>
-                <p class="text-gray-700">
-                    <%= google_book['volumeInfo']['authors']&.join(', ') %>
-                </p>
-                <p class="text-gray-500"><%= google_book['volumeInfo']['publishedDate'] %></p>
-                <%= form_with model: @book, local: true, id: "new_book" do |f| %>
-                    <%= f.hidden_field :title, value: set_google_book_params(google_book)["title"] %>
-                    <%= f.hidden_field :published_date, value: set_google_book_params(google_book)["publishedDate"] %>
-                    <%= f.hidden_field :info_link, value: set_google_book_params(google_book)["canonicalVolumeLink"] %>
-                    <%= f.hidden_field :image_link, value: set_google_book_params(google_book)["bookImage"] %>
-                    <%= f.hidden_field :systemid, value: set_google_book_params(google_book)["systemid"] %>
-                    <% set_google_book_params(google_book)["authors"]&.each do |author| %>
-                        <%= hidden_field_tag 'book[authors][]', author %>
-                    <% end %>
-                    <%= button_tag type: "submit", class: "mt-2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition" do %>
-                       <i class="fa-regular fa-square-plus"></i> よみたいに追加
-                    <% end %>
-                <% end %>
-            </div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+  <% @books.each do |book| %>
+    <div class="book-item bg-white rounded-lg shadow-md p-4 flex flex-col">
+      <div class="flex space-x-4">
+        <div class="flex-shrink-0">
+          <% if book.image_link.present? %>
+            <%= image_tag book.image_link, class: "w-32 h-auto rounded-md object-cover", alt: book.title %>
+          <% else %>
+            <%= image_tag "default_image.png", class: "w-32 h-auto rounded-md object-cover", alt: "No Image" %>
+          <% end %>
         </div>
-    <% end %>
-<% end %>
+
+        <div class="flex flex-col flex-grow">
+          <h3 class="text-lg font-semibold text-gray-800 mb-2"><%= book.title %></h3>
+          
+          <% if book.author.present? %>
+            <p class="text-sm text-gray-600 mb-1">
+              <span class="font-medium">著者:</span> <%= book.author %>
+            </p>
+          <% end %>
+
+          <% if book.publisher.present? %>
+            <p class="text-sm text-gray-600 mb-1">
+              <span class="font-medium">出版社:</span> <%= book.publisher %>
+            </p>
+          <% end %>
+
+          <%= link_to '詳細を見る', book_path(book), 
+              class: "mt-auto px-4 py-2 bg-green-600 text-white text-center rounded-md hover:bg-green-700 transition-colors duration-200" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="my-4 flex justify-center">
+  <%= paginate @books %>
+</div>

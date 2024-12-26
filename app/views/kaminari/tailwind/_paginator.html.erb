@@ -1,0 +1,13 @@
+<nav class="flex justify-between">
+  <%= link_to '前へ', url_for(page: @current_page - 1), class: 'px-4 py-2' if @current_page > 1 %>
+  <div>
+    <% (1..@num_pages).each do |page| %>
+      <% if page == @current_page %>
+        <span class="px-4 py-2 bg-blue-600 text-white"><%= page %></span>
+      <% else %>
+        <%= link_to page, url_for(page: page), class: 'px-4 py-2' %>
+      <% end %>
+    <% end %>
+  </div>
+  <%= link_to '次へ', url_for(page: @current_page + 1), class: 'px-4 py-2' if @current_page < @num_pages %>
+</nav>

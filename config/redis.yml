@@ -1,0 +1,14 @@
+# development:
+#   host: redis # 修正
+#   port: 6379
+#   db: 0
+#   url: redis://redis:6379/0 # 修正
+
+# test:
+#   host: redis # 修正
+#   port: 6379
+#   db: 1
+#   url: redis://redis:6379/1 # 修正
+
+# production:
+#   url: <%= ENV["REDIS_URL"] %>

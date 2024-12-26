@@ -3,27 +3,29 @@ class GoogleBook
     include ActiveModel::Attributes
     include ActiveModel::Validations
   
-    attribute :googlebooksapi_id, :string
-    attribute :authors
+    attribute :google_books_api_id, :string
+    attribute :authors, :string, default: ""
     attribute :image, :string
-    attribute :published_at, :date
+    attribute :published_date, :date
     attribute :title, :string
   
     validates :google_books_api_id, presence: true
     validates :title, presence: true
+    validates :authors, presence: true  # authorsのバリデーションを追加
   
     class << self
       include GoogleBooksApi
   
       def new_from_item(item)
-        @item = item
-        @volume_info = @item['volumeInfo']
+        volume_info = item['volumeInfo']
+        authors = volume_info['authors'] || []  # nilの場合は空の配列を設定
+  
         new(
-          google_books_api_id: @item['id'],
-          authors: @volume_info['authors'],
-          image: image_url,
-          published_at: @volume_info['publishedDate'],
-          title: @volume_info['title'],
+          google_books_api_id: item['id'],
+          authors: authors.join(", "),  # authorsを文字列として保存
+          image: image_url(volume_info),
+          published_date: volume_info['publishedDate'],
+          title: volume_info['title']
         )
       end
   
@@ -39,52 +41,45 @@ class GoogleBook
         items = json['items']
         return [] unless items
   
-        items.map do |item|
-          GoogleBook.new_from_item(item)
-        end
+        items.map { |item| new_from_item(item) }
       end
   
       private
   
-      def image_url
-        @volume_info['imageLinks']['smallThumbnail'] if @volume_info['imageLinks'].present?
+      def image_url(volume_info)
+        volume_info.dig('imageLinks', 'smallThumbnail')
       end
     end
   
-    def save
-      return false unless valid?
+    def save_to_database
+      book = Book.find_or_initialize_by(google_books_api_id: google_books_api_id)
+      book.assign_attributes(
+        title: title,
+        published_date: published_date,
+        image_link: image
+      )
   
-      book = build_book
-      return false unless book.valid?
-  
-      ActiveRecord::Base.transaction do
-        book.remote_image_url = image if image.present?
-        book.save
-        authors.each.with_index do |author, index|
-          author = book.authors.build(name: author)
-          author.is_representation = index.zero?
-          author.save
-        end
-      end
-      true
-    end
-  
-    def find_book_or_save
-      if Book.find_by(google_books_api_id: google_books_api_id) || save
-        Book.find_by(google_books_api_id: google_books_api_id)
+      if book.save
+        save_authors(book, authors.split(", "))  # authorsを配列に戻して保存
+        book
       else
-        false
+        Rails.logger.error("Failed to save book: #{book.errors.full_messages}")
+        nil
       end
     end
   
     private
   
-    def build_book
-      Book.new(
-        google_books_api_id: google_books_api_id,
-        published_at: published_at,
-        title: title,
-      )
+  def save_authors(book, authors)
+    authors.each do |author_name|
+      next if author_name.blank?
+
+      author = Author.find_or_initialize_by(name: author_name.strip)
+      author.books << book unless author.books.include?(book)
+
+      unless author.save
+        Rails.logger.error("Failed to save author: #{author.errors.full_messages}")
+      end
     end
-  end
-  
+  end 
+end 

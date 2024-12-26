@@ -1,22 +1,62 @@
-<h1 class="text-3xl font-bold"><%= @book_details['volumeInfo']['title'] %></h1>
+<div class="max-w-4xl mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-6"><%= @book.title %></h1>
 
-<% if @book_details['volumeInfo']['imageLinks'] %>
-  <img src="<%= @book_details['volumeInfo']['imageLinks']['thumbnail'] %>" alt="<%= @book_details['volumeInfo']['title'] %>">
-<% end %>
+  <div class="flex flex-col md:flex-row gap-8">
+    <div class="w-full md:w-1/3">
+      <% if @book.cover_url.present? %>
+        <%= image_tag @book.cover_url, class: "w-full rounded-lg shadow-lg", alt: @book.title %>
+      <% else %>
+        <%= image_tag "default_image.png", class: "w-full rounded-lg shadow-lg", alt: "No Image" %>
+      <% end %>
+    </div>
 
-<p><strong>著者:</strong> <%= @book_details['volumeInfo']['authors']&.join(', ') %></p>
-<p><strong>出版日:</strong> <%= @book_details['volumeInfo']['publishedDate'] %></p>
-<p><strong>出版社:</strong> <%= @book_details['volumeInfo']['publisher'] %></p>
-<p><strong>ページ数:</strong> <%= @book_details['volumeInfo']['pageCount'] %></p>
-<p><strong>評価:</strong> <%= @book_details['volumeInfo']['averageRating'] %></p>
-<p><strong>ジャンル:</strong> <%= @book_details['volumeInfo']['categories']&.join(', ') %></p>
+    <div class="w-full md:w-2/3">
+      <div class="space-y-4">
+        <% if @book.author.present? %>
+          <p class="text-lg">
+            <span class="font-semibold">著者:</span> <%= @book.author %>
+          </p>
+        <% end %>
 
-<p><strong>説明:</strong></p>
-<% description = @book_details['volumeInfo']['description'].gsub(/<b>|<\/b>|<wbr>/, '') %>
-<% description.split("\n").each do |paragraph| %>
-  <p><%= paragraph.strip %></p>
-<% end %>
+        <% if @book.publisher.present? %>
+          <p class="text-lg">
+            <span class="font-semibold">出版社:</span> <%= @book.publisher %>
+          </p>
+        <% end %>
 
-<p><strong>詳細情報:</strong> <%= link_to 'Google Booksで見る', @book_details['volumeInfo']['canonicalVolumeLink'], target: '_blank' %></p>
+        <% if @book.published_date.present? %>
+          <p class="text-lg">
+            <span class="font-semibold">出版日:</span> <%= @book.published_date %>
+          </p>
+        <% end %>
 
-<%= link_to '一覧に戻る', search_books_path %>
+        <% if @book.page_count.present? %>
+          <p class="text-lg">
+            <span class="font-semibold">ページ数:</span> <%= @book.page_count %>
+          </p>
+        <% end %>
+
+        <% if @book.description.present? %>
+          <div class="mt-6">
+            <h2 class="text-xl font-semibold mb-2">概要</h2>
+            <p class="text-gray-700"><%= @book.description %></p>
+          </div>
+        <% end %>
+
+        <% if @book.info_link.present? %>
+          <div class="mt-6">
+            <%= link_to "詳細情報", @book.info_link, 
+                class: "inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200",
+                target: "_blank",
+                rel: "noopener noreferrer" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8">
+    <%= link_to '検索結果に戻る', search_books_path(search: params[:search]), 
+        class: "inline-block px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200" %>
+  </div>
+</div>

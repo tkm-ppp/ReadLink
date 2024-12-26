@@ -59,8 +59,23 @@ gem "httparty"
 # Net::HTTPを使用してコードが煩雑になることを防ぎ、API通信をする方針としたため
 gem 'faraday'
 
+gem 'faraday-follow_redirects', '~> 0.3.0'
+
+gem 'faraday_middleware'
+
 # URLをエスケープするため
 gem 'addressable'
+
+# ActiveModelのattributeメソッドに渡すことができる正しい型のオブジェクトが作成できる
+gem 'dry-types'
+
+# 堅牢で効率的なキャッシュ機構を実装するため
+gem 'redis'
+
+# 様々なドキュメント形式のサポート: XML、HTML、XHTMLなど、様々なドキュメント形式をパースするため
+gem 'nokogiri'
+
+gem 'kaminari'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
