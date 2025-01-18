@@ -1,38 +1,25 @@
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-  <% @books.each do |book| %>
-    <div class="book-item bg-white rounded-lg shadow-md p-4 flex flex-col">
-      <div class="flex space-x-4">
-        <div class="flex-shrink-0">
-          <% if book.image_link.present? %>
-            <%= image_tag book.image_link, class: "w-32 h-auto rounded-md object-cover", alt: book.title %>
-          <% else %>
-            <%= image_tag "default_image.png", class: "w-32 h-auto rounded-md object-cover", alt: "No Image" %>
+<% if @books.present? %>
+  <h2>検索結果</h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    <% @books.each do |book| %>
+      <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px; margin: 10px; width: calc(30% - 20px);">
+        <h3><%= book['title'] %></h3>
+        <p><strong>著者:</strong> <%= book['author'] %></p>
+        <div style="text-align: center;">
+          <% if book['image_link'] %>
+            <%= link_to image_tag(book['image_link'], alt: book['title'], width: 100), book['info_link'], target: "_blank" %>
           <% end %>
         </div>
-
-        <div class="flex flex-col flex-grow">
-          <h3 class="text-lg font-semibold text-gray-800 mb-2"><%= book.title %></h3>
-          
-          <% if book.author.present? %>
-            <p class="text-sm text-gray-600 mb-1">
-              <span class="font-medium">著者:</span> <%= book.author %>
-            </p>
-          <% end %>
-
-          <% if book.publisher.present? %>
-            <p class="text-sm text-gray-600 mb-1">
-              <span class="font-medium">出版社:</span> <%= book.publisher %>
-            </p>
-          <% end %>
-
-          <%= link_to '詳細を見る', book_path(book), 
-              class: "mt-auto px-4 py-2 bg-green-600 text-white text-center rounded-md hover:bg-green-700 transition-colors duration-200" %>
+        <div style="text-align: center; margin-top: 10px;">
+          <%= link_to "詳細", book['info_link'], target: "_blank", class: "btn btn-primary" %>
         </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
 
-<div class="my-4 flex justify-center">
-  <%= paginate @books %>
-</div>
+  <div style="text-align: center; margin-top: 20px;">
+    <%= paginate @books %>
+  </div>
+<% elsif params[:search_term] %>
+  <p>検索結果がありません。</p>
+<% end %>

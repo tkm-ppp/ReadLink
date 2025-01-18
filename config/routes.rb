@@ -1,11 +1,7 @@
 Rails.application.routes.draw do
   root to: "homes#top"
 
-  resources :books, only: %i[create show], shallow: true do
-    collection do
-      get :search
-    end
-  end
+  get 'books/search', to: 'books#search', as: 'search_books'
 
   get "book_authors/create"
   get "book_authors/destroy"

@@ -21,7 +21,7 @@ class Kokkaitosyokanapi
       idx: start_index, # 取得開始位置
     }.compact
 
-    response = ndl_get('/api/opensearch', qu  ery)
+    response = ndl_get('/api/opensearch', query)
     parse_response(response.body) if response
   end
 

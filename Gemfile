@@ -69,9 +69,6 @@ gem 'addressable'
 # ActiveModelのattributeメソッドに渡すことができる正しい型のオブジェクトが作成できる
 gem 'dry-types'
 
-# 堅牢で効率的なキャッシュ機構を実装するため
-gem 'redis'
-
 # 様々なドキュメント形式のサポート: XML、HTML、XHTMLなど、様々なドキュメント形式をパースするため
 gem 'nokogiri'
 
