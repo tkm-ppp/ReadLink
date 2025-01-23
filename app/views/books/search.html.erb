@@ -1,25 +1,21 @@
 <% if @books.present? %>
-  <h2>検索結果</h2>
-  <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+  <h2>検索結果: <%= params[:search_term] %></h2>
+  <div class="book-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <% @books.each do |book| %>
-      <div style="border: 1px solid #ddd; border-radius: 5px; padding: 10px; margin: 10px; width: calc(30% - 20px);">
-        <h3><%= book['title'] %></h3>
-        <p><strong>著者:</strong> <%= book['author'] %></p>
-        <div style="text-align: center;">
-          <% if book['image_link'] %>
-            <%= link_to image_tag(book['image_link'], alt: book['title'], width: 100), book['info_link'], target: "_blank" %>
-          <% end %>
-        </div>
-        <div style="text-align: center; margin-top: 10px;">
-          <%= link_to "詳細", book['info_link'], target: "_blank", class: "btn btn-primary" %>
+      <div class="book-item flex items-center border p-4">
+        <% if book['image_link'] %>
+          <div class="mr-4">
+            <%= link_to image_tag(book['image_link'], alt: book['title'], class: "w-24 h-32 object-cover"), book['info_link'], target: "_blank" %>
+          </div>
+        <% end %>
+        <div>
+          <h3 class="text-lg font-semibold"><%= book['title'] %></h3>
+          <p class="text-gray-600"><%= book['author'] %></p>
         </div>
       </div>
     <% end %>
   </div>
-
-  <div style="text-align: center; margin-top: 20px;">
-    <%= paginate @books %>
-  </div>
+  <%= paginate @books %>
 <% elsif params[:search_term] %>
   <p>検索結果がありません。</p>
 <% end %>

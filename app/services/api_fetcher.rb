@@ -10,7 +10,10 @@ class ApiFetcher
 
   def self.fetch_data(search_term)
     uri = URI(OPENSEARCH_API_URL)
-    uri.query = URI.encode_www_form(title: search_term)
+    uri.query = URI.encode_www_form(
+      title: search_term,
+      
+    )
     response = Net::HTTP.get(uri)
     
     doc = Nokogiri::XML(response)

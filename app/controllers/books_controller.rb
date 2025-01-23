@@ -3,6 +3,7 @@ class BooksController < ApplicationController
     if params[:search_term].present?
       @books = ApiFetcher.fetch_data(params[:search_term])
       if @books.present?
+        @books = @books.uniq { |book| book[:title] }.sort_by { |book| book[:title] }
         @books = Kaminari.paginate_array(@books).page(params[:page]).per(20)
       else
         @books = Kaminari.paginate_array([]).page(params[:page]).per(20)

@@ -37,4 +37,4 @@ services:
 volumes:
   bundle_data:
   postgresql_data:
-  node_modules:
+  node_modules:sudo systemctl status postgresql.service
