@@ -1,16 +1,50 @@
-class CarilApi
-  include HTTParty
-  base_uri 'https://api.calil.jp'
+require 'net/http'
+require 'json'
 
-  def initialize(api_key)
-    @api_key = api_key
-  end
+endpoint = "https://api.calil.jp/library"
 
-  def search_books(keyword)
-    self.class.get("/book/search", query: { appkey: @api_key, keyword: keyword })
-  end
+params = {
+  appkey: "7c854f40b6a4274618da08219f6c60e0",
+  pref: "東京都",
+  city: "渋谷区",
+  format: "json",
+  limit: "5"
+}
 
-  def check_availability(isbn)
-    self.class.get("/book/availability", query: { appkey: @api_key, isbn: isbn })
+uri = URI(endpoint)
+uri.query = URI.encode_www_form(params)
+
+response = Net::HTTP.get(uri)
+
+# レスポンスをUTF-8に変換
+response = response.force_encoding('UTF-8')
+
+puts response  # レスポンスを表示して確認
+
+# JSONP形式のレスポンスの場合、コールバックを削除
+if response.start_with?('callback(')
+  rjson = response.sub(/^callback\((.*)\);$/, '{\1}')
+else
+  rjson = response  # そのままレスポンスを使用
+end
+
+# JSONをパース
+begin
+  data = JSON.parse(rjson)
+rescue JSON::ParserError => e
+  puts "JSONの解析エラー: #{e.message}"
+  puts "レスポンス: #{response}"
+  exit 1
+end
+
+# データを出力
+if data.is_a?(Array)  # dataが配列であることを確認
+  data.each do |library|
+    puts library["formal"]
+    puts library["url_pc"]
+    puts library["address"]
+    puts "----------------------"
   end
+else
+  puts "データが配列ではありません: #{data.inspect}"
 end

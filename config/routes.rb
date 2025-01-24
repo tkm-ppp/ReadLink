@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  get 'libraries/index'
   root to: "homes#top"
 
   get 'books/search', to: 'books#search', as: 'search_books'
+
+  resources :libraries, only: [:index]
 
   get "book_authors/create"
   get "book_authors/destroy"
