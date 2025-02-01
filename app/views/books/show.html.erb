@@ -26,7 +26,8 @@
   <% elsif @isbn.present? && !flash.alert %>
     <p>書籍詳細情報が見つかりませんでした。</p>
   <% end %>
-
+  
+  
   <% if @availability_results.present? && !@availability_results[:error] && @availability_results[@isbn] %>
     <div class="bg-white shadow-md rounded-lg p-4">
       <h2 class="text-xl font-semibold mb-2">大阪府内図書館 貸出状況 (ISBN: <%= @isbn %>)</h2>
