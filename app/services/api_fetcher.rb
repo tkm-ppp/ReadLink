@@ -9,11 +9,12 @@ class ApiFetcher
   CARIL_API_BASE_URL = "https://api.calil.jp/book" 
 
 
-  def self.fetch_data(search_term)
+  def self.fetch_data(search_term, author = nil)
     uri = URI(OPENSEARCH_API_URL)
-    uri.query = URI.encode_www_form(
-      title: search_term,
-    )
+    query_params = { title: search_term } 
+    query_params[:author] = author if author.present?
+
+    uri.query = URI.encode_www_form(query_params) 
     response = Net::HTTP.get(uri)
     doc = Nokogiri::XML(response)
 
@@ -43,7 +44,7 @@ class ApiFetcher
   
   class CurilApiClient
     CARIL_API_BASE_URL = "https://api.calil.jp/check"
-    CARIL_APP_KEY = ENV['CARIL_APP_KEY'] # APIキー (必要な場合)
+    CARIL_APP_KEY = ENV['CARIL_APP_KEY'] 
   
     def self.book_exists?(isbn)
       return false if isbn.blank?

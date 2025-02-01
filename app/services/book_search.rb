@@ -1,5 +1,3 @@
-# app/services/api_fetcher.rb
-
 require 'uri'
 require 'net/http'
 require 'nokogiri'
