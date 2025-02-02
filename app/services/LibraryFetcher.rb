@@ -7,7 +7,6 @@ class LibraryFetcher
   CARIL_API_URL = "https://api.calil.jp/check"
   OPENBD_API_URL = "https://api.openbd.jp/v1/get" # openBD API の URL を追加
 
-
   def self.fetch_book_detail_from_openbd(isbn) # openBD API から書籍詳細情報を取得するメソッド
     uri = URI("#{OPENBD_API_URL}?isbn=#{isbn}")
 
@@ -55,19 +54,18 @@ class LibraryFetcher
   def self.fetch_book_details(isbn)
     appkey = ENV['CALIL_API_KEY']
     prefecture_system_ids = [
-  'Osaka_Osaka', 'Osaka_Sakai', 'Osaka_Kishiwada', 'Osaka_Toyonaka', 
-  'Osaka_Ikeda', 'Osaka_Suita', 'Osaka_IzumiOtsu', 'Osaka_Takatsuki', 
-  'Osaka_Kaizuka', 'Osaka_Moriguchi', 'Osaka_Hirakata', 'Osaka_Ibaraki', 
-  'Osaka_Yao', 'Osaka_IzumiSano', 'Osaka_Tondabayashi', 'Osaka_Neyagawa', 
-  'Osaka_Kawachinagano', 'Osaka_Matsubara', 'Osaka_Daito', 'Osaka_Izumi', 
-  'Osaka_Minoh', 'Osaka_Kashiwara', 'Osaka_Habikino', 'Osaka_Kadoma', 
-  'Osaka_Setsuto', 'Osaka_Takaishi', 'Osaka_Fujidera', 'Osaka_Higashiosaka', 
-  'Osaka_Sennan', 'Osaka_Shirodawate', 'Osaka_Katano', 'Osaka_Osakasayama', 
-  'Osaka_Hannan', 'Osaka_Shimamoto', 'Osaka_Toyono', 'Osaka_Nose', 
-  'Osaka_Tadaoka', 'Osaka_Kumatori', 'Osaka_Tajiri', 'Osaka_Misaki', 
-  'Osaka_Taishi', 'Osaka_Kawachinagano', 'Osaka_Chihayaakasaka'
-]
-
+      'Osaka_Osaka', 'Osaka_Sakai', 'Osaka_Kishiwada', 'Osaka_Toyonaka', 
+      'Osaka_Ikeda', 'Osaka_Suita', 'Osaka_IzumiOtsu', 'Osaka_Takatsuki', 
+      'Osaka_Kaizuka', 'Osaka_Moriguchi', 'Osaka_Hirakata', 'Osaka_Ibaraki', 
+      'Osaka_Yao', 'Osaka_IzumiSano', 'Osaka_Tondabayashi', 'Osaka_Neyagawa', 
+      'Osaka_Kawachinagano', 'Osaka_Matsubara', 'Osaka_Daito', 'Osaka_Izumi', 
+      'Osaka_Minoh', 'Osaka_Kashiwara', 'Osaka_Habikino', 'Osaka_Kadoma', 
+      'Osaka_Setsuto', 'Osaka_Takaishi', 'Osaka_Fujidera', 'Osaka_Higashiosaka', 
+      'Osaka_Sennan', 'Osaka_Shirodawate', 'Osaka_Katano', 'Osaka_Osakasayama', 
+      'Osaka_Hannan', 'Osaka_Shimamoto', 'Osaka_Toyono', 'Osaka_Nose', 
+      'Osaka_Tadaoka', 'Osaka_Kumatori', 'Osaka_Tajiri', 'Osaka_Misaki', 
+      'Osaka_Taishi', 'Osaka_Kawachinagano', 'Osaka_Chihayaakasaka'
+    ]
 
     Rails.logger.debug "APIキー (先頭5文字): #{appkey.to_s[0..4]}... (デバッグのため先頭5文字のみ表示)" if appkey.present? # APIキーが読み込めているか確認 (先頭5文字のみログ出力)
 
@@ -87,28 +85,24 @@ class LibraryFetcher
 
     loop do 
       begin
-
         response = Net::HTTP.get_response(uri)
 
-        Rails.logger.debug "Response Class:
+        Rails.logger.debug "Response Class: #{response.class}"
 
         # レスポンスが Net::HTTPResponse オブジェクトであることを確認
         unless response.is_a?(Net::HTTPResponse)
-          Rails.logger.error "Unexpected response type:
+          Rails.logger.error "Unexpected response type: #{response.class}"
           Rails.logger.error "Response Body (possibly error message): #{response.body}" if response.respond_to?(:body)
           return { error: "APIリクエストで予期せぬレスポンスを受け取りました" }
         end
 
-
         Rails.logger.debug "Response Status Code: #{response.code}" 
-
 
         unless response.is_a?(Net::HTTPSuccess)
           Rails.logger.error "HTTP Error Response: #{response.code} #{response.message}"
           Rails.logger.error "Response Body: #{response.body}"
           return { error: "APIリクエストエラー: HTTPステータスコード #{response.code}" }
         end
-
 
         json_response = response.body
         Rails.logger.debug "Response Body (JSONP before conversion): #{json_response}" # JSONP形式のレスポンスをログ出力
@@ -161,21 +155,4 @@ class LibraryFetcher
       formatted_results[isbn] = {}
 
       library_info.each do |systemid, details| # systemid のループ
-        formatted_results[isbn][systemid] = { # systemid をキーにする
-          status: details['status'],
-          reserveurl: details['reserveurl'],
-          libraries: {} # libraries をハッシュで初期化
-        }
-        if details['libkey']
-          details['libkey'].each do |lib_name, status|
-            formatted_results[isbn][systemid][:libraries][lib_name] = status # 図書館名をキー、状態を値
-          end
-        end
-      end
-    else
-      formatted_results = { error: "書籍情報が見つかりませんでした。" }
-    end
-    Rails.logger.debug "Formatted Results: #{formatted_results.inspect}" # 整形後の結果をログ出力
-    formatted_results
-  end
-end
+        formatted_results[
