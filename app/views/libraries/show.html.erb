@@ -11,6 +11,7 @@
     <dt class="font-medium">住所</dt><dd><%= @library_detail['address'] %></dd>
     <dt class="font-medium">電話番号</dt><dd><%= @library_detail['tel'] %></dd>
     <dt class="font-medium">郵便番号</dt><dd><%= @library_detail['post'] %></dd>
+    <p class="mb-2">開館時間: <%= @library_detail['open_time'] %></p>
     <dt class="font-medium">URL</dt><dd><% if @library_detail['url_pc'].present? %><%= link_to @library_detail['url_pc'], @library_detail['url_pc'], target: '_blank' %><% else %>-<% end %></dd>
     <dt class="font-medium">都道府県</dt><dd><%= @library_detail['pref'] %></dd>
     <dt class="font-medium">市区町村</dt><dd><%= @library_detail['city'] %></dd>

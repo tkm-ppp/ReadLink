@@ -14,7 +14,7 @@
           <ul>
             <% libraries.each do |library| %>
               <li class="mb-1 hover:bg-gray-100 rounded-md px-2 py-1">
-                <%= link_to library["formal"], library_path(systemid: library["systemid"], libkey: library["libkey"]), class: "block" %>
+                <%= link_to library["formal"], library_detail_path(geocode: library["geocode"]), class: "block" %>
               </li>
             <% end %>
           </ul>

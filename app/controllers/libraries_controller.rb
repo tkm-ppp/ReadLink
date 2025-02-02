@@ -3,46 +3,53 @@ require 'json'
 
 class LibrariesController < ApplicationController
   def show
-    @library_id = params[:library_id] # 図書館IDをパラメータから取得
-    @library_detail = fetch_library_detail(@library_id) # 図書館詳細情報を取得
+    @geocode = params[:geocode] # geocode パラメータを取得
+    @library_detail = fetch_library_detail(@geocode) # geocode を渡す
+
+    Rails.logger.debug("取得したパラメータ (geocode): #{@geocode}")
+    Rails.logger.debug("表示するデータ: #{@library_detail}")
 
     if @library_detail.nil?
-      flash.now[:alert] = "図書館情報が見つかりませんでした。" 
+      flash.now[:alert] = "図書館情報が見つかりませんでした。geocode: #{@geocode}" # geocode をログに出力
     end
   end
 
-  private
-
-  def fetch_library_detail(library_id) # 図書館詳細情報を取得するメソッド
+  def fetch_library_detail(geocode)
     endpoint = "https://api.calil.jp/library"
     params = {
-      appkey: "	7c854f40b6a4274618da08219f6c60e0",
-      libid: library_id, 
+      appkey: ENV['CALIL_API_KEY'],
+      geocode: geocode,
+      limit: 1,
       format: "json",
     }
 
     uri = URI(endpoint)
     uri.query = URI.encode_www_form(params)
 
-    response = Net::HTTP.get(uri)
-    response = response.force_encoding('UTF-8')
+    Rails.logger.debug("APIリクエスト (fetch_library_detail): #{params}")
 
-    if response.start_with?('callback(') && response.end_with?(');')
-      rjson = response.delete_prefix('callback(').delete_suffix(');')
+    response = Net::HTTP.get_response(uri)
+    response_body_utf8 = response.body.force_encoding('UTF-8')
+
+    Rails.logger.debug("APIレスポンス (fetch_library_detail): #{response_body_utf8}")
+
+    if response_body_utf8.start_with?('callback(') && response_body_utf8.end_with?(');')
+      rjson = response_body_utf8.delete_prefix('callback(').delete_suffix(');')
     else
-      rjson = response
+      rjson = response_body_utf8
     end
-
+  
     begin
       libraries_data = JSON.parse(rjson)
+      Rails.logger.debug("JSON解析結果: #{libraries_data}")
       if libraries_data.is_a?(Array) && libraries_data.any?
         return libraries_data.first # 詳細情報は配列の最初の要素に入っているから
       else
-        return nil 
+        return nil
       end
     rescue JSON::ParserError => e
-      Rails.logger.error("JSONの解析エラー: #{e.message} - 図書館ID: #{library_id}")
-      return nil 
+      Rails.logger.error("JSONの解析エラー: #{e.message} - geocode: #{geocode}")
+      return nil
     end
   end
 end
