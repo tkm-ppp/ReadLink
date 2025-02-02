@@ -30,30 +30,30 @@ class LibraryFetcher
 
       # 必要な情報を抽出 (openBD API のレスポンス構造に合わせて調整)
       detail = book_info['summary'] || {} # summary が nil の場合を考慮
-      cover_url = book_info['cover'] # cover URL を取得
+      cover_url = book_info['cover']
 
       book = {
         title: detail['title'],
         author: detail['author'],
         publisher: detail['publisher'],
         isbn: detail['isbn'],
-        cover_url: cover_url # カバーURLを追加
+        cover_url: cover_url
       }
-      book # 書籍情報を返す
+      book
 
     rescue JSON::ParserError => json_error
       Rails.logger.error "OpenBD JSON Parse Error: #{json_error.message}"
       Rails.logger.error "Failed JSON Response Body: #{json_response}"
-      nil # JSON パースエラー時は nil を返す
+      nil
 
     rescue => e
       Rails.logger.error "Error fetching book detail from OpenBD for ISBN #{isbn}: #{e.message}"
-      nil # その他のエラー発生時も nil を返す
+      nil
     end
   end
 
-  def self.fetch_book_details(isbn) # メソッド名を変更、systemid を固定、appkey を環境変数から取得
-    appkey = ENV['CALIL_API_KEY'] # 環境変数からAPIキーを取得
+  def self.fetch_book_details(isbn)
+    appkey = ENV['CALIL_API_KEY']
     prefecture_system_ids = [
   'Osaka_Osaka', 'Osaka_Sakai', 'Osaka_Kishiwada', 'Osaka_Toyonaka', 
   'Osaka_Ikeda', 'Osaka_Suita', 'Osaka_IzumiOtsu', 'Osaka_Takatsuki', 
@@ -81,28 +81,28 @@ class LibraryFetcher
     uri = URI(CARIL_API_URL)
     uri.query = URI.encode_www_form(params)
 
-    Rails.logger.debug "Request URL: #{uri.to_s}" # リクエストURLをログ出力
+    Rails.logger.debug "Request URL: #{uri.to_s}" 
 
-    session = nil # セッションIDを保持する変数
+    session = nil
 
-    loop do # continue が 1 の間リトライ
+    loop do 
       begin
-        # Net::HTTP.get_response を使用するように変更
+
         response = Net::HTTP.get_response(uri)
 
-        Rails.logger.debug "Response Class: #{response.class.name}" # レスポンスのクラス名をログ出力
+        Rails.logger.debug "Response Class:
 
         # レスポンスが Net::HTTPResponse オブジェクトであることを確認
         unless response.is_a?(Net::HTTPResponse)
-          Rails.logger.error "Unexpected response type: #{response.class.name}"
+          Rails.logger.error "Unexpected response type:
           Rails.logger.error "Response Body (possibly error message): #{response.body}" if response.respond_to?(:body)
           return { error: "APIリクエストで予期せぬレスポンスを受け取りました" }
         end
 
 
-        Rails.logger.debug "Response Status Code: #{response.code}" # HTTPステータスコードをログ出力
+        Rails.logger.debug "Response Status Code: #{response.code}" 
 
-        # HTTPステータスコードが 2xx (成功) 以外の場合はエラーとする
+
         unless response.is_a?(Net::HTTPSuccess)
           Rails.logger.error "HTTP Error Response: #{response.code} #{response.message}"
           Rails.logger.error "Response Body: #{response.body}"

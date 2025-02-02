@@ -1,26 +1,39 @@
-<div class="container mx-auto p-4">
-  <h1 class="text-2xl font-bold mb-4"><%= @pref_name %> の図書館リスト</h1>
-   <% if flash[:alert] %>
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <span class="block sm:inline"><%= flash[:alert] %></span>
-      </div>
-    <% end %>
-   <% if @city_library_lists.present? %>
-    <div class="space-y-4">
-       <% @city_library_lists.each do |city_name, libraries| %>
+<div class="container mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-6 text-gray-800"><%= @pref_name %> の図書館リスト</h1>
+
+  <% if flash[:alert] %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+      <strong class="font-bold">エラー！</strong>
+      <span class="block sm:inline"><%= flash[:alert] %></span>
+    </div>
+  <% end %>
+
+  <% if @city_library_lists.present? %>
+    <div class="space-y-6">
+      <% @city_library_lists.each do |city_name, libraries| %>
         <% if libraries.present? %>
-        <div class="bg-white rounded-lg shadow-md p-4">
-          <h2 class="text-xl font-semibold mb-2"><%= city_name %></h2>
-          <ul>
-            <% libraries.each do |library| %>
-              <li class="mb-1 hover:bg-gray-100 rounded-md px-2 py-1">
-                <%= link_to library["formal"], library_detail_path(geocode: library["geocode"]), class: "block" %>
-              </li>
-            <% end %>
-          </ul>
-         </div>
+          <section class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="px-6 py-3 bg-gray-100 border-b border-gray-200">
+              <h2 class="text-xl font-semibold text-gray-700"><%= city_name %></h2>
+            </div>
+            <ul class="divide-y divide-gray-200">
+              <% libraries.each do |library| %>
+                <li class="px-6 py-4 hover:bg-gray-50 transition-colors duration-150">
+                  <%= link_to library["formal"], library_detail_path(geocode: library["geocode"]), class: "block text-blue-500 hover:underline" %>
+                </li>
+              <% end %>
+            </ul>
+          </section>
         <% end %>
       <% end %>
     </div>
-   <% end %>
+  <% else %>
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md" role="alert">
+      <p>図書館情報が見つかりませんでした。</p>
+    </div>
+  <% end %>
+
+  <div class="mt-8">
+    <%= link_to "都道府県選択画面に戻る", regions_path, class: "inline-block bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded" %>
+  </div>
 </div>
