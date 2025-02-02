@@ -22,12 +22,9 @@ class LibraryFetcher
       json_response = response.body
       books_data = JSON.parse(json_response)
 
-      # openBD API は ISBN に該当する書籍が見つからない場合も空配列を返すので、nil チェックは不要
-
       book_info = books_data.first # 配列の最初の要素を取得 (通常は1件のはず)
       return nil if book_info.nil? # 書籍情報が nil の場合は nil を返す
 
-      # 必要な情報を抽出 (openBD API のレスポンス構造に合わせて調整)
       detail = book_info['summary'] || {} # summary が nil の場合を考慮
       cover_url = book_info['cover']
 
@@ -67,8 +64,6 @@ class LibraryFetcher
       'Osaka_Taishi', 'Osaka_Kawachinagano', 'Osaka_Chihayaakasaka'
     ]
 
-    Rails.logger.debug "APIキー (先頭5文字): #{appkey.to_s[0..4]}... (デバッグのため先頭5文字のみ表示)" if appkey.present? # APIキーが読み込めているか確認 (先頭5文字のみログ出力)
-
     params = {
       appkey: appkey,
       isbn: isbn,
@@ -89,7 +84,6 @@ class LibraryFetcher
 
         Rails.logger.debug "Response Class: #{response.class}"
 
-        # レスポンスが Net::HTTPResponse オブジェクトであることを確認
         unless response.is_a?(Net::HTTPResponse)
           Rails.logger.error "Unexpected response type: #{response.class}"
           Rails.logger.error "Response Body (possibly error message): #{response.body}" if response.respond_to?(:body)
@@ -110,7 +104,6 @@ class LibraryFetcher
         # JSONP形式からJSON形式に変換 (callback() が付いている場合)
         if json_response.start_with?('callback(') && json_response.end_with?(');')
           json_response = json_response.delete_prefix('callback(').delete_suffix(');')
-          Rails.logger.debug "Response Body (JSON after conversion): #{json_response}" # 変換後のJSONをログ出力
         end
 
         result = JSON.parse(json_response)
@@ -118,7 +111,6 @@ class LibraryFetcher
 
         if result['continue'] == 1
           session = result['session'] # セッションIDを取得
-          Rails.logger.debug "Continue flag is 1. Session ID: #{session}" # セッションIDをログ出力
           sleep 1 # 1秒待機 (APIの推奨に従う)
           # 2回目以降のリクエストは session ID を付与
           params_with_session = {
@@ -127,16 +119,13 @@ class LibraryFetcher
             format: 'json'
           }
           uri.query = URI.encode_www_form(params_with_session) # URIを更新
-          Rails.logger.debug "Retry Request URL (with session): #{uri.to_s}" # リトライ時のリクエストURLをログ出力
           next # ループを継続
         else
-          Rails.logger.debug "Continue flag is 0. Final Result processing." # continue=0 の場合のログ
           return format_availability_results(result) # 結果を整形して返す
         end
 
       rescue JSON::ParserError => json_error
         Rails.logger.error "JSON Parse Error: #{json_error.message}" # JSONパースエラーをログ出力
-        Rails.logger.error "Failed JSON Response Body: #{json_response}" # パースに失敗したJSONレスポンスをログ出力
         return { error: "レスポンスのJSONパースに失敗しました" } # JSONパースエラーの情報を返す
 
       rescue => e
@@ -149,10 +138,28 @@ class LibraryFetcher
   def self.format_availability_results(result) # 結果を整形するメソッド
     formatted_results = {} # 返却するハッシュ
 
-    if result['books'] && result['books'].key?(result['books'].keys.first) # ISBNでキーアクセスするように修正
+    if result['books'] && result['books'].key?(result['books'].keys.first) 
       isbn = result['books'].keys.first # ISBNを取得
       library_info = result['books'][isbn]
       formatted_results[isbn] = {}
 
       library_info.each do |systemid, details| # systemid のループ
-        formatted_results[
+        formatted_results[isbn][systemid] = { # systemid をキーにする
+          status: details['status'],
+          reserveurl: details['reserveurl'],
+          libraries: {} # libraries をハッシュで初期化
+        }
+        if details['libkey']
+          details['libkey'].each do |lib_name, status|
+            formatted_results[isbn][systemid][:libraries][lib_name] = status # 図書館名をキー、状態を値
+          end
+        end
+      end
+    else
+      formatted_results = { error: "書籍情報が見つかりませんでした。" }
+    end
+    
+    Rails.logger.debug "Formatted Results: #{formatted_results.inspect}" # 整形後の結果をログ出力
+    formatted_results
+  end
+end
