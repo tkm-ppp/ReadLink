@@ -6,7 +6,7 @@ require 'json' # JSONパーサーを追加
 class ApiFetcher
   OPENSEARCH_API_URL = "https://ndlsearch.ndl.go.jp/api/opensearch"
   COVER_API_BASE_URL = "https://ndlsearch.ndl.go.jp/thumbnail"
-  CARIL_API_BASE_URL = "https://api.calil.jp/book" 
+  CARIL_API_BASE_URL = "https://api.calil.jp/book"
 
 
   def self.fetch_data(search_term)
@@ -14,16 +14,32 @@ class ApiFetcher
     uri.query = URI.encode_www_form(
       title: search_term,
     )
-    response = Net::HTTP.get(uri)
-    doc = Nokogiri::XML(response)
+    response = Net::HTTP.get_response(uri)
+    response_body_utf8 = response.body.force_encoding('UTF-8')
 
+    puts "レスポンスコード: #{response.code}" # レスポンスコードを確認
+    puts "レスポンスボディ: #{response_body_utf8}" # レスポンスボディを確認
+
+    doc = Nokogiri::XML(response_body_utf8)
     items = doc.xpath('/rss/channel/item')
     filtered_items = []
 
-    items.each do |item|
-      book_info = parse_ndl_item(item)
-      if CurilApiClient.book_exists?(book_info[:isbn]) # カーリルAPIで存在確認
-        filtered_items << book_info
+    # 検索結果が存在しない場合の処理
+    if doc.at_xpath('/rss/channel/openSearch:totalResults').text.to_i == 0
+      puts "検索結果が見つかりませんでした。"
+    else
+      items.each do |item|
+        categories = item.xpath('category')
+        if categories.any? { |category| category.content == '図書' }
+          title = item.at_xpath('title')&.content
+          author = item.at_xpath('author')&.content
+          if title && title.include?(search_term) || author && author.include?(search_term)
+            book_info = parse_ndl_item(item)
+            if book_info[:isbn].present? && CurilApiClient.book_exists?(book_info[:isbn]) # カーリルAPIで存在確認
+              filtered_items << book_info
+            end
+          end
+        end
       end
     end
     filtered_items
