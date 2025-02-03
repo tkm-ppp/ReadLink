@@ -329,6 +329,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   capybara
+  concurrent-ruby
   debug
   devise (= 4.9.4)
   devise-i18n
