@@ -28,39 +28,34 @@
   <% end %>
 
 
-  <% if @availability_results.present? && !@availability_results[:error] && @availability_results[@isbn] %>
-    <div class="bg-white shadow-md rounded-lg p-4">
-      <h2 class="text-xl font-semibold mb-2">大阪府内図書館 貸出状況 (ISBN: <%= @isbn %>)</h2>
-      <% @availability_results[@isbn].each do |systemid, system_info| %>
-        <div class="mb-6 p-4 border rounded-lg">
-          <div class="flex justify-between items-center mb-2">
-            <h3 class="text-lg font-semibold"><%= systemid_display_name(systemid) %></h3>
-          </div>
-          <div class="grid grid-cols-4 gap-2"> <%# grid layout for library branches %>
-            <% if system_info[:libraries].present? %>
-              <% system_info[:libraries].each do |lib_name, status| %>
-                <div class="flex flex-col items-center justify-center p-2 border rounded-md shadow-sm">
-                  <%= link_to library_display_name(lib_name), library_path(systemid: systemid, libkey: lib_name), class: "text-sm text-center text-blue-500 underline" %>
-                  <span class="text-xs text-gray-700"><%= status %></span>
-                </div>
-              <% end %>
+ <% @availability_results[@isbn].each do |systemid, system_info| %>
+  <div class="mb-6 p-4 border rounded-lg">
+    <div class="flex justify-between items-center mb-2">
+      <h3 class="text-lg font-semibold"><%= systemid_display_name(systemid) %></h3>
+    </div>
+    <div class="grid grid-cols-4 gap-2"> <%# grid layout for library branches %>
+      <% if system_info[:libraries].present? %>
+        <% system_info[:libraries].each do |lib_name, status| %>
+          <% # ここで各図書館の詳細情報を取得 (system_info[:libraries][lib_name] にgeocodeが含まれていると仮定) %>
+          <% library_detail = system_info[:libraries][lib_name] %> <%# 仮の修正: library_detail に図書館情報を代入 %>
+          <div class="flex flex-col items-center justify-center p-2 border rounded-md shadow-sm">
+            <% if library_detail.present? && library_detail["geocode"].present? %> <%# library_detail と geocode の存在を確認 %>
+              <%= link_to library_display_name(lib_name), library_detail_path(geocode: library_detail["geocode"]), class: "text-sm text-center text-blue-500 underline" %>
             <% else %>
-              <p>蔵書なし</p>
+              <%= library_display_name(lib_name) %> <%# geocode がない場合はリンクなしで図書館名のみ表示 %>
             <% end %>
+            <span class="text-xs text-gray-700"><%= status %></span>
           </div>
-          <% if system_info[:reserveurl].present? %>
-            <div class="mt-4 text-center">
-              <a href="<%= system_info[:reserveurl] %>" target="_blank" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 inline-block">予約する</a>
-            </div>
-          <% end %>
-        </div>
+        <% end %>
+      <% else %>
+        <p>蔵書なし</p>
       <% end %>
     </div>
-  <% elsif @isbn.present? && !flash.alert && !@book.present? %>
-    <p>大阪府内の図書館で書籍情報が見つかりませんでした。</p>
-  <% end %>
-
-  <% if @isbn.blank? %>
-    <p>ISBN を指定して書籍の貸出状況を確認してください (例: /books/9784041095989)</p>
-  <% end %>
+    <% if system_info[:reserveurl].present? %>
+      <div class="mt-4 text-center">
+        <a href="<%= system_info[:reserveurl] %>" target="_blank" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 inline-block">予約する</a>
+      </div>
+    <% end %>
+  </div>
+<% end %>
 </div>
