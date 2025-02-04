@@ -6,7 +6,7 @@ require 'logger'
 
 Dotenv.load(File.expand_path('../../../.env', __FILE__))
 
-class BooksSearch
+class BookSearch
   GOOGLE_BOOKS_API_KEYS = ENV['GOOGLE_BOOKS_API_KEYS']&.split(',') || [] # 環境変数からAPIキーを取得 (カンマ区切り)
   GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes"
   MAX_RESULTS_PER_PAGE = 40 # Google Books API の最大取得件数 (40件)
