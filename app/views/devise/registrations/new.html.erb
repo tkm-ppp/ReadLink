@@ -8,7 +8,7 @@
     <%= render "devise/shared/error_messages", resource: resource %>
 
     <div class="field mb-4">
-      <%= f.label :name, "User Name", class: "block text-lg font-medium text-gray-700" %>
+      <%= f.label :name, "ユーザー名", class: "block text-lg font-medium text-gray-700" %>
       <%= f.text_field :name, autofocus: true, class: "w-full p-2 border border-gray-300 rounded" %>
     </div>
 
@@ -17,35 +17,25 @@
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 focus:border-blue-500 p-2" %>
     </div>
 
-    <div class="mt-4 md:mt-8">
-          <%= f.label :password, t('devise.registrations.new.password'), class: 'block mb-2 text-sm md:text-lg text-nowrap font-medium text-primary' %>
-          <%= f.password_field :password, class: 'bg-white border border-gray-300 text-sm w-full rounded-lg focus:ring-primary focus:border-primary block p-2 md:p-3.5', placeholder:t('devise.registrations.new.password_placehold er'), required: true, autocomplete: "new-password", id: "password_field" %>
-          <div class="mt-2">
-            <%= check_box_tag 'show_password', '1', false, onclick: 'togglePasswordVisibility()' %>
-            <%= label_tag 'show_password', t('devise.registrations.new.show_password') %>
-          </div>
-        </div>
+    <div class="mb-4">
+      <%= f.label :password, "パスワード", class: "block text-lg font-medium text-gray-700" %>
+      <% if @minimum_password_length %>
+        <em class="text-gray-700">（<%= @minimum_password_length %> 文字以上）</em>
+      <% end %>
+      <%= f.password_field :password, autocomplete: "new-password", class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 focus:border-blue-500 p-2" %>
+    </div>
 
-    <div class="mt-4 md:mt-8">
-          <%= f.label :password, t('devise.registrations.new.password'), class: 'block mb-2 text-sm md:text-lg text-nowrap font-medium text-primary' %>
-          <%= f.password_field :password, class: 'bg-white border border-gray-300 text-sm w-full rounded-lg focus:ring-primary focus:border-primary block p-2 md:p-3.5', placeholder: t('devise.registrations.new.password_placeholder'), required: true, autocomplete: "new-password", id: "password_field" %>
-          <div class="mt-2">
-            <%= check_box_tag 'show_password', '1', false, onclick: 'togglePasswordVisibility()' %>
-            <%= label_tag 'show_password', t('devise.registrations.new.show_password') %>
-          </div>
-        </div>
-
-    <div class="field">
-        <%= f.label :avater %><br />
-        <%= f.file_field :avater, class: "my-2"%><br>
+    <div class="mb-4">
+      <%= f.label :password_confirmation, "パスワード確認", class: "block text-lg font-medium text-gray-700" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 focus:border-blue-500 p-2" %>
     </div>
 
     <div class="flex items-center justify-between">
       <%= f.submit "新規登録", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
     </div>
 
-
-
+    <div class="mt-4">
+    <%= link_to "ログイン", new_user_session_path, class: "bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600", data: { turbo_frame: "_top" } %>
+  </div>
   <% end %>
 </div>
-
