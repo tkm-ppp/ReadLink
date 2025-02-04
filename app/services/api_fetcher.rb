@@ -35,9 +35,7 @@ class ApiFetcher
           author = item.at_xpath('author')&.content
           if title && title.include?(search_term) || author && author.include?(search_term)
             book_info = parse_ndl_item(item)
-            if book_info[:isbn].present? && CurilApiClient.book_exists?(book_info[:isbn]) # カーリルAPIで存在確認
-              filtered_items << book_info
-            end
+            filtered_items << book_info
           end
         end
       end
@@ -61,45 +59,10 @@ class ApiFetcher
     CARIL_API_BASE_URL = "https://api.calil.jp/check"
     CARIL_APP_KEY = ENV['CARIL_APP_KEY'] # APIキー (必要な場合)
   
+    # カーリルAPIでのISBN存在確認は行わないため、このメソッドは使用されません。
     def self.book_exists?(isbn)
-      return false if isbn.blank?
-  
-      uri = URI(CARIL_API_BASE_URL)
-      uri.query = URI.encode_www_form(
-        appkey: CARIL_APP_KEY,
-        isbn: isbn,
-        format: 'jsonp', 
-        callback: 'callback' # コールバック関数名 (固定値)
-      )
-  
-      response = Net::HTTP.get_response(uri)
-  
-      case response
-      when Net::HTTPSuccess
-        json_response_string = response.body
-        if json_response_string.start_with?('callback(') && json_response_string.end_with?(');')
-          json_string = json_response_string.delete_prefix('callback(').delete_suffix(');')
-          Rails.logger.debug "Response Body (JSON after conversion): #{json_string}"
-          begin
-            json_response = JSON.parse(json_string)
-            # 存在判定ロジックを修正: レスポンスが空でなければ存在するとみなす (仮実装)
-            return json_response.present? && json_response.any? 
-          rescue JSON::ParserError => e
-            Rails.logger.error "JSONパースエラー (JSONP変換後): #{e.message}"
-            return false
-          end
-        else
-          Rails.logger.warn "JSONP形式のレスポンスではありません: #{json_response_string}"
-          return false
-        end
-  
-      else
-        Rails.logger.error "カーリルAPIエラー: #{response.code} #{response.message}"
-        false
-      end
-    rescue => e
-      Rails.logger.error "カーリルAPIリクエストエラー: #{e.message}"
-      false
+      # ここで何もしない
+      true
     end
   end
 end

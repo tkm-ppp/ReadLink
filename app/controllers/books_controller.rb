@@ -1,4 +1,4 @@
-require_relative '../services/book_search'
+# app/controllers/books_controller.rb
 require_relative '../services/data_processor'
 require 'kaminari/core'
 require 'kaminari/activerecord'
@@ -9,16 +9,6 @@ class BooksController < ApplicationController
     if params[:search_term].present?
       @books = ApiFetcher.fetch_data(params[:search_term])
       return render(status: :bad_request) if @books.blank? # 検索結果が空の場合はBadRequestを返す
-
-      # 必要な情報のみを抽出
-      @books = @books.map do |book|
-        {
-          title: book[:title],
-          author: book[:author],
-          image_link: book[:image_link],
-          isbn: book[:isbn]
-        }
-      end.select { |book| book[:isbn].present? }
 
       @books = Kaminari.paginate_array(@books).page(params[:page]).per(20)
 
