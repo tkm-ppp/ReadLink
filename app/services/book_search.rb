@@ -1,7 +1,7 @@
 require 'uri'
 require 'net/http'
 require 'json'
-require 'dotenv' # 環境変数読み込み用 gem
+require 'dotenv'
 require 'logger'
 
 Dotenv.load(File.expand_path('../../../.env', __FILE__))

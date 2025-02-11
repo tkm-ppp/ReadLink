@@ -18,5 +18,3 @@ Rails.application.routes.draw do
   get 'library_detail', to: 'libraries#show', as: 'library_detail'
 
 end
-
-

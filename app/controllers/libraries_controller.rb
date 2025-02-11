@@ -26,12 +26,11 @@ class LibrariesController < ApplicationController
     uri = URI(endpoint)
     uri.query = URI.encode_www_form(params)
 
-    Rails.logger.debug("APIリクエスト (fetch_library_detail): #{params}")
+
 
     response = Net::HTTP.get_response(uri)
     response_body_utf8 = response.body.force_encoding('UTF-8')
 
-    Rails.logger.debug("APIレスポンス (fetch_library_detail): #{response_body_utf8}")
 
     if response_body_utf8.start_with?('callback(') && response_body_utf8.end_with?(');')
       rjson = response_body_utf8.delete_prefix('callback(').delete_suffix(');')

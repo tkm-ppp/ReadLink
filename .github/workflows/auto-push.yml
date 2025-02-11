@@ -1,0 +1,27 @@
+name: Auto Push
+
+on:
+  schedule:
+    - cron: '50 23 * * *' # 毎日23時50分に実行
+
+jobs:
+  auto-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Update file
+        run: |
+          echo "Updated at $(date)" > update_log.txt
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "${USER_EMAIL}"
+          git config --local user.name "${USER_NAME}"
+          git add .
+          git commit -m "Automated update at $(date)"
+          git push origin main

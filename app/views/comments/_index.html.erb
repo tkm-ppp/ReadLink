@@ -1,0 +1,13 @@
+<div class="mt-6" id="comments-container">
+  <h3 class="font-semibold text-lg text-gray-700 mb-3">コメント</h3>
+  <% if comments.present? %>
+    <% comments.each do |comment| %>
+      <div class="comment border-b pb-2 mb-2">
+        <p class="comment-body"><%= comment.body %></p>
+        <p class="text-gray-500 text-sm">投稿日時: <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <p>まだコメントはありません。</p>
+  <% end %>
+</div>

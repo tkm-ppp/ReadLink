@@ -150,6 +150,11 @@
   resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-7.2.201.tgz#bfb3da01b3e2462f5a18f372c52dedd7de76037f"
   integrity sha512-wsTdWoZ5EfG5k3t7ORdyQF0ZmDEgN4aVPCanHAiNEwCROqibSZMXXmCbH7IDJUVri4FOeAVwwbPINI7HVHPKBw==
 
+"@stimulus-components/content-loader@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@stimulus-components/content-loader/-/content-loader-5.0.0.tgz#93a64e2924dc2e8853ca023d6420f2123d00d816"
+  integrity sha512-5ib9PveLI9VEbUwJQpp76OW9Q1Fc8CY7Yo9iVOPTFScwtUWOQJCnwR836osLzYbEIDEEpCfBsCRcIdn9PBGT8A==
+
 bootstrap@^5.3.3:
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.3.3.tgz#de35e1a765c897ac940021900fcbb831602bac38"

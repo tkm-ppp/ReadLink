@@ -6,8 +6,7 @@ require 'json' # JSONパーサーを追加
 class ApiFetcher
   OPENSEARCH_API_URL = "https://ndlsearch.ndl.go.jp/api/opensearch"
   COVER_API_BASE_URL = "https://ndlsearch.ndl.go.jp/thumbnail"
-  CARIL_API_BASE_URL = "https://api.calil.jp/book"
-
+  OPENBD_API_URL = "https://api.openbd.jp/v1/get" # OpenBD APIのURL
 
   def self.fetch_data(search_term)
     uri = URI(OPENSEARCH_API_URL)
@@ -17,16 +16,13 @@ class ApiFetcher
     response = Net::HTTP.get_response(uri)
     response_body_utf8 = response.body.force_encoding('UTF-8')
 
-    puts "レスポンスコード: #{response.code}" # レスポンスコードを確認
-    puts "レスポンスボディ: #{response_body_utf8}" # レスポンスボディを確認
-
     doc = Nokogiri::XML(response_body_utf8)
     items = doc.xpath('/rss/channel/item')
     filtered_items = []
 
     # 検索結果が存在しない場合の処理
     if doc.at_xpath('/rss/channel/openSearch:totalResults').text.to_i == 0
-      puts "検索結果が見つかりませんでした。"
+      puts "NDL Search API: 検索結果が見つかりませんでした。"
     else
       items.each do |item|
         categories = item.xpath('category')
@@ -35,7 +31,9 @@ class ApiFetcher
           author = item.at_xpath('author')&.content
           if title && title.include?(search_term) || author && author.include?(search_term)
             book_info = parse_ndl_item(item)
-            filtered_items << book_info
+            if OpenBdApiClient.book_exists_in_openbd?(book_info[:isbn]) # OpenBD APIで存在確認
+              filtered_items << book_info
+            end
           end
         end
       end
@@ -54,15 +52,30 @@ class ApiFetcher
       image_link: "#{COVER_API_BASE_URL}/#{item.at_xpath('dc:identifier')&.content&.gsub('ISBN:', '')}"
     }
   end
-  
-  class CurilApiClient
-    CARIL_API_BASE_URL = "https://api.calil.jp/check"
-    CARIL_APP_KEY = ENV['CARIL_APP_KEY'] # APIキー (必要な場合)
-  
-    # カーリルAPIでのISBN存在確認は行わないため、このメソッドは使用されません。
-    def self.book_exists?(isbn)
-      # ここで何もしない
-      true
+
+  class OpenBdApiClient # クラス名を変更
+    OPENBD_API_URL = "https://api.openbd.jp/v1/get" # OpenBD APIのURL
+
+    def self.book_exists_in_openbd?(isbn) # メソッド名を変更
+      return false if isbn.blank?
+
+      uri = URI("#{OPENBD_API_URL}?isbn=#{isbn}")
+      response = Net::HTTP.get_response(uri)
+      response_body_utf8 = response.body.force_encoding('UTF-8')
+
+
+      case response
+      when Net::HTTPSuccess
+        json_response = JSON.parse(response_body_utf8)
+        # OpenBD APIのレスポンスが空配列の場合、データが存在しないと判断する
+        return json_response.present? && json_response.any?
+      else
+
+        return false
+      end
+    rescue => e
+
+      return false
     end
   end
 end
