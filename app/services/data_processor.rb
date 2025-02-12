@@ -1,8 +1,8 @@
-require 'csv'
+require "csv"
 
 class DataProcessor
   def self.save_to_csv(data, filename)
-    CSV.open(filename, 'w') do |csv|
+    CSV.open(filename, "w") do |csv|
       csv << data.first.keys
       data.each do |row|
         csv << row.values

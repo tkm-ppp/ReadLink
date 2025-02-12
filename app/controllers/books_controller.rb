@@ -1,5 +1,5 @@
-require_relative '../services/book_search'
-require_relative '../services/data_processor'
+require_relative "../services/book_search"
+require_relative "../services/data_processor"
 
 
 class BooksController < ApplicationController
@@ -19,7 +19,7 @@ class BooksController < ApplicationController
 
 
 
-      csv_filename = Rails.root.join('tmp', "search_results_#{Time.now.to_i}.csv")
+      csv_filename = Rails.root.join("tmp", "search_results_#{Time.now.to_i}.csv")
       DataProcessor.save_to_csv(@books, csv_filename)
       @books = DataProcessor.read_from_csv(csv_filename)
     else

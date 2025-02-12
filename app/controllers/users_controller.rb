@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # before_action :authenticate_user!
-  
+
   # def show
   #   Rails.logger.debug "Parameters: #{params.inspect}"
   #   @user = User.find(params[:id])
