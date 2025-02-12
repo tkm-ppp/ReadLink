@@ -2,7 +2,7 @@ name: Auto Push
 
 on:
   schedule:
-    - cron: '17 16 * * *' # 毎日23時50分に実行
+    - cron: '30 7 * * *' # 毎日16時30分（JST）に実行
 
 jobs:
   auto-push:
