@@ -7,74 +7,57 @@ require "logger"
 Dotenv.load(File.expand_path("../../../.env", __FILE__))
 
 class BookSearch
-  GOOGLE_BOOKS_API_KEYS = ENV["GOOGLE_BOOKS_API_KEYS"]&.split(",") || [] # 環境変数からAPIキーを取得 (カンマ区切り)
-  GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes"
-  MAX_RESULTS_PER_PAGE = 40 # Google Books API の最大取得件数 (40件)
+  RAKUTEN_APPLICATION_ID = ENV["RAKUTEN_APPLICATION_ID"] # 環境変数からアプリケーションIDを取得
+  RAKUTEN_BOOKS_API_URL = "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404" # 楽天Books APIのエンドポイント
+  HITS_PER_PAGE = 30 # 楽天APIの1ページあたり最大取得件数 (30件)
 
   def self.fetch_books(search_term, search_type = :title)
-    puts "GOOGLE_BOOKS_API_KEYS: #{ENV['GOOGLE_BOOKS_API_KEYS'].inspect}" # デバッグ出力: GOOGLE_BOOKS_API_KEYS の値
-    puts "GOOGLE_BOOKS_API_KEYS.empty?: #{GOOGLE_BOOKS_API_KEYS.empty?}" # デバッグ出力: GOOGLE_BOOKS_API_KEYS が空かどうか
-    puts "API Keys Array: #{GOOGLE_BOOKS_API_KEYS.inspect}" # デバッグ出力: APIキー配列の中身
-
-    return [] if GOOGLE_BOOKS_API_KEYS.empty?
+    return [] if RAKUTEN_APPLICATION_ID.nil? || RAKUTEN_APPLICATION_ID.empty? # アプリケーションIDが設定されていない場合は空配列を返す
     puts "fetch_books started with search_term: #{search_term}, search_type: #{search_type}" # デバッグ出力: fetch_books 開始
 
-    return [] if GOOGLE_BOOKS_API_KEYS.empty? # APIキーが設定されていない場合は空配列を返す
-
-    api_key_rotator = ApiKeyRotator.new(GOOGLE_BOOKS_API_KEYS) # APIキーローテーターを初期化
     books = []
-    page_token = nil # ページトークン初期化
+    page = 1 # ページ番号初期化
 
     begin
       loop do # ページネーションループ
-        api_key = api_key_rotator.get_next_key # APIキーをローテーション
-        query = build_query(search_term, search_type, api_key, page_token) # クエリを生成
-
-        puts "API Request URI: #{query}" # デバッグ出力: APIリクエストURI
+        query = build_query(search_term, search_type, RAKUTEN_APPLICATION_ID, page) # クエリを生成
 
         response = fetch_api_response(query) # APIレスポンスを取得
 
         puts "API Response Code: #{response.code}" # デバッグ出力: APIレスポンスコード
 
-          # if response.is_a?(Net::HTTPSuccess) # ← この条件分岐を削除
+        if response.is_a?(Net::HTTPSuccess) # HTTPステータスコードが 2xx の場合のみ処理
           json_response = JSON.parse(response.body)
-          items = json_response["items"] || [] # items が nil の場合を考慮
-
+          items = json_response["Items"] || [] # Items が nil の場合を考慮
+          
           puts "Number of items in response: #{items.count}" # デバッグ出力: レスポンスに含まれるアイテム数
 
-          items.each do |item| # 各書籍アイテムを処理
-            book_info = parse_book_item(item)
+          items.each do |item_data| # 各書籍アイテムを処理
+            book_item = item_data["Item"] # Item 要素を取得
+            book_info = parse_book_item(book_item) # パース処理
             if book_info && !book_info[:isbn].nil? && !book_info[:isbn].empty? && matches_search_term?(book_info, search_term, search_type)
               books << book_info
               puts "Book added: #{book_info[:title]}" # デバッグ出力: 追加された書籍タイトル
             end
           end
 
-          next_page_token = json_response["nextPageToken"] # 次のページトークンを取得
-          if next_page_token.nil? # 次のページがない場合はループを抜ける
-            break
-          else
-            page_token = next_page_token # ページトークンを更新して次のページへ
-            puts "Next Page Token: #{page_token}" # デバッグ出力: 次のページトークン
+          total_count = json_response["count"].to_i # 総ヒット件数を取得
+          if books.count >= total_count || books.count >= 100 # 最大100件まで、または総ヒット件数を超えたら終了
+            puts "Reached max books or total count. Stopping pagination."
+            break # 最大件数に達した場合、または総ヒット件数を超えた場合はループを抜ける
           end
 
-          if books.count >= 100 # 最大100件まで取得 (調整可能)
-            puts "100 books reached, stopping pagination."
-            break
-          end
+          page += 1 # ページ番号をインクリメント
+          puts "Next Page: #{page}" # デバッグ出力: 次のページ番号
 
-          Logger.new(STDOUT).error "Google Books API error: #{response.code} #{response.message}"
-          api_key_rotator.mark_key_as_failed(api_key) # APIキーを失敗としてマーク
-          if api_key_rotator.all_keys_failed? # すべてのAPIキーが失敗した場合
-            Rails.logger.error "All API keys failed. Stopping requests."
-            break # リクエストを停止
-          else
-            puts "Retrying with a different API key." # 別のAPIキーでリトライ
-          end
-        sleep 1 # API rate limit 対策 (調整可能)
+          sleep 1 # API rate limit 対策 (調整可能)
+        else # HTTPエラーレスポンスの場合
+          Logger.new(STDOUT).error "Rakuten Books API error: #{response.code} #{response.message}"
+          break # エラーが発生した場合はループを抜ける (リトライしない)
+        end
       end # loop do
     rescue => e # エラーハンドリング
-      Rails.logger.error "Error during Google Books API request: #{e.message}"
+      Rails.logger.error "Error during Rakuten Books API request: #{e.message}"
     end
 
     puts "fetch_books finished. Total books found: #{books.count}" # デバッグ出力: fetch_books 終了、合計書籍数
@@ -84,16 +67,29 @@ class BookSearch
 
   private
 
-  def self.build_query(search_term, search_type, api_key, page_token)
-    query_string = search_type == :author ? "inauthor:#{search_term}" : "intitle:#{search_term}"
+  def self.build_query(search_term, search_type, application_id, page)
     params = {
-      q: query_string,
-      key: api_key,
-      maxResults: MAX_RESULTS_PER_PAGE,
-      startIndex: 0, # startIndex は Google Books API では nextPageToken でページネーションするため不要
-      pageToken: page_token # ページトークンを追加
+      applicationId: application_id, # アプリケーションID
+      format: "json", # レスポンス形式をJSONに指定
+      keyword: search_term, # 検索キーワード
+      hits: HITS_PER_PAGE, # 1ページあたり取得件数
+      page: page # ページ番号
     }
-    URI::HTTPS.build(host: URI.parse(GOOGLE_BOOKS_API_URL).host, path: URI.parse(GOOGLE_BOOKS_API_URL).path, query: URI.encode_www_form(params))
+    
+    # 検索タイプに応じてパラメータを追加
+    case search_type
+    when :title
+      params[:title] = search_term # タイトル検索
+    when :author
+      params[:author] = search_term # 著者名検索
+    when :publisher
+      params[:publisherName] = search_term # 出版社名検索
+    when :isbn
+      params[:isbn] = search_term # ISBN検索
+    end
+
+
+    URI::HTTPS.build(host: URI.parse(RAKUTEN_BOOKS_API_URL).host, path: URI.parse(RAKUTEN_BOOKS_API_URL).path, query: URI.encode_www_form(params))
   end
 
 
@@ -106,55 +102,22 @@ class BookSearch
 
 
   def self.parse_book_item(item)
-    volume_info = item["volumeInfo"]
-    return nil unless volume_info # volumeInfo が nil の場合は nil を返す
-
-    book_info = { # 一旦 book_info 変数に格納
-      title: volume_info["title"],
-      authors: volume_info["authors"]&.join(", "), # 著者を ',' 区切りで連結
-      publisher: volume_info["publisher"],
-      isbn: volume_info["industryIdentifiers"]&.find { |id| id["type"] == "ISBN_13" }&.dig("identifier"), # 修正: dig('identifier') を追加
-      image_link: volume_info["imageLinks"]&.dig("thumbnail") # imageLinks から thumbnail を取得
+    book_info = {
+      title: item["title"], # タイトル
+      authors: item["author"], # 著者名 (楽天APIのレスポンスに authors はないので author を使用)
+      publisher: item["publisherName"], # 出版社名
+      isbn: item["isbn"], # ISBN
+      image_link: item["mediumImageUrl"] # 画像URL (medium サイズ)
     }
     puts "Parsed book_info: #{book_info}" # デバッグ出力: 解析された書籍情報
-    book_info # book_info を返す
+    book_info
   end
-
 
   def self.matches_search_term?(book_info, search_term, search_type)
-    if search_type == :author
-      book_info[:authors]&.downcase&.include?(search_term.downcase)
-    else # search_type == :title (デフォルト)
-      book_info[:title]&.downcase&.include?(search_term.downcase)
-    end
+    # 楽天APIではキーワード検索を使用しているため、追加のマッチング処理は基本的には不要
+    true # 常に true を返す
   end
 end
-
-
-class ApiKeyRotator
-  def initialize(api_keys)
-    @api_keys = api_keys
-    @key_index = 0
-    @failed_keys = {} # 失敗したAPIキーを記録するHash
-  end
-
-  def get_next_key
-    key = @api_keys[@key_index]
-    puts "Using API key: #{key} (index: #{@key_index})" # デバッグ出力: 使用するAPIキー
-    key
-  end
-
-  def mark_key_as_failed(key)
-    @failed_keys[key] = true # 失敗したAPIキーを記録
-    @key_index = (@key_index + 1) % @api_keys.length # 次のキーへローテーション
-    puts "Marked API key as failed: #{key}. Rotated to next key. Current index: #{@key_index}" # デバッグ出力: APIキー失敗とローテーション
-  end
-
-  def all_keys_failed?
-    @failed_keys.length == @api_keys.length # すべてのAPIキーが失敗した場合 true
-  end
-end
-
 
 
 if __FILE__ == $0 # 直接実行された場合のみ実行
@@ -163,25 +126,25 @@ if __FILE__ == $0 # 直接実行された場合のみ実行
 
   if search_term.nil? || search_term.empty?
     puts "Usage: ruby book_search.rb <search_term> [search_type]"
-    puts "  search_type: title (default) or author"
+    puts "  search_type: title (default), author, publisher, isbn"
     exit 1
   end
 
-  puts "Searching for '#{search_term}' by #{search_type}..." # 検索開始メッセージ
+  puts "Searching for '#{search_term}' by #{search_type} using Rakuten Books API..." # 検索開始メッセージ
 
-  books = GoogleBooksSearch.fetch_books(search_term, search_type) # 書籍情報を取得
+  books = BookSearch.fetch_books(search_term, search_type) # 書籍情報を取得
 
   if books.empty?
-    puts "No books found for '#{search_term}' by #{search_type}." # 検索結果が0件の場合
+    puts "No books found for '#{search_term}' by #{search_type} using Rakuten Books API." # 検索結果が0件の場合
   else
-    puts "\nFound #{books.count} books:" # 検索結果が見つかった場合
+    puts "\nFound #{books.count} books from Rakuten Books API:" # 検索結果が見つかった場合
     books.each_with_index do |book, index| # 各書籍情報を出力
       puts "\n--- Book #{index + 1} ---"
       puts "Title: #{book[:title]}"
-      puts "Authors: #{book[:authors]}"
-      puts "Publisher: #{book[:publisher]}"
+      puts "Author: #{book[:authors]}" # 著者名 (authors -> Author に変更)
+      puts "Publisher: #{book[:publisher]}" # 出版社名 (publisher -> publisherName に変更)
       puts "ISBN: #{book[:isbn]}"
-      puts "Image Link: #{book[:image_link]}"
+      puts "Image Link: #{book[:image_link]}" # 画像URL (image_link -> mediumImageUrl に変更)
     end
   end
 end

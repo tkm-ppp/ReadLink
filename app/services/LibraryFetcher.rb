@@ -13,8 +13,6 @@ class LibraryFetcher
       response = Net::HTTP.get_response(uri)
 
       unless response.is_a?(Net::HTTPSuccess)
-        Rails.logger.error "OpenBD API Error Response: #{response.code} #{response.message}"
-        Rails.logger.error "Response Body: #{response.body}"
         return nil # エラー時は nil を返す
       end
 
