@@ -5,7 +5,7 @@ require_relative "../services/data_processor"
 class BooksController < ApplicationController
   def search
     if params[:search_term].present?
-      @books = BookSearch.fetch_books(params[:search_term])
+      @books = BookSearch.fetch_books(title_keyword, author_keyword)
       return render(status: :bad_request) if @books.blank? # 検索結果が空の場合はBadRequestを返す
 
       @books = @books.map do |book|

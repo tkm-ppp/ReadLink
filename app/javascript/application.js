@@ -1,34 +1,23 @@
-// Entry point for the build script in your package.json
 import "@hotwired/turbo-rails"
-import "./controllers"
+import "./controllers" // Stimulus controllers の読み込み
 import { Application } from "@hotwired/stimulus";
 import ContentLoader from '@stimulus-components/content-loader'
 import Sound from '@stimulus-components/sound'
-import Dropdown from '@stimulus-components/dropdown'
-import HelloController from "./controllers/hello_controller"
 import Carousel from '@stimulus-components/carousel'
+import Dropdown from "@stimulus-components/dropdown"
+import Clipboard from '@stimulus-components/clipboard'
+import ColorPicker from '@stimulus-components/color-picker'
 
 const application = Application.start()
-const context = require.context("controllers", true, /_controller\.js$/)
-application.load(definitionsFromContext(context))
+
+// Stimulus Components の登録
+
 application.register('content-loader', ContentLoader)
-application.register('dropdown', Dropdown)
-application.register("hello", HelloController)
 application.register('sound', Sound)
 application.register('carousel', Carousel)
-application.debug = true
+application.register('dropdown', Dropdown)
+application.register('clipboard', Clipboard)
+application.register('color-picker', ColorPicker)
 
-export default class extends Dropdown {
-    connect() {
-      super.connect()
-      console.log("Do what you want here.")
-    }
-  
-    toggle(event) {
-      super.toggle()
-    }
-  
-    hide(event) {
-      super.hide(event)
-    }
-  }
+
+import '@simonwep/pickr/dist/themes/classic.min.css'

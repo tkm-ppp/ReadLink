@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   }
   get "users" => redirect("/users/sign_up")
 
-  get "books/search", to: "books#search", as: "search_books"
+  get 'books/search_by_title_author', to: 'books#search', as: 'search_books' # 検索フォーム表示 (indexアクション)
+  post 'books/search_by_title_author', to: 'books#search_by_title_author', as: 'books_search_by_title_author'
   get "books/:isbn", to: "books#show", as: "book"
 
   get "regions", to: "regions#index", as: "regions"
