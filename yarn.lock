@@ -240,6 +240,11 @@ nanopop@2.3.0:
   resolved "https://registry.yarnpkg.com/nanopop/-/nanopop-2.3.0.tgz#a5f672fba27d45d6ecbd0b59789c040072915123"
   integrity sha512-fzN+T2K7/Ah25XU02MJkPZ5q4Tj5FpjmIYq4rvoHX4yb16HzFdCO6JxFFn5Y/oBhQ8no8fUZavnyIv9/+xkBBw==
 
+stimulus-autocomplete@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/stimulus-autocomplete/-/stimulus-autocomplete-3.1.0.tgz#7c9292706556ed0a87abf60ea2688bf0ea1176a8"
+  integrity sha512-SmVViCdA8yCl99oV2kzllNOqYjx7wruY+1OjAVsDTkZMNFZG5j+SqDKHMYbu+dRFy/SWq/PParzwZHvLAgH+YA==
+
 stimulus-use@^0.52.2, stimulus-use@^0.52.3:
   version "0.52.3"
   resolved "https://registry.yarnpkg.com/stimulus-use/-/stimulus-use-0.52.3.tgz#d6f35fa93277274957a2ed98a7b04b4d702cb1d6"

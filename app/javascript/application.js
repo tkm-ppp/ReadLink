@@ -2,11 +2,9 @@ import "@hotwired/turbo-rails"
 import "./controllers" // Stimulus controllers の読み込み
 import { Application } from "@hotwired/stimulus";
 import ContentLoader from '@stimulus-components/content-loader'
-import Sound from '@stimulus-components/sound'
 import Carousel from '@stimulus-components/carousel'
-import Dropdown from "@stimulus-components/dropdown"
-import Clipboard from '@stimulus-components/clipboard'
-import ColorPicker from '@stimulus-components/color-picker'
+import { Autocomplete } from 'stimulus-autocomplete'
+
 
 const application = Application.start()
 
@@ -15,9 +13,7 @@ const application = Application.start()
 application.register('content-loader', ContentLoader)
 application.register('sound', Sound)
 application.register('carousel', Carousel)
-application.register('dropdown', Dropdown)
-application.register('clipboard', Clipboard)
-application.register('color-picker', ColorPicker)
+application.register('autocomplete', Autocomplete)
 
 
-import '@simonwep/pickr/dist/themes/classic.min.css'
+

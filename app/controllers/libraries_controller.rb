@@ -2,6 +2,16 @@ require "net/http"
 require "json"
 
 class LibrariesController < ApplicationController
+  def settings
+    #図書館設定画面の処理をここに記述
+  end
+
+  def index
+    @q = Library.ransack(params[:q]) # Ransackオブジェクトを生成
+    @libraries = @q.result # 検索結果を取得
+    @regions_data = build_regions_data
+  end
+
   def show
     @geocode = params[:geocode] # geocode パラメータを取得
     @library_detail = fetch_library_detail(@geocode) # geocode を渡す
@@ -13,6 +23,46 @@ class LibrariesController < ApplicationController
       flash.now[:alert] = "図書館情報が見つかりませんでした。geocode: #{@geocode}" # geocode をログに出力
     end
   end
+
+
+  
+
+  def fetch_and_save_libraries
+  endpoint = "https://api.calil.jp/library"
+  params = {
+    appkey: ENV["CALIL_API_KEY"],
+    format: "json",
+    limit: "100"
+  }
+
+  uri = URI(endpoint)
+  uri.query = URI.encode_www_form(params)
+
+  response = Net::HTTP.get_response(uri)
+  response_body_utf8 = response.body.force_encoding("UTF-8")
+
+  if response_body_utf8.start_with?("callback(") && response_body_utf8.end_with?(");")
+    rjson = response_body_utf8.delete_prefix("callback(").delete_suffix(");")
+  else
+    rjson = response_body_utf8
+  end
+
+  begin
+    libraries_data = JSON.parse(rjson)
+    libraries_data.each do |library|
+      Library.find_or_create_by(libkey: library["libkey"]) do |lib|
+        lib.address = library["address"]
+        lib.tel = library["tel"]
+        lib.post = library["post"]
+        lib.formal = library["formal"]
+        lib.url_pc = library["url_pc"]
+        lib.geocode = library["geocode"]
+      end
+    end
+  rescue JSON::ParserError => e
+    Rails.logger.error("JSONの解析エラー: #{e.message}")
+  end
+end
 
   def fetch_library_detail(geocode)
     endpoint = "https://api.calil.jp/library"

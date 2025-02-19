@@ -14,6 +14,7 @@
     "@stimulus-components/dropdown": "^3.0.0",
     "@stimulus-components/sound": "^2.0.1",
     "bootstrap": "^5.3.3",
+    "stimulus-autocomplete": "^3.1.0",
     "stimulus-use": "^0.52.3"
   },
   "scripts": {

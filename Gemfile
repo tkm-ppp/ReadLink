@@ -46,14 +46,16 @@ gem "warden", "1.2.9"
 gem "rails-i18n"
 gem "devise-i18n"
 
+# 検索機能
+gem 'ransack'
+
 # APIリクエストを簡単に行うため
 gem "httparty"
 
 # ページネーションのため
 gem "kaminari"
 
-# 環境変数を読み込むため
-gem "dotenv-rails"
+
 
 gem "concurrent-ruby"
 
@@ -66,6 +68,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # 環境変数を読み込むため
+  gem "dotenv-rails"
 end
 
 group :development do

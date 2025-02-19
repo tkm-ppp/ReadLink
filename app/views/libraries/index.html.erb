@@ -1,0 +1,29 @@
+<!-- app/views/regions/index.html.erb -->
+
+  <!-- 検索結果の表示 -->
+  <% if @libraries.present? %>
+    <h2 class="text-2xl font-bold mt-4">検索結果</h2>
+    <ul>
+      <% @libraries.each do |library| %>
+        <li>
+          <%= library.formal %> (<%= library.address %>)
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <% @regions_data.each do |region_name, prefectures| %>
+      <div class="bg-white shadow-md rounded-lg p-4">
+        <h2 class="text-xl font-semibold mb-2"><%= region_name %></h2>
+        <ul class="space-y-1">
+          <% prefectures.each do |pref_name,  pref| %>
+              <li class="hover:bg-gray-100 rounded-md px-2 py-1">
+               <%= link_to pref_name, region_path(pref_name: pref), class: "block" %>
+               </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>

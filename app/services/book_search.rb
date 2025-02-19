@@ -7,84 +7,75 @@ require "logger"
 Dotenv.load(File.expand_path("../../../.env", __FILE__))
 
 class BookSearch
-  RAKUTEN_APPLICATION_ID = ENV["RAKUTEN_APPLICATION_ID"] # 環境変数からアプリケーションIDを取得
-  RAKUTEN_BOOKS_API_URL = "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404" # 楽天Books APIのエンドポイント
-  HITS_PER_PAGE = 30 # 楽天APIの1ページあたり最大取得件数 (30件)
+  RAKUTEN_BOOKS_APPLICATION_ID = ENV["RAKUTEN_BOOKS_APPLICATION_ID"] # 環境変数から楽天ブックスAPIのアプリケーションIDを取得
+  RAKUTEN_BOOKS_API_URL = "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404" # 楽天ブックスAPIのエンドポイント
 
-  # 検索タイプを廃止し、title_keyword と author_keyword を引数として受け取るように変更
-  def self.fetch_books(title_keyword = nil, author_keyword = nil)
-    return [] if RAKUTEN_APPLICATION_ID.nil? || RAKUTEN_APPLICATION_ID.empty?
-    puts "fetch_books started with title_keyword: #{title_keyword}, author_keyword: #{author_keyword}" # デバッグ出力: fetch_books 開始
+  def self.fetch_books(search_term, search_type = :keyword) # search_type のデフォルトを :keyword に変更
+    puts "RAKUTEN_BOOKS_APPLICATION_ID: #{ENV['RAKUTEN_BOOKS_APPLICATION_ID'].inspect}" # デバッグ出力: RAKUTEN_BOOKS_APPLICATION_ID の値
+    puts "RAKUTEN_BOOKS_APPLICATION_ID.present?: #{RAKUTEN_BOOKS_APPLICATION_ID.present?}" # デバッグ出力: RAKUTEN_BOOKS_APPLICATION_ID が存在するかどうか
+    puts "search_term: #{search_term}, search_type: #{search_type}" # デバッグ出力: 検索キーワードと検索タイプ
+
+    return [] unless RAKUTEN_BOOKS_APPLICATION_ID.present? # アプリケーションIDがない場合は空配列を返す
 
     books = []
-    page = 1 # ページ番号初期化
 
     begin
-      loop do # ページネーションループ
-        # build_query の引数を変更
-        query = build_query(title_keyword, author_keyword, RAKUTEN_APPLICATION_ID, page) # クエリを生成
+      query = build_query(search_term, search_type) # クエリを生成
+      puts "API Request URI: #{query}" # デバッグ出力: APIリクエストURI
 
-        response = fetch_api_response(query) # APIレスポンスを取得
+      response = fetch_api_response(query) # APIレスポンスを取得
+      puts "API Response Code: #{response.code}" # デバッグ出力: APIレスポンスコード
 
-        puts "API Response Code: #{response.code}" # デバッグ出力: APIレスポンスコード
+      if response.is_a?(Net::HTTPSuccess) # 成功レスポンスの場合のみ処理
+        json_response = JSON.parse(response.body)
+        items = json_response["Items"] || [] # items が nil の場合を考慮
 
-        if response.is_a?(Net::HTTPSuccess) # HTTPステータスコードが 2xx の場合のみ処理
-          json_response = JSON.parse(response.body)
-          items = json_response["Items"] || [] # Items が nil の場合を考慮
+        puts "Number of items in response: #{items.count}" # デバッグ出力: レスポンスに含まれるアイテム数
 
-          puts "Number of items in response: #{items.count}" # デバッグ出力: レスポンスに含まれるアイテム数
-
-          items.each do |item_data| # 各書籍アイテムを処理
-            book_item = item_data["Item"] # Item 要素を取得
-            book_info = parse_book_item(book_item) # パース処理
-            if book_info && !book_info[:isbn].nil? && !book_info[:isbn].empty? && matches_search_criteria?(book_info, title_keyword, author_keyword) # マッチング処理を修正
-              books << book_info
-              puts "Book added: #{book_info[:title]}" # デバッグ出力: 追加された書籍タイトル
-            end
+        items.each do |item_data| # 各書籍アイテムを処理
+          book_info = parse_book_item(item_data["Item"]) # item_data['Item'] を渡すように修正
+          if book_info # book_info が nil でない場合のみ処理
+            books << book_info
+            puts "Book added: #{book_info[:title]}" # デバッグ出力: 追加された書籍タイトル
           end
-
-          total_count = json_response["count"].to_i # 総ヒット件数を取得
-          if books.count >= total_count || books.count >= 100 # 最大100件まで、または総ヒット件数を超えたら終了
-            puts "Reached max books or total count. Stopping pagination."
-            break # 最大件数に達した場合、または総ヒット件数を超えた場合はループを抜ける
-          end
-
-          page += 1 # ページ番号をインクリメント
-          puts "Next Page: #{page}" # デバッグ出力: 次のページ番号
-
-          sleep 1 # API rate limit 対策 (調整可能)
-        else # HTTPエラーレスポンスの場合
-          Logger.new(STDOUT).error "Rakuten Books API error: #{response.code} #{response.message}"
-          break # エラーが発生した場合はループを抜ける (リトライしない)
         end
-      end # loop do
+      else # エラーレスポンスの場合
+        Logger.new(STDOUT).error "楽天ブックスAPIエラー: #{response.code} #{response.message}" # エラーログ出力
+      end
     rescue => e # エラーハンドリング
-      Rails.logger.error "Error during Rakuten Books API request: #{e.message}"
+      Rails.logger.error "楽天ブックスAPIリクエスト中のエラー: #{e.message}" # 例外ログ出力
     end
 
     puts "fetch_books finished. Total books found: #{books.count}" # デバッグ出力: fetch_books 終了、合計書籍数
     books # 検索結果の書籍リストを返す
   end
 
-
   private
 
-  # build_query の引数を変更、検索タイプによる条件分岐を削除
-  def self.build_query(title_keyword, author_keyword, application_id, page)
+  def self.build_query(search_term, search_type)
     params = {
-      applicationId: application_id, # アプリケーションID
+      applicationId: RAKUTEN_BOOKS_APPLICATION_ID, # 楽天ブックスAPIのアプリケーションID
       format: "json", # レスポンス形式をJSONに指定
-      hits: HITS_PER_PAGE, # 1ページあたり取得件数
-      page: page # ページ番号
+      keyword: search_term, # 検索キーワード
+      # title: search_term, # タイトル検索 (keyword で包括的に検索するため title は不要)
+      # author: search_term, # 著者名検索 (keyword で包括的に検索するため author は不要)
+      sort: "-sales", # 売れ筋順にソート (オプション)
+      hits: 30 # 取得件数 (オプション)
     }
 
-    # title_keyword が存在する場合、title パラメータを追加
-    params[:title] = title_keyword if title_keyword.present?
-    # author_keyword が存在する場合、author パラメータを追加
-    params[:author] = author_keyword if author_keyword.present?
+    if search_type == :title # 検索タイプが title の場合
+      params[:title] = search_term # タイトルを検索キーワードに設定 (keyword と title の両方で検索)
+      params.delete(:keyword) # keyword パラメータを削除 (タイトル検索時は keyword は不要)
+    elsif search_type == :author # 検索タイプが author の場合
+      params[:author] = search_term # 著者を検索キーワードに設定 (keyword と author の両方で検索)
+      params.delete(:keyword) # keyword パラメータを削除 (著者名検索時は keyword は不要)
+    end
 
-
-    URI::HTTPS.build(host: URI.parse(RAKUTEN_BOOKS_API_URL).host, path: URI.parse(RAKUTEN_BOOKS_API_URL).path, query: URI.encode_www_form(params))
+    URI::HTTPS.build(
+      host: URI.parse(RAKUTEN_BOOKS_API_URL).host,
+      path: URI.parse(RAKUTEN_BOOKS_API_URL).path,
+      query: URI.encode_www_form(params)
+    )
   end
 
 
@@ -97,77 +88,62 @@ class BookSearch
 
 
   def self.parse_book_item(item)
+    return nil unless item # item が nil の場合は nil を返す
+
     book_info = {
-      title: item["title"], # タイトル
-      authors: item["author"], # 著者名 (楽天APIのレスポンスに authors はないので author を使用)
-      publisher: item["publisherName"], # 出版社名
-      isbn: item["isbn"], # ISBN
-      image_link: item["mediumImageUrl"] # 画像URL (medium サイズ)
+      title: item["title"], # 商品タイトル
+      author: item["author"], # 著者名
+      publisherName: item["publisherName"], # 出版社名
+      isbn: item["isbn"], # ISBNコード (ISBN13)
+      listPrice: item["listPrice"], # 定価 (税抜き)
+      mediumImageUrl: item["mediumImageUrl"], # 商品画像URL (128x128ピクセル)
+      affiliateUrl: item["affiliateUrl"], # アフィリエイトURL (楽天アフィリエイトリンク)
+      itemUrl: item["itemUrl"], # 商品URL (楽天ブックスの商品ページへのリンク)
+      salesDate: item["salesDate"], # 発売日 (YYYY年MM月DD日形式)
+      itemCaption: item["itemCaption"], # 商品説明
+      booksGenreId: item["booksGenreId"], # ジャンルID
+      reviewAverage: item["reviewAverage"], # レビュー平均点 (0.0～5.0)
+      reviewCount: item["reviewCount"] # レビュー件数
     }
     puts "Parsed book_info: #{book_info}" # デバッグ出力: 解析された書籍情報
-    book_info
-  end
-
-  # matches_search_criteria? メソッドを修正
-  def self.matches_search_criteria?(book_info, title_keyword, author_keyword)
-    # title_keyword が指定されている場合はタイトルで比較
-    if !title_keyword.nil? && book_info[:title].downcase.include?(title_keyword.downcase)
-      return true if author_keyword.nil?
-    end
-  
-    # author_keyword が指定されている場合は著者名で比較
-    if !author_keyword.nil? && book_info[:authors].downcase.include?(author_keyword.downcase)
-      return true if title_keyword.nil?
-    end
-  
-    # title_keyword と author_keyword の両方が指定されている場合は両方で比較
-    if !title_keyword.nil? && !author_keyword.nil? &&
-       book_info[:title].downcase.include?(title_keyword.downcase) && book_info[:authors].downcase.include?(author_keyword.downcase)
-      return true
-    end
-  
-    # どちらのキーワードも指定されていない場合は常に true (全件取得)
-    return true if title_keyword.nil? && author_keyword.nil?
-  
-    false 
+    book_info # book_info を返す
   end
 end
 
 
 if __FILE__ == $0 # 直接実行された場合のみ実行
-  # コマンドライン引数の処理を変更
-  title_keyword = ARGV[0] # タイトルキーワードを最初の引数から取得
-  author_keyword = ARGV[1] # 著者名キーワードを2番目の引数から取得
+  search_term = ARGV[0] || "ruby" # 検索キーワードをコマンドライン引数から取得 (デフォルト: 'ruby')
+  search_type = ARGV[1]&.to_sym || :keyword # 検索タイプをコマンドライン引数から取得 (デフォルト: :keyword)
 
-
-  if title_keyword.nil? && author_keyword.nil?
-    puts "Usage: ruby book_search.rb <title_keyword> [author_keyword]"
-    puts "  <title_keyword>: 書籍タイトル (省略可)"
-    puts "  <author_keyword>: 著者名 (省略可)"
-    puts "  タイトルまたは著者名のどちらか、または両方を指定して検索できます。"
+  if search_term.nil? || search_term.empty?
+    puts "Usage: ruby book_search.rb <search_term> [search_type]"
+    puts "  search_type: keyword (default), title, or author" # 検索タイプの選択肢を keyword, title, author に変更
     exit 1
   end
 
-  search_criteria_message = ""
-  search_criteria_message += "タイトル: '#{title_keyword}' " if title_keyword.present?
-  search_criteria_message += "著者名: '#{author_keyword}' " if author_keyword.present?
+  puts "Searching for '#{search_term}' by #{search_type}..." # 検索開始メッセージ
 
-  puts "Searching for books by #{search_criteria_message}using Rakuten Books API..."
-
- 
-  books = BookSearch.fetch_books(title_keyword, author_keyword) 
+  books = BookSearch.fetch_books(search_term, search_type) # 書籍情報を取得 (クラス名を修正)
 
   if books.empty?
-    puts "No books found for #{search_criteria_message}using Rakuten Books API."
+    puts "No books found for '#{search_term}' by #{search_type}." # 検索結果が0件の場合
   else
-    puts "\nFound #{books.count} books from Rakuten Books API:"
-    books.each_with_index do |book, index| 
+    puts "\nFound #{books.count} books:" # 検索結果が見つかった場合
+    books.each_with_index do |book, index| # 各書籍情報を出力
       puts "\n--- Book #{index + 1} ---"
-      puts "Title: #{book[:title]}"
-      puts "Author: #{book[:authors]}" 
-      puts "Publisher: #{book[:publisher]}" 
-      puts "ISBN: #{book[:isbn]}"
-      puts "Image Link: #{book[:image_link]}" 
+      puts "Title: #{book[:title]}" # タイトル
+      puts "Author: #{book[:author]}" # 著者名
+      puts "Publisher: #{book[:publisherName]}" # 出版社名
+      puts "ISBN: #{book[:isbn]}" # ISBNコード
+      puts "List Price: #{book[:listPrice]}" # 定価
+      puts "Image URL: #{book[:mediumImageUrl]}" # 画像URL
+      puts "Affiliate URL: #{book[:affiliateUrl]}" # アフィリエイトURL
+      puts "Item URL: #{book[:itemUrl]}" # 商品URL
+      puts "Sales Date: #{book[:salesDate]}" # 発売日
+      puts "Item Caption: #{book[:itemCaption]}" # 商品説明
+      puts "Genre ID: #{book[:booksGenreId]}" # ジャンルID
+      puts "Review Average: #{book[:reviewAverage]}" # レビュー平均点
+      puts "Review Count: #{book[:reviewCount]}" # レビュー件数
     end
   end
 end
