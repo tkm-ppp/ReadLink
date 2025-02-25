@@ -52,7 +52,7 @@ class LibraryFetcher
           }
         end
       end
- 
+
       Rails.logger.info "Fetched book detail from OpenBD for ISBN #{isbn}: #{book.inspect}"
 
       book

@@ -14,6 +14,6 @@ class ApplicationController < ActionController::Base
   def set_search
     @q = Library.ransack(params[:q])
     @libraries = @q.result(distinct: true).order(created_at: :desc).page(params[:page]).per(10)
-    render template: 'libraries/index'
+    render template: "libraries/index"
   end
 end

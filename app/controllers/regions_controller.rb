@@ -1,6 +1,10 @@
 class RegionsController < ApplicationController
   def index
-    @regions_data = build_regions_data 
+    @regions_data = build_regions_data
+    @libraries = [] 
+    if params[:search].present?
+      @libraries = Library.where("formal LIKE ? OR address LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
+    end
   end
 
   def show
@@ -89,6 +93,11 @@ class RegionsController < ApplicationController
     all_libraries = {}
 
     cities = PrefectureCities::PREFECTURE_CITIES[pref_name]
+
+    if cities.nil?
+      Rails.logger.warn("都道府県 #{pref_name} に対応する市区町村データが見つかりませんでした。")
+      return {} # 空のハッシュを返す
+    end
 
     cities.each do |city_name|
       libraries_in_city = []

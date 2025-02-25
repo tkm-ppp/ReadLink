@@ -6,11 +6,10 @@
       <strong class="font-bold">エラー！</strong>
       <span class="block sm:inline"><%= flash[:alert] %></span>
     </div>
-  <% elsif @library_detail %>
+  <% elsif @library %>
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
       <div class="px-6 py-4 bg-gray-100 border-b border-gray-200">
-        <h2 class="text-xl font-semibold text-gray-700"><%= @library_detail['formal'] %></h2>
-        <p class="text-gray-500"><%= @library_detail['short'] %></p>
+        <h2 class="text-xl font-semibold text-gray-700"><%= @library.formal %></h2>
       </div>
 
       <div class="p-6">
@@ -18,41 +17,15 @@
         <div class="mb-4">
           <div class="grid grid-cols-3 gap-4 mb-2">
             <div class="font-medium text-gray-600">住所</div>
-            <div class="col-span-2 text-gray-700"><%= @library_detail['address'] %></div>
+            <div class="col-span-2 text-gray-700"><%= @library.address %></div>
           </div>
           <div class="grid grid-cols-3 gap-4 mb-2">
             <div class="font-medium text-gray-600">電話番号</div>
-            <div class="col-span-2 text-gray-700"><%= @library_detail['tel'] %></div>
+            <div class="col-span-2 text-gray-700"><%= @library.tel %></div>
           </div>
           <div class="grid grid-cols-3 gap-4 mb-2">
             <div class="font-medium text-gray-600">郵便番号</div>
-            <div class="col-span-2 text-gray-700"><%= @library_detail['post'] %></div>
-          </div>
-          <div class="grid grid-cols-3 gap-4">
-            <div class="font-medium text-gray-600">URL</div>
-            <div class="col-span-2 text-gray-700">
-              <% if @library_detail['url_pc'].present? %>
-                <%= link_to @library_detail['url_pc'], @library_detail['url_pc'], target: '_blank', class: "text-blue-500 hover:underline" %>
-              <% else %>
-                -
-              <% end %>
-            </div>
-          </div>
-        </div>
-
-        <h3 class="font-semibold text-lg text-gray-700 mb-3 mt-5">所在地情報</h3>
-        <div class="mb-4">
-          <div class="grid grid-cols-3 gap-4 mb-2">
-            <div class="font-medium text-gray-600">都道府県</div>
-            <div class="col-span-2 text-gray-700"><%= @library_detail['pref'] %></div>
-          </div>
-          <div class="grid grid-cols-3 gap-4 mb-2">
-            <div class="font-medium text-gray-600">市区町村</div>
-            <div class="col-span-2 text-gray-700"><%= @library_detail['city'] %></div>
-          </div>
-          <div class="grid grid-cols-3 gap-4">
-            <div class="font-medium text-gray-600">緯度経度</div>
-            <div class="col-span-2 text-gray-700"><%= @library_detail['geocode'] %></div>
+            <div class="col-span-2 text-gray-700"><%= @library.post %></div>
           </div>
         </div>
 
@@ -60,21 +33,32 @@
         <div>
           <div class="grid grid-cols-3 gap-4 mb-2">
             <div class="font-medium text-gray-600">図書館キー</div>
-            <div class="col-span-2 text-gray-700"><%= @library_detail['libkey'] %></div>
+            <div class="col-span-2 text-gray-700"><%= @library.libkey %></div>
           </div>
           <div class="grid grid-cols-3 gap-4 mb-2">
             <div class="font-medium text-gray-600">正式名称</div>
-            <div class="col-span-2 text-gray-700"><%= @library_detail['formal'] %></div>
+            <div class="col-span-2 text-gray-700"><%= @library.formal %></div>
           </div>
-          <div class="grid grid-cols-3 gap-4">
-            <div class="font-medium text-gray-600">略称</div>
-            <div class="col-span-2 text-gray-700"><%= @library_detail['short'] %></div>
+          <div class="grid grid-cols-3 gap-4 mb-2">
+            <div class="font-medium text-gray-600">緯度経度</div>
+            <div class="col-span-2 text-gray-700"><%= @library.geocode %></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4 mb-2">
+          <div class="font-medium text-gray-600">予約</div>
+          <div class="col-span-2 text-gray-700">
+            <% if @library.url_pc.present? %>
+              <%= link_to "本を予約する", @library.url_pc, target: '_blank', class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+            <% else %>
+              <span class="text-gray-500">予約URLがありません</span>
+            <% end %>
           </div>
         </div>
       </div>
 
       <div class="px-6 py-4 bg-gray-100 border-t border-gray-200">
-        <%= link_to "都道府県別一覧に戻る", regions_path(pref_name: @library_detail['pref']), class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+        <%= link_to "都道府県別一覧に戻る", region_path(pref_name: @pref), class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
       </div>
     </div>
   <% else %>
