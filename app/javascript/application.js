@@ -17,3 +17,14 @@ application.register('autocomplete', Autocomplete)
 
 
 
+document.addEventListener('turbolinks:load', () => {
+  // 市町村全選択チェックボックスの処理
+  document.querySelectorAll('.city-select-all').forEach(checkbox => {
+    const city = checkbox.dataset.city;
+    checkbox.addEventListener('change', () => {
+      document.querySelectorAll(`[data-city="${city}"].library-checkbox`).forEach(libCheckbox => {
+        libCheckbox.checked = checkbox.checked;
+      });
+    });
+  });
+});

@@ -19,4 +19,8 @@ Rails.application.routes.draw do
 
   get "libraries", to: "libraries#index", as: "library_index"
   get "library_detail", to: "libraries#show", as: "library_detail"
+
+  get "libraries/settings", to: "libraries#settings", as: "library_setting"
+  post "libraries/settings", to: "libraries#create"
+  delete "libraries/settings", to: "libraries#destroy"
 end

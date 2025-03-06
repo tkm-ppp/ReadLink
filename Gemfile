@@ -46,6 +46,8 @@ gem "warden", "1.2.9"
 gem "rails-i18n"
 gem "devise-i18n"
 
+gem 'japanese_address_parser'
+
 # 検索機能
 gem "ransack"
 

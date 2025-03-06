@@ -10,5 +10,6 @@ class Library < ApplicationRecord
       [ "user_libraries", "users" ]
     end
 
+    scope :search, ->(query) { where("formal LIKE ? OR address LIKE ?", "%#{query}%", "%#{query}%") }
  
 end

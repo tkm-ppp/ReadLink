@@ -3,16 +3,27 @@ require "json"
 
 class LibrariesController < ApplicationController
   def settings
-    @user = current_user
-    @libraries = Library.all
-  end
-  
-  def update_library_settings
-    current_user.library_ids = params[:library_ids]
-    redirect_to settings_path, notice: "図書館設定を更新しました"
+    @search_term = params[:search]
+    @libraries = Library.search(@search_term) if @search_term.present?
+    @user_libraries = current_user.libraries
   end
 
+  def create
+    if params[:library_ids].present?
+      libraries = Library.where(id: params[:library_ids])
+      libraries.each do |library|
+        current_user.libraries << library unless current_user.libraries.include?(library)
+      end
+      flash[:notice] = "図書館が追加されました。"
+    end
+    redirect_to library_settings_path(search: params[:search])
+  end
 
+  def destroy
+    library = Library.find(params[:library_id])
+    current_user.libraries.delete(library)
+    redirect_to library_setting_path(search: params[:search])
+  end
 
   def show
     @library = Library.find_by(geocode: params[:geocode])

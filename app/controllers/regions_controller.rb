@@ -1,11 +1,20 @@
 class RegionsController < ApplicationController
   def index
     @regions_data = build_regions_data
-    @libraries = [] 
+    @libraries = []
+    
     if params[:search].present?
-      @libraries = Library.where("formal LIKE ? OR address LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
+      @libraries = Library.where("formal LIKE ? OR address LIKE ?", 
+                               "%#{params[:search]}%", "%#{params[:search]}%")
+      # 修正箇所：city属性を正しく取得する処理を追加
+      # 例：addressから市町村名を抽出する場合
+      @libraries = @libraries.map do |lib|
+        lib.city = lib.address.split(/[\s、]/).first
+        lib
+      end
     end
   end
+  
 
   def show
     @pref_name = params[:pref_name]
