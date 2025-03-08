@@ -1,5 +1,6 @@
 require "net/http"
 require "json"
+require 'google_maps_service'
 
 class LibrariesController < ApplicationController
   def settings
@@ -23,6 +24,35 @@ class LibrariesController < ApplicationController
     library = Library.find(params[:library_id])
     current_user.libraries.delete(library)
     redirect_to library_setting_path(search: params[:search])
+  end
+
+  def search
+    client = GooglePlaces::Client.new(ENV['GOOGLE_API_KEY'])
+    @libraries = client.spots(
+      params[:lat].to_f,
+      params[:lng].to_f,
+      types: 'library',
+      radius: 2000 # 2km圏内
+    )
+    
+    respond_to do |format|
+      format.json { render json: @libraries }
+    end
+  end
+
+  def search
+    gmaps = GoogleMapsService::Client.new(key: ENV['GOOGLE_API_KEY'])
+    
+    results = gmaps.spots(
+      params[:latitude].to_f,
+      params[:longitude].to_f,
+      types: 'library',
+      radius: 5000, # 5km圏内
+      language: 'ja'
+    )
+    
+    @libraries = results.map { |place| place[:name] }
+    respond_to :json
   end
 
   def show

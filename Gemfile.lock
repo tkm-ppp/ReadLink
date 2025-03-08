@@ -119,6 +119,8 @@ GEM
     erubi (1.13.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google_places (2.0.0)
+      httparty (>= 0.13.1)
     httparty (0.22.0)
       csv
       mini_mime (>= 1.0.0)
@@ -368,6 +370,7 @@ DEPENDENCIES
   devise (= 4.9.4)
   devise-i18n
   dotenv-rails
+  google_places
   httparty
   japanese_address_parser
   jbuilder
