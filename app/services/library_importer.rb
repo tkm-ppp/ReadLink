@@ -105,7 +105,7 @@ class LibraryImporter
     CSV.open(filepath, "wb") do |csv|
       csv << Library.column_names # ヘッダー行を追加
       kyoto_libraries.find_each do |library|
-      # Library.all.find_each do |library|
+        # Library.all.find_each do |library|
         csv << library.attributes.values
       end
     end
