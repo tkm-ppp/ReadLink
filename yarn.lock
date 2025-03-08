@@ -129,12 +129,12 @@
 
 "@hotwired/stimulus@^3.2.2":
   version "3.2.2"
-  resolved "https://registry.yarnpkg.com/@hotwired/stimulus/-/stimulus-3.2.2.tgz#071aab59c600fed95b97939e605ff261a4251608"
+  resolved "https://registry.npmjs.org/@hotwired/stimulus/-/stimulus-3.2.2.tgz"
   integrity sha512-eGeIqNOQpXoPAIP7tC1+1Yc1yl1xnwYqg+3mzqxyrbE5pg5YFBZcA6YoTiByJB6DKAEsiWtl6tjTJS4IYtbB7A==
 
 "@hotwired/turbo-rails@^8.0.12":
   version "8.0.12"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-8.0.12.tgz#6f1a2661122c0a2bf717f3bc68b5106638798c89"
+  resolved "https://registry.npmjs.org/@hotwired/turbo-rails/-/turbo-rails-8.0.12.tgz"
   integrity sha512-ZXwu9ez+Gd4RQNeHIitqOQgi/LyqY8J4JqsUN0nnYiZDBRq7IreeFdMbz29VdJpIsmYqwooE4cFzPU7QvJkQkA==
   dependencies:
     "@hotwired/turbo" "^8.0.12"
@@ -142,22 +142,71 @@
 
 "@hotwired/turbo@^8.0.12":
   version "8.0.12"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-8.0.12.tgz#50aa8345d7f62402680c6d2d9814660761837001"
+  resolved "https://registry.npmjs.org/@hotwired/turbo/-/turbo-8.0.12.tgz"
   integrity sha512-l3BiQRkD7qrnQv6ms6sqPLczvwbQpXt5iAVwjDvX0iumrz6yEonQkNAzNjeDX25/OJMFDTxpHjkJZHGpM9ikWw==
 
 "@rails/actioncable@^7.0":
   version "7.2.201"
-  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-7.2.201.tgz#bfb3da01b3e2462f5a18f372c52dedd7de76037f"
+  resolved "https://registry.npmjs.org/@rails/actioncable/-/actioncable-7.2.201.tgz"
   integrity sha512-wsTdWoZ5EfG5k3t7ORdyQF0ZmDEgN4aVPCanHAiNEwCROqibSZMXXmCbH7IDJUVri4FOeAVwwbPINI7HVHPKBw==
+
+"@simonwep/pickr@1.9.0":
+  version "1.9.0"
+  resolved "https://registry.npmjs.org/@simonwep/pickr/-/pickr-1.9.0.tgz"
+  integrity sha512-oEYvv15PyfZzjoAzvXYt3UyNGwzsrpFxLaZKzkOSd0WYBVwLd19iJerePDONxC1iF6+DpcswPdLIM2KzCJuYFg==
+  dependencies:
+    core-js "3.32.2"
+    nanopop "2.3.0"
+
+"@stimulus-components/carousel@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.npmjs.org/@stimulus-components/carousel/-/carousel-6.0.0.tgz"
+  integrity sha512-Jj7lwJI9B13+Wyt6Q27G5b45w5wyjVC79RB6eIuWt9ZYMRbjPWsV2kDofpiM1wUZi7h1+xk+vAZorPPnvGd4dA==
+  dependencies:
+    swiper "^11.0.6"
+
+"@stimulus-components/clipboard@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/@stimulus-components/clipboard/-/clipboard-5.0.0.tgz"
+  integrity sha512-gbwU1sVBiKfMGGCt6oyXx9mGD+cEcHBSqaz//5UVepoQqzl2jYEUWQGFIO0f48LMOamEQwR1azQKfHq6llv6oA==
+
+"@stimulus-components/color-picker@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@stimulus-components/color-picker/-/color-picker-2.0.0.tgz"
+  integrity sha512-ITQGvQ1RNLsoiZMmlc6R60pn36UuGD3lLv76LMRcipUbp1Sn3EenkMf5fABRd8MKz2ZIbJcTqZlMx4+I8FyHXA==
+  dependencies:
+    "@simonwep/pickr" "1.9.0"
+
+"@stimulus-components/content-loader@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/@stimulus-components/content-loader/-/content-loader-5.0.0.tgz"
+  integrity sha512-5ib9PveLI9VEbUwJQpp76OW9Q1Fc8CY7Yo9iVOPTFScwtUWOQJCnwR836osLzYbEIDEEpCfBsCRcIdn9PBGT8A==
+
+"@stimulus-components/dropdown@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@stimulus-components/dropdown/-/dropdown-3.0.0.tgz"
+  integrity sha512-GY9Ez8T5Vbcad702seF4iuKZwv4f+VACtfO527l8vrFDFbGWWFyRljyK9FFXSPEkUC3/4PilVsYfPO2CMikkEg==
+  dependencies:
+    stimulus-use "^0.52.2"
+
+"@stimulus-components/sound@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/@stimulus-components/sound/-/sound-2.0.1.tgz"
+  integrity sha512-IJyfgPyItYiCnHFUUdFSgFT9XvsHTtvZOyjWfuLHUPJnWQUatpYpHQfaUvsp3Es5aJNCRsCs6Ub4VUaOPxmApQ==
 
 bootstrap@^5.3.3:
   version "5.3.3"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.3.3.tgz#de35e1a765c897ac940021900fcbb831602bac38"
+  resolved "https://registry.npmjs.org/bootstrap/-/bootstrap-5.3.3.tgz"
   integrity sha512-8HLCdWgyoMguSO9o+aH+iuZ+aht+mzW0u3HIMzVu7Srrpv7EBBxTnrFlSCskwdY1+EOFQSm7uMJhNQHkdPcmjg==
+
+core-js@3.32.2:
+  version "3.32.2"
+  resolved "https://registry.npmjs.org/core-js/-/core-js-3.32.2.tgz"
+  integrity sha512-pxXSw1mYZPDGvTQqEc5vgIb83jGQKFGYWY76z4a7weZXUolw3G+OvpZqSRcfYOoOVUQJYEPsWeQK8pKEnUtWxQ==
 
 esbuild@^0.24.0:
   version "0.24.2"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.24.2.tgz#b5b55bee7de017bff5fb8a4e3e44f2ebe2c3567d"
+  resolved "https://registry.npmjs.org/esbuild/-/esbuild-0.24.2.tgz"
   integrity sha512-+9egpBW8I3CD5XPe0n6BfT5fxLzxrlDzqydF3aviG+9ni1lDC/OvMHcxqEFV0+LANZG5R1bFMWfUrjVsdwxJvA==
   optionalDependencies:
     "@esbuild/aix-ppc64" "0.24.2"
@@ -185,3 +234,28 @@ esbuild@^0.24.0:
     "@esbuild/win32-arm64" "0.24.2"
     "@esbuild/win32-ia32" "0.24.2"
     "@esbuild/win32-x64" "0.24.2"
+
+nanopop@2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/nanopop/-/nanopop-2.3.0.tgz"
+  integrity sha512-fzN+T2K7/Ah25XU02MJkPZ5q4Tj5FpjmIYq4rvoHX4yb16HzFdCO6JxFFn5Y/oBhQ8no8fUZavnyIv9/+xkBBw==
+
+stimulus-autocomplete@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/stimulus-autocomplete/-/stimulus-autocomplete-3.1.0.tgz"
+  integrity sha512-SmVViCdA8yCl99oV2kzllNOqYjx7wruY+1OjAVsDTkZMNFZG5j+SqDKHMYbu+dRFy/SWq/PParzwZHvLAgH+YA==
+
+stimulus-use@^0.52.2, stimulus-use@^0.52.3:
+  version "0.52.3"
+  resolved "https://registry.npmjs.org/stimulus-use/-/stimulus-use-0.52.3.tgz"
+  integrity sha512-stZ5dID6FUrGCR/ChWUa0FT5Z8iqkzT6lputOAb50eF+Ayg7RzJj4U/HoRlp2NV333QfvoRidru9HLbom4hZVw==
+
+swiper@^11.0.6:
+  version "11.2.3"
+  resolved "https://registry.npmjs.org/swiper/-/swiper-11.2.3.tgz"
+  integrity sha512-24m5tqHCd1Wmp9+86aKDoIGMsZGEjIL++3nuB1UjhAhIlvwj4k0Jikxu9PGQ/VswLpoje6JtMDWo12uu4aS2FA==
+
+tailwindcss@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.0.8.tgz"
+  integrity sha512-Me7N5CKR+D2A1xdWA5t5+kjjT7bwnxZOE6/yDI/ixJdJokszsn2n++mdU5yJwrsTpqFX2B9ZNMBJDwcqk9C9lw==

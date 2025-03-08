@@ -35,25 +35,30 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 # ログイン機能
-gem 'devise', '4.9.4'
+gem "devise", "4.9.4"
 
-gem 'orm_adapter', '0.5.0'
+gem "orm_adapter", "0.5.0"
 
-gem 'responders', '3.1.1'
+gem "responders", "3.1.1"
 
-gem 'warden', '1.2.9'
+gem "warden", "1.2.9"
 
-gem 'rails-i18n'
-gem 'devise-i18n'
+gem "rails-i18n"
+gem "devise-i18n"
 
-# APIリクエストを簡単に行うため 
-gem 'httparty'
+gem 'japanese_address_parser'
+
+# 検索機能
+gem "ransack"
+
+# APIリクエストを簡単に行うため
+gem "httparty"
 
 # ページネーションのため
-gem 'kaminari'
+gem "kaminari"
 
-# 環境変数を読み込むため
-gem 'dotenv-rails' 
+gem "charlock_holmes"
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -64,6 +69,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # 環境変数を読み込むため
+  gem "dotenv-rails"
 end
 
 group :development do

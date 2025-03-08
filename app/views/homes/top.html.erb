@@ -4,11 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReadLink</title>
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet">
 </head>
 <body>
-    
-    
+<div data-controller="color-picker">
+  <input type="hidden" name="color" value="#667EEA" data-color-picker-target="input" />
+
+  <div data-color-picker-target="button"></div>
+</div>
+<div data-controller="hello">
+  <input data-hello-target="name" type="text">
+  <button data-action="click->hello#greet">Greet</button>
+</div>
+
+<div data-controller="clipboard">
+  PIN: <input data-clipboard-target="source" type="text" value="1234" readonly>
+  <button data-action="clipboard#copy">クリップボードにコピー</button>
+</div>
+
+
+<div data-controller="dropdown" class="relative">
+  <button type="button" data-action="dropdown#toggle click@window->dropdown#hide">Options</button>
+
+  <div
+    data-dropdown-target="menu"
+    class="hidden transition transform origin-top-right absolute right-0"
+    data-transition-enter-from="opacity-0 scale-95"
+    data-transition-enter-to="opacity-100 scale-100"
+    data-transition-leave-from="opacity-100 scale-100"
+    data-transition-leave-to="opacity-0 scale-95"
+  >
+    <a href="#" data-action="dropdown#toggle">Account settings</a>
+    <a href="#" data-action="dropdown#toggle">Support</a>
+    <a href="#" data-action="dropdown#toggle">License</a>
+  </div>
+</div>
+<div data-controller="sound" data-sound-url-value="/path/to/your/sound.mp3">
+  <button type="button" data-action="sound#play">▶️ Play</button>
+  <button type="button" data-action="sound#pause">⏸️ Pause</button>
+  <button type="button" data-action="sound#reset">⏹️ Reset</button>
+  <button type="button" data-action="sound#muted" data-sound-muted-param="true">🔇 Mute</button>
+  <button type="button" data-action="sound#muted" data-sound-muted-param="false">🔈 Unmute</button>
+  <button type="button" data-action="sound#loop" data-sound-loop-param="true">🔁 Loop</button>
+  <button type="button" data-action="sound#volume" data-sound-volume-param="1">🔊 Volume to 100%</button>
+  <button type="button" data-action="sound#volume" data-sound-volume-param="0.25">🔉 Volume to 25%</button>
+</div>
+<button data-action="click->disclosure#toggle">詳細を開閉</button>
+<div data-disclosure-target="content" class="hidden">
+  ここに表示したいコンテンツ
+</div>
+<div data-controller="tabs">
+  <ul>
+    <li><button data-action="click->tabs#switch" data-tabs-target="tab" data-tab-index="0">タブ1</button></li>
+    <li><button data-action="click->tabs#switch" data-tabs-target="tab" data-tab-index="1">タブ2</button></li>
+  </ul>
+
+  <div data-tabs-target="content" data-tab-index="0">タブ1のコンテンツ</div>
+  <div data-tabs-target="content" data-tab-index="1" class="hidden">タブ2のコンテンツ</div>
+</div>
+
+<style> /* タブのスタイル。必要に応じて変更してください */
+.tabs [data-tabs-target="tab"].active {
+  background-color: lightgray; /* アクティブなタブの背景色 */
+}
+</style>
+</div>
+
     <main> 
     </main>
 </body>

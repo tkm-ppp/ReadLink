@@ -1,8 +1,6 @@
-# app/controllers/books_controller.rb
-require_relative '../services/data_processor'
-require 'kaminari/core'
-require 'kaminari/activerecord'
-require 'kaminari/actionview'
+require_relative "../services/book_search"
+require_relative "../services/data_processor"
+
 
 class BooksController < ApplicationController
   def search
@@ -10,7 +8,6 @@ class BooksController < ApplicationController
       @books = ApiFetcher.fetch_data(params[:search_term])
       return render(status: :bad_request) if @books.blank? # 検索結果が空の場合はBadRequestを返す
 
-      # 必要な情報のみを抽出
       @books = @books.map do |book|
         {
           title: book[:title],
@@ -20,13 +17,13 @@ class BooksController < ApplicationController
         }
       end.select { |book| book[:isbn].present? }
 
-      @books = Kaminari.paginate_array(@books).page(params[:page]).per(20)
 
-      csv_filename = Rails.root.join('tmp', "search_results_#{Time.now.to_i}.csv")
+
+      csv_filename = Rails.root.join("tmp", "search_results_#{Time.now.to_i}.csv")
       DataProcessor.save_to_csv(@books, csv_filename)
-      @books = Kaminari.paginate_array(DataProcessor.read_from_csv(csv_filename)).page(params[:page]).per(20)
+      @books = DataProcessor.read_from_csv(csv_filename)
     else
-      @books = Kaminari.paginate_array([]).page(params[:page]).per(20) #
+      @books = []
     end
   end
 
@@ -40,9 +37,6 @@ class BooksController < ApplicationController
       end
 
       @book = LibraryFetcher.fetch_book_detail_from_openbd(@isbn) # 書籍詳細情報を取得
-      if @book.nil? # 書籍詳細情報が見つからなかった場合
-        flash.now[:alert] = "書籍詳細情報が見つかりませんでした。" # エラーメッセージを設定
-      end
 
     else
       flash.now[:alert] = "ISBN が指定されていません。" # ISBN がない場合のエラーメッセージ (変更なし)

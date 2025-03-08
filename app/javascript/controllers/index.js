@@ -6,3 +6,7 @@ import { application } from "./application"
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import ColorPicker from '@stimulus-components/color-picker'
+application.register('color-picker', ColorPicker)
+
