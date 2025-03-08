@@ -62,6 +62,9 @@ gem "charlock_holmes"
 # googleマップAPIを使用するため
 gem 'google_places'
 
+# 環境変数を読み込むため
+  gem "dotenv-rails"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -72,8 +75,7 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  # 環境変数を読み込むため
-  gem "dotenv-rails"
+  
 end
 
 group :development do
