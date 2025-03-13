@@ -18,11 +18,11 @@ Rails.application.routes.draw do
   get "libraries", to: "libraries#index", as: "library_index"
   get "library_detail", to: "libraries#show", as: "library_detail"
 
-  resources :library_settings, only: [:create, :destroy] do
+  resources :library_settings, only: [ :create, :destroy ] do
     collection do
       get :settings  # settings アクションをカスタムアクションとして追加
     end
   end
 
-  get 'libraries/nearby', to: 'libraries#nearby'
+  get "libraries/nearby", to: "libraries#nearby"
 end
