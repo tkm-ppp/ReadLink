@@ -30,11 +30,11 @@ document.addEventListener('turbolinks:load', () => {
 });
 
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(registration) {
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(err) {
-      console.log('ServiceWorker registration failed: ', err);
+  navigator.serviceWorker.register('/sw.js')
+    .then(registration => {
+      console.log('Service Worker 登録成功:', registration);
+    })
+    .catch(error => {
+      console.error('Service Worker 登録失敗:', error);
     });
-  });
 }
