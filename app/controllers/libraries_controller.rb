@@ -25,6 +25,20 @@ class LibrariesController < ApplicationController
     redirect_to library_setting_path(search: params[:search])
   end
 
+  def search
+    client = GooglePlaces::Client.new(ENV['GOOGLE_API_KEY'])
+    @libraries = client.spots(
+      params[:lat].to_f,
+      params[:lng].to_f,
+      types: 'library',
+      radius: 2000 # 2km圏内
+    )
+    
+    respond_to do |format|
+      format.json { render json: @libraries }
+    end
+  end
+  
   def show
     @library = Library.find_by(geocode: params[:geocode])
     @pref = extract_prefecture(@library.address)

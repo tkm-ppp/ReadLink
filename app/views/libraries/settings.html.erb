@@ -4,6 +4,8 @@
   設定できる数は市町村と大学などをあわせて10件までです。
 </p>
 
+<button id="get-location">現在位置から検索</button>
+
 <%= form_tag(library_settings_path, method: :get, class: "mb-4") do %>
   <div class="flex items-center border border-gray-300 rounded-md p-2 w-1/3">
     <%= text_field_tag :search, @search_term, placeholder: "図書館か市町村の名前を入力してください", class: "flex-1 border-none focus:ring-0 focus:outline-none" %>
@@ -60,3 +62,19 @@
     </li>
   <% end %>
 </ul>
+
+<script>
+document.getElementById('get-location').addEventListener('click', () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+});
+
+function showPosition(position) {
+  fetch(`/libraries/search?lat=${position.coords.latitude}&lng=${position.coords.longitude}`)
+    .then(response => response.json())
+    .then(data => updateMap(data));
+}
+</script>

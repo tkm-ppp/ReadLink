@@ -46,7 +46,7 @@ gem "warden", "1.2.9"
 gem "rails-i18n"
 gem "devise-i18n"
 
-gem 'japanese_address_parser'
+gem "japanese_address_parser"
 
 # 検索機能
 gem "ransack"
@@ -59,6 +59,11 @@ gem "kaminari"
 
 gem "charlock_holmes"
 
+# googleマップAPIを使用するため
+gem "google_places"
+
+# 環境変数を読み込むため
+gem 'dotenv-rails', groups: [:development, :test, :production]
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -69,9 +74,6 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-
-  # 環境変数を読み込むため
-  gem "dotenv-rails"
 end
 
 group :development do
