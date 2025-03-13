@@ -1,0 +1,9 @@
+<% if @results.present? %>
+  <ul class="list-group">
+    <% @results.each do |place| %>
+      <li class="list-group-item"><%= place['name'] %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <div class="alert alert-warning">近くに図書館が見つかりませんでした</div>
+<% end %>

@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   }
   get "users" => redirect("/users/sign_up")
 
-  get "libraries/settings", to: "libraries#settings", as: "library_settings"
-
   get "books/search_by_title_author", to: "books#search", as: "search_books" # 検索フォーム表示 (indexアクション)
   post "books/search_by_title_author", to: "books#search_by_title_author", as: "books_search_by_title_author"
   get "books/:isbn", to: "books#show", as: "book"
@@ -20,7 +18,11 @@ Rails.application.routes.draw do
   get "libraries", to: "libraries#index", as: "library_index"
   get "library_detail", to: "libraries#show", as: "library_detail"
 
-  get "libraries/settings", to: "libraries#settings", as: "library_setting"
-  post "libraries/settings", to: "libraries#create"
-  delete "libraries/settings", to: "libraries#destroy"
+  resources :library_settings, only: [:create, :destroy] do
+    collection do
+      get :settings  # settings アクションをカスタムアクションとして追加
+    end
+  end
+
+  get 'libraries/nearby', to: 'libraries#nearby'
 end

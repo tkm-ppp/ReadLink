@@ -14,6 +14,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="48x48" href="/icon/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/icon/favicon-96x96.png">
   <link rel="icon" type="image/svg+xml" href="/img/icon/favicon.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="/img/icon/apple-touch-icon.png">
   <link rel="mask-icon" color="#ffffff" href="/img/icon/favicon.svg">
@@ -37,7 +38,7 @@
 
 <% if user_signed_in? %>
   <li class="nav-item">
-  <%= link_to "図書館設定", library_settings_path, class: "nav-link bg-green-700 text-white rounded-lg px-4 py-2 hover:bg-green-800 transition" %>
+  <%= link_to "図書館設定", settings_library_settings_path, class: "nav-link bg-green-700 text-white rounded-lg px-4 py-2 hover:bg-green-800 transition" %>
   </li>
   <li class="nav-item">
     <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn", style: "background-color: #00188A; color: white;" %>

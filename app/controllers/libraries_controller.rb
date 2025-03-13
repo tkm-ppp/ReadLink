@@ -2,59 +2,21 @@ require "net/http"
 require "json"
 
 class LibrariesController < ApplicationController
-  def settings
-    @search_term = params[:search]
-    @libraries = Library.search(@search_term) if @search_term.present?
-    @user_libraries = current_user.libraries
-  end
-
-  def create
-    if params[:library_ids].present?
-      libraries = Library.where(id: params[:library_ids])
-      libraries.each do |library|
-        current_user.libraries << library unless current_user.libraries.include?(library)
-      end
-      flash[:notice] = "図書館が追加されました。"
-    end
-    redirect_to library_settings_path(search: params[:search])
-  end
-
-  def destroy
-    library = Library.find(params[:library_id])
-    current_user.libraries.delete(library)
-    redirect_to library_setting_path(search: params[:search])
-  end
-
-  def search
-    client = GooglePlaces::Client.new(ENV['GOOGLE_API_KEY'])
-    @libraries = client.spots(
-      params[:lat].to_f,
-      params[:lng].to_f,
-      types: 'library',
-      radius: 2000 # 2km圏内
-    )
-    
-    respond_to do |format|
-      format.json { render json: @libraries }
-    end
-  end
-  
   def show
     @library = Library.find_by(geocode: params[:geocode])
     @pref = extract_prefecture(@library.address)
-    
+
     Rails.logger.debug("取得したパラメータ (geocode): #{@geocode}")
     Rails.logger.debug("表示するデータ: #{@library}")
-  
+
     if @library.nil?
       flash.now[:alert] = "図書館情報が見つかりませんでした。geocode: #{@geocode}"
     end
   end
 
-
   def fetch_and_save_libraries
-  endpoint = "https://api.calil.jp/library"
-  params = {
+    endpoint = "https://api.calil.jp/library"
+    params = {
     appkey: ENV["CALIL_API_KEY"],
     format: "json",
     limit: "100"
