@@ -48,6 +48,9 @@ gem "devise-i18n"
 
 gem "japanese_address_parser"
 
+# 距離の計算をしやすくするため
+gem 'geocoder'
+
 # 検索機能
 gem "ransack"
 

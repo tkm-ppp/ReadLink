@@ -24,5 +24,5 @@ Rails.application.routes.draw do
     end
   end
 
-  get "libraries/nearby", to: "libraries#nearby"
+  get "library_settings/nearby", to: "libraries#nearby"
 end
