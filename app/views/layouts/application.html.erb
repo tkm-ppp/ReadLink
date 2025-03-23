@@ -32,13 +32,13 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto"></ul>
               <li class="nav-item">
-                <%= link_to "図書館検索", regions_path, class: "nav-link bg-green-700 text-white rounded-lg px-4 py-2 hover:bg-green-800 transition" %>
+                <%= link_to "全国の図書館", regions_path, class: "nav-link bg-green-700 text-white rounded-lg px-4 py-2 hover:bg-green-800 transition" %>
               </li>
 
 
 <% if user_signed_in? %>
   <li class="nav-item">
-  <%= link_to "図書館設定", settings_library_settings_path, class: "nav-link bg-green-700 text-white rounded-lg px-4 py-2 hover:bg-green-800 transition" %>
+  <%= link_to "図書館設定", library_settings_path, class: "nav-link bg-green-700 text-white rounded-lg px-4 py-2 hover:bg-green-800 transition" %>
   </li>
   <li class="nav-item">
     <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn", style: "background-color: #00188A; color: white;" %>

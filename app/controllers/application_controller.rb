@@ -11,4 +11,13 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
     devise_parameter_sanitizer.permit(:account_update, keys: [ :name ])
   end
+
+  def fetch_libraries
+    @search_libraries = []
+
+    if params[:search].present?
+      @search_libraries = Library.where("formal LIKE ? OR address LIKE ?",
+                                  "%#{params[:search]}%", "%#{params[:search]}%")
+    end
+  end
 end
