@@ -4,7 +4,7 @@ require 'rake'
 namespace :import do
   desc "Import libraries from CSV file"
   task libraries: :environment do
-    csv_file = Rails.root.join('public', 'libraries across Japan.csv') # 絶対パスの指定
+    csv_file = Rails.root.join('public', 'libraries_across_Japan.csv') # 絶対パスの指定
 
     begin
       CSV.foreach(csv_file, headers: true) do |row|
