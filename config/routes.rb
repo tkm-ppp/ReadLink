@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   root to: "homes#top"
 
   devise_for :users, controllers: {
-  sessions: "users/sessions",
-  registrations: "users/registrations"
+    sessions: "users/sessions",
+    registrations: "users/registrations"
   }
   get "users" => redirect("/users/sign_up")
 
@@ -25,4 +25,9 @@ Rails.application.routes.draw do
   end
 
   get 'libraries/nearby', to: 'libraries#nearby'
+
+  # 追加部分：letter_opener_web のルートを開発環境のみで有効にする
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
 end
