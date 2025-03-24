@@ -1,0 +1,47 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  EnabledByDefault: true
+  TargetRubyVersion: 2.7
+
+Metrics/BlockLength:
+  Exclude:
+    - japanese_address_parser.gemspec
+    - spec/**/*_spec.rb
+
+# contextの記述を日本語で記述するのを許容する。
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+# MITなのでファイルの著作権は記載しない。
+Style/Copyright:
+  Enabled: false
+
+# コメントを日本語で記述するのを許容する。
+Style/AsciiComments:
+  Enabled: false
+
+Style/StringHashKeys:
+  Exclude:
+    # CSVのヘッダーの日本語を解釈するために日本語文字列のハッシュを許容する。
+    - lib/japanese_address_parser/csv_parser.rb
+
+    # ライブラリが返すハッシュのキーが文字列なので許容する。
+    - spec/japanese_address_parser/address_normalizer_spec.rb
+
+# elseがない場合にはcase文ではなくif文を許容する。
+Style/MissingElse:
+  EnforcedStyle: case
+
+Gemspec/DependencyVersion:
+  EnforcedStyle: forbidden
