@@ -57,32 +57,7 @@
         </div>
       </div>
 
-  <div id="map" style="height: 700px; margin: 32px; border: solid; border-color: #c0c0c0; border-width: 1px; box-shadow: 2px 2px 2px #c0c0c0;"></div> <!-- 高さを設定 -->
-<!-- Googleマップ表示用の Javascript -->
-<script>
-  async function initMap() {
-    const { Map } = await google.maps.importLibrary("maps");
 
-    const map = new Map(document.getElementById("map"), {
-      center: { lat: <%= @library.geocode.split(",")[1].to_f %>, lng: <%= @library.geocode.split(",")[0].to_f %> }, // 位置を更新
-      zoom: 15,
-    });
-    const marker = new google.maps.Marker({
-      position: { lat: <%= @library.geocode.split(",")[1].to_f %>, lng: <%= @library.geocode.split(",")[0].to_f %> },
-      map: map,
-      title: "tokyo-tower",
-    });
-
-    const infoWindow = new google.maps.InfoWindow({ // 吹き出しの追加
-      content: '<div class="sample"><%= @library.formal %></div>' // 吹き出しに表示する内容
-    });
-    marker.addListener('click', function() { // マーカーをクリックしたとき
-      infoWindow.open(map, marker); // 吹き出しの表示
-    });
-  }
-</script>
-
-<script async src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_KEY'] %>&callback=initMap"></script>
 
       <div class="px-6 py-4 bg-gray-100 border-t border-gray-200">
         <%= link_to "都道府県別一覧に戻る", region_path(pref_name: @pref), class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>

@@ -117,6 +117,9 @@ GEM
       railties (>= 6.1)
     drb (2.2.1)
     erubi (1.13.1)
+    geocoder (1.8.5)
+      base64 (>= 0.1.0)
+      csv (>= 3.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     google_places (2.0.0)
@@ -370,6 +373,7 @@ DEPENDENCIES
   devise (= 4.9.4)
   devise-i18n
   dotenv-rails
+  geocoder
   google_places
   httparty
   japanese_address_parser
