@@ -398,6 +398,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   kaminari
+  letter_opener
   letter_opener_web
   orm_adapter (= 0.5.0)
   pg (~> 1.1)
