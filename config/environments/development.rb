@@ -8,6 +8,15 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.enable_reloading = true
 
+  config.after_initialize do
+    Bullet.enable        = true      # Bulletを有効にする
+    Bullet.alert         = true      # アラートを表示する
+    Bullet.bullet_logger  = true      # Bulletのログを記録する
+    Bullet.console       = true      # コンソールに表示する
+    Bullet.rails_logger  = true      # Railsのログに記録する
+    Bullet.add_footer    = true      # フッターに情報を追加する
+  end
+
   # Do not eager load code on boot.
   config.eager_load = false
 
@@ -16,6 +25,8 @@ Rails.application.configure do
 
   # Enable server timing.
   config.server_timing = true
+
+  config.web_console.whitelisted_ips = '172.18.0.1'
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.

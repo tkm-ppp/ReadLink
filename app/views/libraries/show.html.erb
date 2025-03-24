@@ -56,6 +56,32 @@
           </div>
         </div>
       </div>
+      <div id="mapid" style="height: 400px; margin: 32px; border: solid; border-color: #c0c0c0; border-width: 1px; box-shadow: 2px 2px 2px #c0c0c0;"></div> <!-- 高さを設定 -->
+<!-- Googleマップ表示用の Javascript -->
+<script>
+  var map = L.map('mapid').setView([<%= @library.latitude %>,<%= @library.longitude %>], 15);
+  var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+
+  });
+  var gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+    attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
+  });
+
+
+  var baseMaps = {
+    "OpenStreetMap" : osm,
+    "国土地理院地図" : gsi
+  };
+  L.control.layers(baseMaps).addTo(map);
+  osm.addTo(map);
+
+  //JIG-SAW本社の位置にマーカーを追加する。
+  var marker = L.marker([<%= @library.latitude %>,<%= @library.longitude %>]).addTo(map);
+  //上のマーカーにポップアップを追加する。
+  marker.bindPopup("【<%= @library.formal %>】</br><%= @library.geocode %>").openPopup();
+
+</script>
 
 
 
