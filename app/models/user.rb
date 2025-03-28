@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_many :user_libraries, dependent: :destroy
   has_many :libraries, through: :user_libraries
+  has_many :want_to_read_books, dependent: :destroy
+  has_many :already_read_books, dependent: :destroy
 
   def library_ids
     libraries.pluck(:id)

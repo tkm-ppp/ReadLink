@@ -6,6 +6,33 @@ Rails.application.configure do
   config.consider_all_requests_local = true
   config.server_timing = true
 
+  config.after_initialize do
+    Bullet.enable        = true      # Bulletを有効にする
+    Bullet.alert         = true      # アラートを表示する
+    Bullet.bullet_logger  = true      # Bulletのログを記録する
+    Bullet.console       = true      # コンソールに表示する
+    Bullet.rails_logger  = true      # Railsのログに記録する
+    Bullet.add_footer    = true      # フッターに情報を追加する
+  end
+
+  config.web_console.whitelisted_ips = '172.18.0.1'
+
+  # Enable/disable caching. By default caching is disabled.
+  # Run rails dev:cache to toggle caching.
+  if Rails.root.join("tmp/caching-dev.txt").exist?
+    config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
+
+    config.cache_store = :memory_store
+    config.public_file_server.headers = { "Cache-Control" => "public, max-age=#{2.days.to_i}" }
+  else
+    config.action_controller.perform_caching = false
+
+    config.cache_store = :null_store
+  end
+
+  # Store uploaded files on the local file system (see config/storage.yml for options).
+
   config.active_storage.service = :local
 
   # メールの設定

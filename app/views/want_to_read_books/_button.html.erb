@@ -1,0 +1,9 @@
+<% if current_user.want_to_read_books.exists?(isbn: isbn) %>
+  <%= button_to want_to_read_book_path(isbn), method: :delete, remote: true, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700", data: { isbn: isbn } do %>
+    読みたい本を解除
+  <% end %>
+<% else %>
+  <%= button_to want_to_read_books_path(isbn: isbn), method: :post, remote: true, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700", data: { isbn: isbn } do %>
+    読みたい本
+  <% end %>
+<% end %>

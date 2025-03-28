@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "already_read_books/create"
+  get "already_read_books/destroy"
+  get "want_to_read_books/create"
+  get "want_to_read_books/destroy"
   root to: "homes#top"
 
   devise_for :users, controllers: {
@@ -28,5 +32,8 @@ Rails.application.routes.draw do
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
+
+  resources :want_to_read_books, only: [:index, :create, :destroy], param: :isbn
+  resources :already_read_books, only: [:index, :create, :destroy], param: :isbn
 end
 

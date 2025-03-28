@@ -1,4 +1,4 @@
-import "@hotwired/turbo-rails"
+import { Turbo } from "@hotwired/turbo-rails";
 import "./controllers" // Stimulus controllers の読み込み
 import { Application } from "@hotwired/stimulus";
 import ContentLoader from '@stimulus-components/content-loader'
