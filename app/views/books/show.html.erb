@@ -27,7 +27,16 @@
           <p class="mt-4"><span class="font-semibold">価格:</span> <%= @book[:price_amount] %>円 (税抜)</p>
         <% end %>
 
-        
+        <div class="mt-4">
+          <% if user_signed_in? %>
+            <div id="want_to_read_<%= @book[:isbn] %>">
+              <%= render partial: 'want_to_read_books/button', locals: { isbn: @book[:isbn] } %>
+            </div>
+            <div id="already_read_<%= @book[:isbn] %>">
+              <%= render partial: 'already_read_books/button', locals: { isbn: @book[:isbn] } %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
 

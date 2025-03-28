@@ -68,8 +68,6 @@ gem "google_places"
 # 環境変数を読み込むため
 gem "dotenv-rails", groups: [ :development, :test, :production ]
 
-gem "letter_opener_web"
-
 gem 'bullet'
 
 group :development, :test do

@@ -21,6 +21,11 @@ module App
 
     config.autoload_paths += %W[#{config.root}/app/services]
 
+    config.generators do |g|
+      g.skip_routes true       # ルーティングをスキップする
+      g.helper false           # ヘルパーの生成をスキップする
+      g.test_framework :rspec  # RSpecのテストファイルを自動生成
+    end
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

@@ -42,6 +42,15 @@
   <li class="nav-item">
   <%= link_to "図書館設定", library_settings_path, class: "nav-link bg-green-700 text-white rounded-lg px-4 py-2 hover:bg-green-800 transition" %>
   </li>
+  <li><%= link_to "読みたい本", want_to_read_books_path, class: "text-blue-500 hover:underline" %></li>
+  <li><%= link_to "読んだ本", already_read_books_path, class: "text-blue-500 hover:underline" %></li>
+  <li class="relative group">
+            <button class="text-gray-700 hover:underline">読書管理</button>
+            <ul class="absolute hidden bg-white shadow-md py-2 rounded mt-2 group-hover:block z-10">
+              <li><%= link_to "読みたい本", want_to_read_books_path, class: "block px-4 py-2 text-gray-700 hover:bg-gray-100 whitespace-nowrap" %></li>
+              <li><%= link_to "読んだ本", already_read_books_path, class: "block px-4 py-2 text-gray-700 hover:bg-gray-100 whitespace-nowrap" %></li>
+            </ul>
+  </li>
   <li class="nav-item">
     <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn", style: "background-color: #00188A; color: white;" %>
   </li>
