@@ -13,22 +13,20 @@ Rails.application.configure do
 
   # メールの設定
   config.action_mailer.raise_delivery_errors = true # メール送信エラーを通知
+  config.action_mailer.perform_deliveries = true # メールを実際に送信する
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: "your-production-domain.com" }
+  config.action_mailer.default_url_options = { host: "https://readlink.onrender.com/", protocol: 'https' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.gmail.com',
+    port:                 587,
+    domain:               'readlink.onrender.com', #自分のアプリのドメイン
+    user_name:            ENV['MAILER_SENDER'],
+    password:             ENV['MAILER_PASSWORD'],
+    authentication:       'plain',
+    enable_starttls_auto: true 
+  }
 
-  # 本番環境用: Gmail SMTP設定
-  if Rails.env.production?
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      address: 'smtp.gmail.com',
-      port: 587,
-      domain: 'gmail.com',
-      user_name: ENV['MAILER_SENDER'],
-      password: ENV['MAILER_PASSWORD'],
-      authentication: 'plain',
-      enable_starttls_auto: true
-    }
-  end
 
   config.active_support.deprecation = :notify
   config.active_support.disallowed_deprecation = :raise
