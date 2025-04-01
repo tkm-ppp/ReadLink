@@ -6,6 +6,18 @@ Rails.application.configure do
   config.consider_all_requests_local = true
   config.server_timing = true
 
+  if Rails.root.join("tmp/caching-dev.txt").exist?
+    config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
+
+    config.cache_store = :memory_store
+    config.public_file_server.headers = { "Cache-Control" => "public, max-age=#{2.days.to_i}" }
+  else
+    config.action_controller.perform_caching = false
+
+    config.cache_store = :null_store
+  end
+
   config.after_initialize do
     Bullet.enable        = true      # Bulletを有効にする
     Bullet.alert         = true      # アラートを表示する
@@ -37,14 +49,19 @@ Rails.application.configure do
 
   # メールの設定
   config.action_mailer.raise_delivery_errors = true # メール送信エラーを通知
+  config.action_mailer.perform_deliveries = true # メールを実際に送信する
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { host: "localhost", port: 3001 }
-
-  # 開発環境用: Letter Opener Webを使用
-  if Rails.env.development?
-    config.action_mailer.delivery_method = :letter_opener_web
-    config.action_mailer.perform_deliveries = true
-  end
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'localhost', 
+    user_name: ENV['MAILER_SENDER'],
+    password: ENV['MAILER_PASSWORD'],
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 
   config.active_support.deprecation = :log
   config.active_support.disallowed_deprecation = :raise
