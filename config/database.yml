@@ -73,4 +73,4 @@ production:
   <<: *default
   database: app_production
   username: app
-  password: <%= ENV["APP_DATABASE_PASSWORD"] %>
+  password: <%= ENV["DB_PASSWORD"] %>

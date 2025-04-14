@@ -1,9 +1,12 @@
+// tailwind.config.js
 module.exports = {
-    content: ["./src/**/*.{html,js}"],
-    theme: {
-        extend: {
-            display: ['group-hover'],
-          },
-    plugins: [],
-  }
-  
+  content: [
+    "./app/**/*.{html.erb, html, js}",
+    './app/helpers/**/*.rb',
+    './app/javascript/**/*.{js,jsx,ts,tsx}'
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [require('daisyui')],
+}

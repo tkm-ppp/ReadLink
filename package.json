@@ -1,7 +1,9 @@
 {
   "name": "app",
   "private": true,
-  "devDependencies": {},
+  "devDependencies": {
+    "daisyui": "3.9.4"
+  },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.12",
@@ -10,18 +12,15 @@
     "@stimulus-components/color-picker": "^2.0.0",
     "@stimulus-components/content-loader": "^5.0.0",
     "autoprefixer": "^10.4.20",
-    "bootstrap": "^5.3.3",
-    "daisyui": "^4.12.14",
     "esbuild": "^0.25.1",
     "leaflet": "^1.9.4",
     "postcss": "^8.4.47",
     "stimulus-autocomplete": "^3.1.0",
-    "tailwindcss": "^3.4.14"
+    "tailwindcss": "3.4.17"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
-    "build:js": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --watch",
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
-    "stimulus:manifest:update": "bin/rails stimulus:manifest:update"
+    "build:js": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
+    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css"
   }
 }

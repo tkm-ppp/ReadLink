@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: "users/sessions",
     registrations: "users/registrations",
-    passwords: "users/passwords"
+    passwords: "users/passwords",
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
   get "users" => redirect("/users/sign_up")
 
@@ -20,8 +21,7 @@ Rails.application.routes.draw do
   get "libraries", to: "libraries#index", as: "library_index"
   get "library_detail", to: "libraries#show", as: "library_detail"
 
-  resources :library_settings, only: [ :index, :create, :destroy ] do
-  end
+  resources :library_settings, only: [ :index, :create, :destroy ]
 
 
   get 'libraries/nearby', to: 'libraries#nearby'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_24_095601) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_13_175516) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -69,15 +69,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_24_095601) do
     t.string "geocode"
     t.string "libkey"
     t.string "libid"
-    t.string "systemid"
-    t.string "city"
+    t.index ["formal"], name: "index_libraries_on_formal"
+    t.index ["libid"], name: "index_libraries_on_libid", unique: true
   end
 
   create_table "user_libraries", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "library_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "library_id"
-    t.string "user_id"
+    t.index ["library_id"], name: "index_user_libraries_on_library_id"
+    t.index ["user_id"], name: "index_user_libraries_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -91,6 +93,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_24_095601) do
     t.string "name", null: false
     t.string "username"
     t.text "library_ids"
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -107,5 +111,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_24_095601) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "already_read_books", "users"
+  add_foreign_key "user_libraries", "libraries"
+  add_foreign_key "user_libraries", "users"
   add_foreign_key "want_to_read_books", "users"
 end

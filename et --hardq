@@ -1,0 +1,882 @@
+[33mcommit fe06645be49a96e93f803dfef8442296c99edea6[m[33m ([m[1;36mHEAD -> [m[1;32m読みたい本・読んだ本[m[33m, [m[1;31morigin/パスワードリセット[m[33m)[m
+Author: root <root@pR>
+Date:   Sat Mar 29 23:58:24 2025 +0900
+
+    パスワードリセット本番環境
+
+[33mcommit bad3710ba973812de07a6b3c17aef2947f7ae73f[m[33m ([m[1;31morigin/読みたい本・読んだ本[m[33m)[m
+Author: root <root@pR>
+Date:   Fri Mar 28 12:47:40 2025 +0900
+
+    読みたい機能・読んだ機能を追加
+
+[33mcommit c3069d23a1d33e991fe9666caf8d4ee74078844c[m
+Author: root <root@pR>
+Date:   Mon Mar 24 21:13:57 2025 +0900
+
+    パスワードリセット本番環境
+
+[33mcommit de4d103260feaad41071596f0f647004a0f00adc[m
+Merge: 76d16ed5 d0ff3967
+Author: root <root@pR>
+Date:   Mon Mar 24 20:30:35 2025 +0900
+
+    Resolve merge conflicts in development.rb and production.rb
+
+[33mcommit 76d16ed543ab7672c95551d2c9075b5eb3005040[m
+Author: root <root@pR>
+Date:   Mon Mar 24 20:23:55 2025 +0900
+
+    モデル作成
+
+[33mcommit d0ff39674e09af932bddb5512ad2b59d2057c82c[m
+Merge: 335b6798 455f283a
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Mon Mar 24 19:58:28 2025 +0900
+
+    Merge pull request #99 from tkm-ppp/passwordreset
+    
+    開発環境パスワードリセット
+
+[33mcommit 455f283a0b3b9863c5d6bd06fe224268a4f1b32b[m[33m ([m[1;31morigin/passwordreset[m[33m)[m
+Merge: da480b8e 335b6798
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Mon Mar 24 19:58:18 2025 +0900
+
+    Merge branch 'main' into passwordreset
+
+[33mcommit da480b8ef2ffca485ecf9ff2cdc2993a9372dc23[m
+Author: jenida3 <m9w-o-w@ezweb.ne.jp>
+Date:   Mon Mar 24 19:15:06 2025 +0900
+
+    開発環境パスワードリセット
+
+[33mcommit 335b679886aa4f43b0403847ebc5fcda07078080[m
+Merge: 5f9a28bf 05a84eb2
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Sun Mar 23 17:12:13 2025 +0900
+
+    Merge pull request #97 from tkm-ppp/2025-03-09
+    
+    レンダーにローカルのデータを移す作業
+
+[33mcommit 05a84eb29a7a5108af6c2d7c52874905148a99f3[m[33m ([m[1;31morigin/2025-03-09[m[33m, [m[1;32m2025-03-09[m[33m)[m
+Author: root <root@pR>
+Date:   Sun Mar 23 16:19:26 2025 +0900
+
+    import_libraries.rake
+
+[33mcommit df2cb7a1457c9b79e113a6adbd89d7030c6905e0[m
+Author: root <root@pR>
+Date:   Sun Mar 23 15:55:57 2025 +0900
+
+    import_libraries.rake
+
+[33mcommit 5f9a28bf45d4ca1f2db6498d30b96ebc6c508d92[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Fri Mar 21 16:44:10 2025 +0000
+
+    Automated update at Fri Mar 21 16:44:10 UTC 2025
+
+[33mcommit 700d89e0032275831b04722598dac13cfc145f8a[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Fri Mar 21 16:41:44 2025 +0000
+
+    Automated update at Fri Mar 21 16:41:43 UTC 2025
+
+[33mcommit 5d6e3666fdcf835ce35c18385143c1959f4af749[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Thu Mar 20 16:43:48 2025 +0000
+
+    Automated update at Thu Mar 20 16:43:48 UTC 2025
+
+[33mcommit 07866b0c8f3ffa666dd52fe57c29855a1c7075a2[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Thu Mar 20 16:42:17 2025 +0000
+
+    Automated update at Thu Mar 20 16:42:17 UTC 2025
+
+[33mcommit b4ba4f8ce4cfc00f2a6943f96b39648b51261dec[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Wed Mar 19 16:43:49 2025 +0000
+
+    Automated update at Wed Mar 19 16:43:49 UTC 2025
+
+[33mcommit 97a18ecee8cd5204dd2a6555960293c96e8e87bc[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Wed Mar 19 16:42:14 2025 +0000
+
+    Automated update at Wed Mar 19 16:42:13 UTC 2025
+
+[33mcommit 3e10753f76c53f547eb3c32852a99c3255675438[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Tue Mar 18 16:43:56 2025 +0000
+
+    Automated update at Tue Mar 18 16:43:56 UTC 2025
+
+[33mcommit c5aa1e33506a7aefd88173b8bc06deca9639c766[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Tue Mar 18 16:42:27 2025 +0000
+
+    Automated update at Tue Mar 18 16:42:26 UTC 2025
+
+[33mcommit 4c71be73624c7c47c576bcc7461b13d7b37ddbfb[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Mon Mar 17 16:44:06 2025 +0000
+
+    Automated update at Mon Mar 17 16:44:06 UTC 2025
+
+[33mcommit 3960ed9222c0d6ee83dcb5880b65c5f6195ab8c7[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Mon Mar 17 16:42:33 2025 +0000
+
+    Automated update at Mon Mar 17 16:42:33 UTC 2025
+
+[33mcommit 83a82d758065258074ca5aed1723f20bd15bd4d1[m
+Author: root <root@pR>
+Date:   Mon Mar 17 02:53:22 2025 +0900
+
+    現在地取得完了
+
+[33mcommit f9bf44a3e92641e7066a8a77db2213bfbe066bdf[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sun Mar 16 16:41:37 2025 +0000
+
+    Automated update at Sun Mar 16 16:41:37 UTC 2025
+
+[33mcommit 38da1d7fbc9037c10c42d9033be61f24f8c21947[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sun Mar 16 16:39:34 2025 +0000
+
+    Automated update at Sun Mar 16 16:39:33 UTC 2025
+
+[33mcommit 99bbe1c9253b68422a4e3e9b9b09656f2b55b8b2[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sat Mar 15 16:39:32 2025 +0000
+
+    Automated update at Sat Mar 15 16:39:32 UTC 2025
+
+[33mcommit bc007694d29e9187a41240ff518c43f0e0152177[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sat Mar 15 16:37:26 2025 +0000
+
+    Automated update at Sat Mar 15 16:37:25 UTC 2025
+
+[33mcommit 9e5414470a69c2f04703d02d32988e8a291a7506[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Fri Mar 14 16:41:46 2025 +0000
+
+    Automated update at Fri Mar 14 16:41:46 UTC 2025
+
+[33mcommit 8bdaa171bfcab19db10b5d4742ed0f4948cfa307[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Fri Mar 14 16:40:12 2025 +0000
+
+    Automated update at Fri Mar 14 16:40:11 UTC 2025
+
+[33mcommit eb5f811f9a1a386c424dec289b153524698700c3[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Thu Mar 13 16:45:42 2025 +0000
+
+    Automated update at Thu Mar 13 16:45:42 UTC 2025
+
+[33mcommit 1059bb93a124b41844c59c83fe2e5717e5fa2faa[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Thu Mar 13 16:42:40 2025 +0000
+
+    Automated update at Thu Mar 13 16:42:39 UTC 2025
+
+[33mcommit af2cc2cd35341074ac464058baf40a2f2372e2e3[m
+Author: root <root@pR>
+Date:   Thu Mar 13 17:40:36 2025 +0900
+
+    PWAの修正
+
+[33mcommit ccc811d7c739bc0f35c8a742659086da878c85d5[m
+Merge: 026b19aa 491f262d
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Thu Mar 13 17:35:16 2025 +0900
+
+    Merge pull request #96 from tkm-ppp/2025-03-09
+    
+    コントローラーの分離
+
+[33mcommit 491f262df98f4ad18efd12ca3a1a406357e532fc[m
+Author: root <root@pR>
+Date:   Thu Mar 13 17:25:30 2025 +0900
+
+    PWAの修正
+
+[33mcommit 8cefe8ac7d87e6aea4dbac5d34f3af7b7cce6988[m
+Author: root <root@pR>
+Date:   Thu Mar 13 17:18:19 2025 +0900
+
+    library_settingsの分離
+
+[33mcommit 40857ae732486b25d04c4a570daca2affc1ed70f[m
+Author: root <root@pR>
+Date:   Thu Mar 13 15:26:01 2025 +0900
+
+    library_settingsの分離
+
+[33mcommit 026b19aaacd727cc23fd35cd1a5be6fbe949d261[m
+Merge: 001bccbd 92f9b905
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Thu Mar 13 15:23:07 2025 +0900
+
+    Merge pull request #95 from tkm-ppp/2025-03-09
+    
+    ファビコン機能とPWA
+
+[33mcommit 001bccbd33015cfcff103ba69f437d1baaebc872[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Wed Mar 12 16:44:14 2025 +0000
+
+    Automated update at Wed Mar 12 16:44:13 UTC 2025
+
+[33mcommit a6c3f07d624d8207ab731640a7bd75388714ccb4[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Wed Mar 12 16:42:38 2025 +0000
+
+    Automated update at Wed Mar 12 16:42:37 UTC 2025
+
+[33mcommit 1c23363d9131a13e4077745faa350ca9f9cb129a[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Tue Mar 11 16:44:18 2025 +0000
+
+    Automated update at Tue Mar 11 16:44:18 UTC 2025
+
+[33mcommit b912fb2cd5bfe6679e1062bfbed2881be5c1b734[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Tue Mar 11 16:42:48 2025 +0000
+
+    Automated update at Tue Mar 11 16:42:47 UTC 2025
+
+[33mcommit 92f9b9052a1500ebc7bfd0e057df958edb898925[m
+Author: root <root@pR>
+Date:   Wed Mar 12 00:31:24 2025 +0900
+
+    ファビコンとPWA
+
+[33mcommit b6f9221027c8fe6bf88bdffd6c3e3050c6b57594[m
+Author: root <root@pR>
+Date:   Tue Mar 11 17:36:09 2025 +0900
+
+    ファビコンとPWA
+
+[33mcommit afebb390044481934f594146b73819b00d9ad3a7[m
+Author: root <root@pR>
+Date:   Tue Mar 11 17:19:08 2025 +0900
+
+    ファビコンとPWA
+
+[33mcommit 3a6ad0c4819aa7492e278840eed260858fca7079[m
+Author: root <root@pR>
+Date:   Tue Mar 11 17:06:47 2025 +0900
+
+    ファビコンとPWA
+
+[33mcommit ebf2831b3018668f1ad67d102ea09400fc2c8c96[m
+Author: root <root@pR>
+Date:   Tue Mar 11 16:50:50 2025 +0900
+
+    ファビコンとPWA
+
+[33mcommit 7ede39729c770d979dce523cbeb7096334aa4b7b[m
+Author: root <root@pR>
+Date:   Tue Mar 11 16:38:28 2025 +0900
+
+    ファビコンとPWA
+
+[33mcommit d4be65cf7670b6d338a2cf4f4a35c4489ed6d419[m
+Author: root <root@pR>
+Date:   Tue Mar 11 16:24:04 2025 +0900
+
+    ファビコンとPWA
+
+[33mcommit 8ecc496004704acc05be441ee82912074731a59a[m
+Author: root <root@pR>
+Date:   Tue Mar 11 15:13:36 2025 +0900
+
+    ファビコンとPWA
+
+[33mcommit 0541a75fe599ec79f56205d21b5a14bcb1216588[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Mon Mar 10 16:42:26 2025 +0000
+
+    Automated update at Mon Mar 10 16:42:26 UTC 2025
+
+[33mcommit 07036006d75f2ad96bd1c9272a82208a806bac13[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Mon Mar 10 16:40:20 2025 +0000
+
+    Automated update at Mon Mar 10 16:40:19 UTC 2025
+
+[33mcommit 65037f7c5714db96c4ce0991db958467466996d9[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sun Mar 9 16:34:54 2025 +0000
+
+    Automated update at Sun Mar  9 16:34:54 UTC 2025
+
+[33mcommit a567930da0db01dba47aeacd6d30cbb07afb5cd2[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sun Mar 9 16:31:11 2025 +0000
+
+    Automated update at Sun Mar  9 16:31:10 UTC 2025
+
+[33mcommit be43f131803270970483b9a2f6b32f86c86e4b50[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sat Mar 8 16:33:23 2025 +0000
+
+    Automated update at Sat Mar  8 16:33:23 UTC 2025
+
+[33mcommit bff45fc678f45a788364d20b987caf889d558a04[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sat Mar 8 16:30:54 2025 +0000
+
+    Automated update at Sat Mar  8 16:30:54 UTC 2025
+
+[33mcommit 5b571b5726b4ed6e4f179541f0f250e38b9473bf[m
+Author: root <root@pR>
+Date:   Sun Mar 9 01:10:11 2025 +0900
+
+    2025-03-09
+
+[33mcommit 88015723f67857a5d9311ffd74ceb0a16558901c[m[33m ([m[1;31morigin/2025-03-08[m[33m, [m[1;32m2025-03-08[m[33m)[m
+Author: root <root@pR>
+Date:   Sat Mar 8 23:24:52 2025 +0900
+
+    2025-03-08
+
+[33mcommit 3211e19ec8bb3ce1c526054b2031ac6e8365ccbc[m
+Author: root <root@pR>
+Date:   Sat Mar 8 23:19:10 2025 +0900
+
+    2025-03-08
+
+[33mcommit ef4a475d40471588a41a376bcde3ae60e8fe751a[m
+Author: root <root@pR>
+Date:   Sat Mar 8 23:06:20 2025 +0900
+
+    2025-03-08
+
+[33mcommit 9c7a288488c8096dbc915cf1ece249ec844edb8d[m
+Merge: 5f1159a2 d46c13a2
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Sat Mar 8 17:22:48 2025 +0900
+
+    Merge pull request #92 from tkm-ppp/2025-03-06
+    
+    図書館詳細に地図を実装
+
+[33mcommit d46c13a29e888c8ed283f27da53fe1cce2daacef[m[33m ([m[1;31morigin/2025-03-06[m[33m)[m
+Merge: 1a7031d3 5f1159a2
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Sat Mar 8 17:22:34 2025 +0900
+
+    Merge branch 'main' into 2025-03-06
+
+[33mcommit 5f1159a2a87666a0c5d34ad18f5b80345a1cabec[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Fri Mar 7 16:41:57 2025 +0000
+
+    Automated update at Fri Mar  7 16:41:57 UTC 2025
+
+[33mcommit 39de5c7647987d43dbb24c1508a5b51b4580a301[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Thu Mar 6 16:43:06 2025 +0000
+
+    Automated update at Thu Mar  6 16:43:06 UTC 2025
+
+[33mcommit 1a7031d389db37f832f70e98d84201e401a3e6d9[m[33m ([m[1;32m2025-03-06[m[33m)[m
+Author: root <root@pR>
+Date:   Thu Mar 6 21:13:30 2025 +0900
+
+    2025-03-06
+
+[33mcommit a4cf7235d684179388aefcc94e30867178bc35a7[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Wed Mar 5 16:48:07 2025 +0000
+
+    Automated update at Wed Mar  5 16:48:07 UTC 2025
+
+[33mcommit b54482c319fefae6816062cafd408f91df6bb193[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Tue Mar 4 16:43:27 2025 +0000
+
+    Automated update at Tue Mar  4 16:43:27 UTC 2025
+
+[33mcommit cecfcb0e0f04df29532de3575a82cf373183c733[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Mon Mar 3 16:42:28 2025 +0000
+
+    Automated update at Mon Mar  3 16:42:28 UTC 2025
+
+[33mcommit 065ead7504a813821d21c8e9e3189197cf2a78f7[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sun Mar 2 16:39:05 2025 +0000
+
+    Automated update at Sun Mar  2 16:39:05 UTC 2025
+
+[33mcommit a6be0656e1693a828f67fb0de3427b8f1c82634c[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sat Mar 1 16:38:47 2025 +0000
+
+    Automated update at Sat Mar  1 16:38:47 UTC 2025
+
+[33mcommit 316396ec74d335fe39d9041b9d15e14d598e675e[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Fri Feb 28 16:42:21 2025 +0000
+
+    Automated update at Fri Feb 28 16:42:21 UTC 2025
+
+[33mcommit 3d3960fc44da21a925f9ac206ceb4ddf427850c3[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Thu Feb 27 16:43:03 2025 +0000
+
+    Automated update at Thu Feb 27 16:43:03 UTC 2025
+
+[33mcommit f4c14d3214bcce78e9aae2f8197b500a11c36954[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Wed Feb 26 16:43:18 2025 +0000
+
+    Automated update at Wed Feb 26 16:43:18 UTC 2025
+
+[33mcommit d06e7419dac40a56916848514f37a721364ff68a[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Tue Feb 25 16:43:03 2025 +0000
+
+    Automated update at Tue Feb 25 16:43:03 UTC 2025
+
+[33mcommit ed732121a261d2cf5879fbc10cbd8ea77ce89f5a[m[33m ([m[1;31morigin/2025-02-25[m[33m, [m[1;32m2025-02-25[m[33m)[m
+Author: root <root@pR>
+Date:   Tue Feb 25 23:29:14 2025 +0900
+
+    2025-02-25
+
+[33mcommit 2e6a0ad83f7b52822ce565832cdef46a40505c97[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Mon Feb 24 16:43:20 2025 +0000
+
+    Automated update at Mon Feb 24 16:43:20 UTC 2025
+
+[33mcommit efc3c9d85cb215742efa6b091b401fe87a5204c1[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sun Feb 23 16:37:49 2025 +0000
+
+    Automated update at Sun Feb 23 16:37:49 UTC 2025
+
+[33mcommit 0d66b2f7290a049a4d703696b985ee43ecde1b1b[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sat Feb 22 16:37:40 2025 +0000
+
+    Automated update at Sat Feb 22 16:37:40 UTC 2025
+
+[33mcommit 11bd1e4a3b12c75bf60b8e503c9bb27517784282[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Fri Feb 21 16:40:05 2025 +0000
+
+    Automated update at Fri Feb 21 16:40:05 UTC 2025
+
+[33mcommit 3c76fc81fbcfa0c0606c8b5a94e84946190e4a28[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Thu Feb 20 16:43:10 2025 +0000
+
+    Automated update at Thu Feb 20 16:43:10 UTC 2025
+
+[33mcommit 500d6546f333834214982bd7d6a5ac4b567fd763[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Wed Feb 19 16:41:30 2025 +0000
+
+    Automated update at Wed Feb 19 16:41:30 UTC 2025
+
+[33mcommit a9f3e954c53438037690ff3f81c2ec3114ceb252[m[33m ([m[1;31morigin/2025-02-19[m[33m, [m[1;32m2025-02-19[m[33m)[m
+Author: root <root@pR>
+Date:   Wed Feb 19 13:51:29 2025 +0900
+
+    2025-02-19
+
+[33mcommit cfbd84059593b00eb70a5728ff8e157ce3307848[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Tue Feb 18 16:42:30 2025 +0000
+
+    Automated update at Tue Feb 18 16:42:30 UTC 2025
+
+[33mcommit e25e3827a121708d4102cca88905cff21c93f54c[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Mon Feb 17 16:39:51 2025 +0000
+
+    Automated update at Mon Feb 17 16:39:51 UTC 2025
+
+[33mcommit 5d3d784f046c62af613bc7f581452789a98304e3[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sun Feb 16 16:38:45 2025 +0000
+
+    Automated update at Sun Feb 16 16:38:44 UTC 2025
+
+[33mcommit 71378e8f04d9a67281c3e85a8205b8ee2fb96a07[m
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Sun Feb 16 22:57:32 2025 +0900
+
+    Update Auto Push.yml
+
+[33mcommit 536f0a6b6b9da60dfdb56d2c1d035fe3a4629263[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Sat Feb 15 16:39:15 2025 +0000
+
+    Automated update at Sat Feb 15 16:39:15 UTC 2025
+
+[33mcommit b01852105d014cb61a0485b0bf0f6a3d64255289[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Fri Feb 14 16:40:26 2025 +0000
+
+    Automated update at Fri Feb 14 16:40:26 UTC 2025
+
+[33mcommit bef8e79531e896c7c25f37ae885b316be44a83ed[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Thu Feb 13 16:42:37 2025 +0000
+
+    Automated update at Thu Feb 13 16:42:37 UTC 2025
+
+[33mcommit 06ceef80d03b091032e458a96d4d4daecd39f17d[m[33m ([m[1;32m楽天API[m[33m, [m[1;32mdevelopment[m[33m, [m[1;32mMVP[m[33m)[m
+Author: root <root@pR>
+Date:   Thu Feb 13 23:35:14 2025 +0900
+
+    stimirusの実装確認完了
+
+[33mcommit 40d3b1de46ebedc99fdaca52b766dc992821af8d[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Wed Feb 12 16:41:03 2025 +0000
+
+    Automated update at Wed Feb 12 16:41:03 UTC 2025
+
+[33mcommit 94f5593b6d1219be7cfe9a7f1a56816ecffd958c[m
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Thu Feb 13 00:05:51 2025 +0900
+
+    Update ci.yml
+
+[33mcommit 6020820a2ecb6f5d72783ad8db6cce199b71bba8[m[33m ([m[1;31morigin/MVP[m[33m)[m
+Author: root <root@pR>
+Date:   Thu Feb 13 00:03:05 2025 +0900
+
+    stimirusお試し色々
+
+[33mcommit 2df86cb0d0f0f1692cee52b4be60a248d26ebcff[m
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Wed Feb 12 16:44:46 2025 +0900
+
+    Update Auto Push.yml
+
+[33mcommit 1b363492be6ffd0e2c9f22c04ed2f35c053bc385[m
+Author: tkm-ppp <book.tkm@gmail.com>
+Date:   Wed Feb 12 07:34:54 2025 +0000
+
+    Automated update at Wed Feb 12 07:34:54 UTC 2025
+
+[33mcommit 4f7644f3cf8d7256096a1ca4dca1f7f1d82119ef[m
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Wed Feb 12 16:26:48 2025 +0900
+
+    Update Auto Push.yml
+
+[33mcommit a1ec7df03297df31857f5620ff80cedcf857df67[m
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Wed Feb 12 16:16:31 2025 +0900
+
+    Update Auto Push.yml
+
+[33mcommit b17a94ffdf6997ea4b6f9a958a202c6d4e51c488[m
+Author: root <root@pR>
+Date:   Wed Feb 12 16:04:21 2025 +0900
+
+    gem clean up
+
+[33mcommit 453d9a829204feed6dba60f5f2dc2da0f31b051e[m
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Wed Feb 12 15:42:16 2025 +0900
+
+    Update Auto Push.yml
+
+[33mcommit db0d6ae4aeee7c5d22e6d12340c6d4d7c8021b89[m
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Wed Feb 12 15:40:39 2025 +0900
+
+    Create Auto Push.yml
+
+[33mcommit 93db16909b01a8169f9a536ec2cbf37d2461140a[m
+Author: root <root@pR>
+Date:   Wed Feb 12 15:29:43 2025 +0900
+
+    github actions設定
+
+[33mcommit 7947e42e1e14afba54ef0266d6abf9728c204e96[m
+Author: root <root@pR>
+Date:   Wed Feb 12 15:23:16 2025 +0900
+
+    github actions設定
+
+[33mcommit c1c2e0f52e200c1c62ca5d2bc0a506f21e0df8a1[m
+Author: root <root@pR>
+Date:   Wed Feb 12 15:10:16 2025 +0900
+
+    github actions設定
+
+[33mcommit d651db2cfe0eac9cb6090dc950ee72096f69d1dc[m
+Author: root <root@pR>
+Date:   Wed Feb 12 15:09:15 2025 +0900
+
+    github actions設定
+
+[33mcommit 8a5e21f538bf8854b2f10986f4fd0f7164e48693[m
+Author: root <root@pR>
+Date:   Wed Feb 12 00:10:50 2025 +0900
+
+    github actions設定
+
+[33mcommit 50537b84bee5a3458291fcef023acf693f6508eb[m
+Author: root <root@pR>
+Date:   Tue Feb 11 23:48:23 2025 +0900
+
+    github actions設定
+
+[33mcommit b508005ff900eb43bfeb4c24cffefd47b18d5a96[m
+Author: root <root@pR>
+Date:   Tue Feb 4 16:34:54 2025 +0900
+
+    最終修正
+
+[33mcommit 1e82248cb625b8d9afb5032cac60bb7b78a273cd[m
+Author: root <root@pR>
+Date:   Tue Feb 4 16:24:13 2025 +0900
+
+    最終修正
+
+[33mcommit f350438b8598d252e07536d35b6289d597582a4f[m
+Author: root <root@pR>
+Date:   Tue Feb 4 16:12:52 2025 +0900
+
+    最終修正
+
+[33mcommit adb9ec841a945b4822985dc31af0d06ef89a2c18[m
+Author: root <root@pR>
+Date:   Tue Feb 4 16:03:48 2025 +0900
+
+    最終修正
+
+[33mcommit 817a470d7e0cc00335d00fb2c598f4de0ab08fb0[m
+Author: root <root@pR>
+Date:   Tue Feb 4 15:43:28 2025 +0900
+
+    最終修正
+
+[33mcommit ef9a99f2fa21e270c7504be75b2557a5e2f280c4[m
+Author: root <root@pR>
+Date:   Tue Feb 4 15:34:29 2025 +0900
+
+    修正
+
+[33mcommit 58ca7cdb1c58ab380d2e10b8637b270c5f3f9629[m
+Author: root <root@pR>
+Date:   Tue Feb 4 14:56:39 2025 +0900
+
+    修正
+
+[33mcommit e7b12d35980a5bda00d8571653d40bea5e3f2bd4[m
+Author: root <root@pR>
+Date:   Mon Feb 3 21:19:04 2025 +0900
+
+    修正
+
+[33mcommit 2544306ff16af2db4f4c6305644a81cae8a2539a[m
+Author: root <root@pR>
+Date:   Mon Feb 3 21:12:04 2025 +0900
+
+    修正
+
+[33mcommit ebdefad21974ab43d07a952dc2079ee5f116fe0c[m
+Author: root <root@pR>
+Date:   Mon Feb 3 21:05:45 2025 +0900
+
+    修正
+
+[33mcommit 05ea2409cfeaf2e25b09f161f40caf97d345b238[m
+Author: root <root@pR>
+Date:   Mon Feb 3 21:00:42 2025 +0900
+
+    修正
+
+[33mcommit 729bc5655caf6bb88e33d8abc9b6e55185ffabe5[m
+Author: root <root@pR>
+Date:   Mon Feb 3 19:17:45 2025 +0900
+
+    修正
+
+[33mcommit e2f492c67a9591169e4a73dbec1d04131a455fa9[m
+Author: root <root@pR>
+Date:   Mon Feb 3 19:13:17 2025 +0900
+
+    syuusei
+
+[33mcommit 027aa8fe2887dd4c4a2a233a20059e3e8a326915[m
+Author: root <root@pR>
+Date:   Mon Feb 3 11:52:53 2025 +0900
+
+    修正
+
+[33mcommit 6ad9bfc49e9560312e588e00efd2b80aa90cae67[m
+Author: root <root@pR>
+Date:   Mon Feb 3 07:44:27 2025 +0900
+
+    ログイン機能修正
+
+[33mcommit 6387a5700054ebe88b4111591ce221ebee962515[m
+Author: root <root@pR>
+Date:   Mon Feb 3 07:26:15 2025 +0900
+
+    ログイン機能修正
+
+[33mcommit 3ae7367a7bb8a8ea5a8123d1120ced479503a2f1[m
+Author: root <root@pR>
+Date:   Mon Feb 3 07:14:56 2025 +0900
+
+    ログイン機能修正
+
+[33mcommit f1cb95943cdd05141d069bf95b7888b3391c690f[m
+Author: root <root@pR>
+Date:   Mon Feb 3 07:07:57 2025 +0900
+
+    ログイン機能修正
+
+[33mcommit 385f34390218e1244ed299dd2b6462a1eccc4e4b[m
+Author: root <root@pR>
+Date:   Sun Feb 2 21:41:28 2025 +0900
+
+    図書館詳細の修正
+
+[33mcommit 54c9911874b8072d5e4f7c084cc4732da27b8b59[m
+Author: root <root@pR>
+Date:   Sat Feb 1 16:19:52 2025 +0900
+
+    MVP
+
+[33mcommit 8dc087fab8e2583f7b5258ecad3dded232e22613[m
+Author: root <root@pR>
+Date:   Sat Feb 1 16:12:30 2025 +0900
+
+    MVP
+
+[33mcommit 7e3904d491051b5f7aac3e3ce4ba041d26536915[m[33m ([m[1;32mmain[m[33m)[m
+Author: root <root@pR>
+Date:   Sat Feb 1 16:07:16 2025 +0900
+
+    MVP
+
+[33mcommit 11e819e9042622a268eab7118318316e906b6a5a[m
+Author: root <root@pR>
+Date:   Sat Feb 1 15:46:41 2025 +0900
+
+    MVP
+
+[33mcommit 31cadfed7456d3107aaeb8c1b02565c5ad1f37a5[m
+Author: root <root@pR>
+Date:   Sat Feb 1 15:42:36 2025 +0900
+
+    MVP
+
+[33mcommit 4785851ce1391fba655b88ac172529127d241662[m
+Author: root <root@pR>
+Date:   Sat Feb 1 12:25:31 2025 +0900
+
+    本の検索一覧を修正
+
+[33mcommit 90b376eb1eca83722a4a728600ab4bfdfe633e6e[m
+Author: root <root@pR>
+Date:   Sat Feb 1 10:40:53 2025 +0900
+
+    ログイン機能エラー解決
+
+[33mcommit b854c644c3c90453672567641484c9f986c87045[m
+Author: root <root@pR>
+Date:   Sat Feb 1 00:08:10 2025 +0900
+
+    ログイン機能復旧
+
+[33mcommit 46af964ee71df1974f9b4ca8189c8701a4103ee1[m[33m ([m[1;32mNDLAPI　カーリルAPIの連携[m[33m)[m
+Author: root <root@pR>
+Date:   Fri Jan 31 16:04:43 2025 +0900
+
+    本の詳細画面編集
+
+[33mcommit 1f9fa130c2035bca290c440d6ae2bd74615e328a[m
+Author: root <root@pR>
+Date:   Fri Jan 31 12:45:31 2025 +0900
+
+    本の詳細に貸出し情報を実装
+
+[33mcommit b2df1af56fc8a10f5a411c3e4e3f108eed27531f[m
+Author: root <root@pR>
+Date:   Wed Jan 29 14:59:08 2025 +0900
+
+    図書館リスト
+
+[33mcommit db61927186cb11daaa5e6bf18da5e33871743a6e[m
+Author: root <root@pR>
+Date:   Wed Jan 29 14:05:05 2025 +0900
+
+    図書館リスト
+
+[33mcommit 3fe251e17f0746765c5c7c6cfaa25646a8ae5d71[m
+Author: root <root@pR>
+Date:   Sun Jan 26 15:59:38 2025 +0900
+
+    hensyuu
+
+[33mcommit f621b44007371bf9040f46b86a0575e61c709b53[m
+Author: root <root@pR>
+Date:   Sun Jan 26 15:55:19 2025 +0900
+
+    hensyuu
+
+[33mcommit d8d0d27ae8934e0659917e8cc64f217c88da0ae4[m
+Author: root <root@pR>
+Date:   Sun Jan 26 15:39:34 2025 +0900
+
+    hensyuu
+
+[33mcommit 9e88789f2d0e304007eb7c0ea602bd68558aca59[m
+Author: root <root@pR>
+Date:   Sun Jan 26 12:36:45 2025 +0900
+
+    styleseet削除
+
+[33mcommit 70b7916a6743f9aa5bc5db23bfddf9b3c41e7636[m
+Merge: 1ed0761f df3b0975
+Author: root <root@pR>
+Date:   Sat Jan 25 20:48:52 2025 +0900
+
+    a
+
+[33mcommit 1ed0761f8deec9ed94429945eb71b5d14d6ae38b[m
+Author: root <root@pR>
+Date:   Sat Jan 25 20:35:13 2025 +0900
+
+    readme
+
+[33mcommit 9427f157fbacdaa6ee579d0dbd6d2bbe655bb44a[m
+Author: root <root@pR>
+Date:   Sat Jan 25 20:26:19 2025 +0900
+
+    readme
+
+[33mcommit 3489ee56860c053e5d6aeec390fe3c59d7c277ca[m
+Author: root <root@pR>
+Date:   Sat Jan 25 15:08:19 2025 +0900
+
+    set up
+
+[33mcommit df3b09751145d43916bd18780db2b9b6539e13f0[m
+Author: タク/長谷川拓磨 <book.tkm@gmail.com>
+Date:   Sat Jan 25 14:55:07 2025 +0900
+
+    Initial commit

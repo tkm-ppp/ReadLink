@@ -33,3 +33,9 @@
 <div class="mt-4">
   <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "text-blue-500 hover:text-blue-700" %>
 </div>
+
+<div class="form-control w-full mt-5">
+  <%= link_to "Googleでログイン / 新規登録", user_google_oauth2_omniauth_authorize_path, class: "btn btn-primary" %>
+</div>
+
+</div>
