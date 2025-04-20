@@ -9,6 +9,7 @@ default: &default
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASS'] %>
   host: <%= ENV['DB_HOST'] %>
+  port: 5432
 
 
 development:
@@ -74,3 +75,4 @@ production:
   database: app_production
   username: app
   password: <%= ENV["DB_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
