@@ -8,6 +8,7 @@ namespace :import do
 
     begin
       CSV.foreach(csv_file, headers: true) do |row|
+        attributes = row.to_hash.except('id') # idカラムを除外
         Library.create!(row.to_hash) # row.to_hashを使って全てのカラムを一度に渡す
       end
     rescue ActiveRecord::RecordInvalid => e

@@ -3,14 +3,22 @@ require "json"
 
 class LibrariesController < ApplicationController
   def show
-    @library = Library.find_by(geocode: params[:geocode])
-    @pref = extract_prefecture(@library.address)
+    @pref_name = params[:pref_name]
+    @libraries = Library.where("address LIKE ?", "%#{@pref_name}%")
+    
+    # 市町村ごとにグループ化
+    @city_library_lists = {}
+    @libraries.each do |library|
+      city = extract_city(library.address)
+      @city_library_lists[city] ||= []
+      @city_library_lists[city] << {
+        "formal" => library.formal,
+        "geocode" => library.geocode
+      }
+    end
 
-    Rails.logger.debug("取得したパラメータ (geocode): #{@geocode}")
-    Rails.logger.debug("表示するデータ: #{@library}")
-
-    if @library.nil?
-      flash.now[:alert] = "図書館情報が見つかりませんでした。geocode: #{@geocode}"
+    if @libraries.empty?
+      flash.now[:alert] = "#{@pref_name}の図書館情報が見つかりませんでした。"
     end
   end
 
@@ -74,5 +82,10 @@ private
       regions_data[lib.region] << lib.prefecture
     end
     regions_data
+  end
+
+  def extract_city(address)
+    # 都道府県名を除去して市区町村名を抽出
+    address.sub(/^#{@pref_name}/, '').split(/[市区町村]/).first&.concat("市") || "その他"
   end
 end
